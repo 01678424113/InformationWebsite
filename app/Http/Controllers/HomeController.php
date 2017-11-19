@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Sunra\PhpSimple\HtmlDomParser;
+use Spatie\Browsershot\Browsershot;
 
 class HomeController extends Controller
 {
@@ -12,13 +13,13 @@ class HomeController extends Controller
         return view('frontend.page.index');
     }
 
-    public function getAlexa(Request $request)
+    public function getInformationWebsite(Request $request)
     {
         $domain = $request->input('txt-domain');
         $information_web = [];
-        $html = HtmlDomParser::file_get_html('https://www.alexa.com/siteinfo/' . $domain);
+        $html_alexa = HtmlDomParser::file_get_html('https://www.alexa.com/siteinfo/' . $domain);
         //Global rank
-        $globalRanks = $html->find('span.globleRank .col-pad div strong.metrics-data');
+        $globalRanks = $html_alexa->find('span.globleRank .col-pad div strong.metrics-data');
         foreach ($globalRanks as $item) {
             $globalRank_text = trim($item->innertext());
             $globalRank_text = preg_match('/\>(.+)/',$globalRank_text,$result);
@@ -27,19 +28,19 @@ class HomeController extends Controller
         }
         $information_web['globalRank'] = $globalRank;
         //Country
-        $countries = $html->find('span.countryRank .col-pad h4.metrics-title a');
+        $countries = $html_alexa->find('span.countryRank .col-pad h4.metrics-title a');
         foreach ($countries as $item) {
             $country = trim($item->innertext());
         }
         $information_web['country'] = $country;
         //Country rank
-        $countryRanks = $html->find('span.countryRank .col-pad div strong.metrics-data');
+        $countryRanks = $html_alexa->find('span.countryRank .col-pad div strong.metrics-data');
         foreach ($countryRanks as $item) {
             $countryRank = trim($item->innertext());
         }
         $information_web['countryRank'] = $countryRank;
         //Visitor
-        $visitor = $html->find('section#engage-panel section#engagement-content span.span4 strong.metrics-data');
+        $visitor = $html_alexa->find('section#engage-panel section#engagement-content span.span4 strong.metrics-data');
         $bounce_percent = $visitor[0]->innertext();
         $pageviews_per_visitor = $visitor[1]->innertext();
         $time_on_site = $visitor[2]->innertext();
@@ -50,25 +51,25 @@ class HomeController extends Controller
         $image_search_traffic = 'https://traffic.alexa.com/graph?o=lt&y=q&b=ffffff&n=666666&f=999999&p=4e8cff&r=1y&t=2&z=0&c=1&h=150&w=340&u=' . $domain;
         $information_web['image_search_traffic'] = $image_search_traffic;
         //Top 5 Keyword search engines
-        $keywords = $html->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
+        $keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
         for($i = 1; $i < 10 ; $i+=2){
             $keyword[] = $keywords[$i]->innertext();
         }
         $information_web['keyword'] = $keyword;
         //Backlink
-        $backlinks = $html->find('section#linksin-panel-content span.box1-r');
+        $backlinks = $html_alexa->find('section#linksin-panel-content span.box1-r');
         foreach ($backlinks as $item) {
             $backlink = $item->innertext();
         }
         $information_web['backlink'] = $backlink;
         //Rate gender, home, school, work
-        $genders_left = $html->find('div#demographics-content span.pybar-bars span.pybar-l span.pybar-bg');
+        $genders_left = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-l span.pybar-bg');
         foreach ($genders_left as $item){
             $gender_left = $item->innertext();
             preg_match('/width\:(.+)\%/',$gender_left,$result);
             $rate_left[] = (int)$result[1];
         }
-        $genders_right = $html->find('div#demographics-content span.pybar-bars span.pybar-r span.pybar-bg');
+        $genders_right = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-r span.pybar-bg');
         foreach ($genders_right as $item){
             $genders_right = $item->innertext();
             preg_match('/width\:(.+)\%/',$genders_right,$result);
@@ -116,14 +117,53 @@ class HomeController extends Controller
         $geo_positions = $html_web->find('meta[name=geo.position]');
         $geo_position = $geo_positions[0]->content;
 
-        echo $html_web;
+        //Screen short website
+        $image_path = explode('.',$domain);
+        $image_path = $image_path[0].'.jpg';
+        $image_path = "upload/".$image_path;
+        $screenShort = new Browsershot();
+        $screenShort
+            ->setUrl('http://'.$domain)
+            ->setWidth('512')
+            ->setHeight('384')
+            ->save($image_path);
+        echo "<img src='$image_path' />";
+        //End information form website------------------------------------------------------------------------
 
-
-
-
-
-
-
+        $html_whois = HtmlDomParser::file_get_html('https://www.whois.com/whois/'.$domain);
+        $df_block = $html_whois->find('div.df-block');
+        //DOMAIN INFORMATION
+        $domain_informations = $df_block[0]->find('.df-row');
+        $i = 0;
+        foreach ($domain_informations as $item){
+            $domain_information[] = [
+                $item->find('.df-label')[0]->innertext()=>$item->find('.df-value')[0]->innertext(),
+            ];
+        }
+        //REGISTRANT CONTACT
+        $registrant_contacts = $df_block[1]->find('.df-row');
+        $i = 0;
+        foreach ($registrant_contacts as $item){
+            $registrant_contact[] = [
+                $item->find('.df-label')[0]->innertext()=>$item->find('.df-value')[0]->innertext(),
+            ];
+        }
+        //ADMINISTRATIVE CONTACT
+        $administrative_contacts = $df_block[2]->find('.df-row');
+        $i = 0;
+        foreach ($administrative_contacts as $item){
+            $administrative_contact[] = [
+                $item->find('.df-label')[0]->innertext()=>$item->find('.df-value')[0]->innertext(),
+            ];
+        }
+        //TECHNICAL CONTACT
+        $technical_contacts = $df_block[3]->find('.df-row');
+        $i = 0;
+        foreach ($technical_contacts as $item){
+            $technical_contact[] = [
+                $item->find('.df-label')[0]->innertext()=>$item->find('.df-value')[0]->innertext(),
+            ];
+        }
 
     }
 }
