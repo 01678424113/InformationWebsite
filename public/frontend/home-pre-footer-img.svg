@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3249" height="433" viewBox="0 0 3249 433" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <ellipse id="a" cx="532.031" cy="118.969" rx="14.276" ry="14.276" />
+    <mask id="p" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#a" />
+    </mask>
+    <ellipse id="b" cx="1082.145" cy="297.899" rx="14.276" ry="14.276" />
+    <mask id="q" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#b" />
+    </mask>
+    <ellipse id="c" cx="1622.741" cy="254.118" rx="14.276" ry="14.276" />
+    <mask id="r" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#c" />
+    </mask>
+    <ellipse id="d" cx="2153.82" cy="63.768" rx="14.276" ry="14.276" />
+    <mask id="s" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#d" />
+    </mask>
+    <ellipse id="e" cx="2690.61" cy="14.276" rx="14.276" ry="14.276" />
+    <mask id="t" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#e" />
+    </mask>
+    <ellipse id="f" cx="528.224" cy="84.706" rx="14.276" ry="14.276" />
+    <mask id="u" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#f" />
+    </mask>
+    <ellipse id="g" cx="1078.338" cy="130.39" rx="14.276" ry="14.276" />
+    <mask id="v" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#g" />
+    </mask>
+    <ellipse id="h" cx="1618.934" cy="200.82" rx="14.276" ry="14.276" />
+    <mask id="w" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#h" />
+    </mask>
+    <ellipse id="i" cx="2150.013" cy="14.276" rx="14.276" ry="14.276" />
+    <mask id="x" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#i" />
+    </mask>
+    <ellipse id="j" cx="2688.706" cy="134.197" rx="14.276" ry="14.276" />
+    <mask id="y" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#j" />
+    </mask>
+    <ellipse id="k" cx="511.092" cy="223.662" rx="14.276" ry="14.276" />
+    <mask id="z" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#k" />
+    </mask>
+    <ellipse id="l" cx="1055.496" cy="212.241" rx="14.276" ry="14.276" />
+    <mask id="A" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#l" />
+    </mask>
+    <ellipse id="m" cx="1596.092" cy="179.882" rx="14.276" ry="14.276" />
+    <mask id="B" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#m" />
+    </mask>
+    <ellipse id="n" cx="2127.171" cy="73.285" rx="14.276" ry="14.276" />
+    <mask id="C" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#n" />
+    </mask>
+    <ellipse id="o" cx="2665.864" cy="14.276" rx="14.276" ry="14.276" />
+    <mask id="D" width="28.553" height="28.553" x="0" y="0" fill="#fff">
+      <use xlink:href="#o" />
+    </mask>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <g fill="#81d225" transform="translate(-1 28.553)">
+      <path d="M526.867 120.524l545.948 179.34 544.9-41.554 526.02-191.806 539.796-48.006 550.77 47.244 3.333-5.446-554.11-47.487-541.015 48.166L1616.52 252.78l-543.036 41.524L526.392 115.3 4.104 397.82l-2.51 1.362 2.725 5.02 2.51-1.364" />
+      <use stroke="#fff" stroke-width="4" mask="url(#p)" stroke-linecap="square" xlink:href="#a" />
+      <use stroke="#fff" stroke-width="4" mask="url(#q)" stroke-linecap="square" xlink:href="#b" />
+      <use stroke="#fff" stroke-width="4" mask="url(#r)" stroke-linecap="square" xlink:href="#c" />
+      <use stroke="#fff" stroke-width="4" mask="url(#s)" stroke-linecap="square" xlink:href="#d" />
+      <use stroke="#fff" stroke-width="4" mask="url(#t)" stroke-linecap="square" xlink:href="#e" />
+    </g>
+    <g fill="#a95cea" transform="translate(-1 36.167)">
+      <path d="M526.86 88.168l546.614 44.32 543.646 72.507 526.59-186.07 538.96 117.537L3235.077 31.44l1.736-6.145-554.07 105.572-539.38-117.423-526.817 186.03-542.465-72.662L525.735 82.81 4.11 363.55l-2.51 1.357 2.71 5.026 2.513-1.355" />
+      <use stroke="#fff" stroke-width="4" mask="url(#u)" stroke-linecap="square" xlink:href="#f" />
+      <use stroke="#fff" stroke-width="4" mask="url(#v)" stroke-linecap="square" xlink:href="#g" />
+      <use stroke="#fff" stroke-width="4" mask="url(#w)" stroke-linecap="square" xlink:href="#h" />
+      <use stroke="#fff" stroke-width="4" mask="url(#x)" stroke-linecap="square" xlink:href="#i" />
+      <use stroke="#fff" stroke-width="4" mask="url(#y)" stroke-linecap="square" xlink:href="#j" />
+    </g>
+    <g fill="#0088fc" transform="translate(12.325)">
+      <path d="M524.632 225.452l547.47-11.104 543.895-30.27 525.675-107.942 540.27-61.452 550.823 22.514 3.086-5.59-554.113-22.614-540.96 61.51-525.51 107.925-543.38 30.21-548.098 11.21L3.02 369.03l-1.17 6.276" />
+      <use stroke="#fff" stroke-width="4" mask="url(#z)" stroke-linecap="square" xlink:href="#k" />
+      <use stroke="#fff" stroke-width="4" mask="url(#A)" stroke-linecap="square" xlink:href="#l" />
+      <use stroke="#fff" stroke-width="4" mask="url(#B)" stroke-linecap="square" xlink:href="#m" />
+      <use stroke="#fff" stroke-width="4" mask="url(#C)" stroke-linecap="square" xlink:href="#n" />
+      <use stroke="#fff" stroke-width="4" mask="url(#D)" stroke-linecap="square" xlink:href="#o" />
+    </g>
+  </g>
+</svg>
