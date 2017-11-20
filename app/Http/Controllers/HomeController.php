@@ -8,6 +8,21 @@ use Spatie\Browsershot\Browsershot;
 
 class HomeController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+  /*  public function __construct()
+    {
+        $this->middleware('auth');
+    }*/
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         return view('frontend.page.index');
@@ -124,8 +139,8 @@ class HomeController extends Controller
         $screenShort = new Browsershot();
         $screenShort
             ->setUrl('http://'.$domain)
-            ->setWidth('512')
-            ->setHeight('384')
+            ->setWidth('1024')
+            ->setHeight('768')
             ->save($image_path);
         echo "<img src='$image_path' />";
         //End information form website------------------------------------------------------------------------
@@ -165,5 +180,38 @@ class HomeController extends Controller
             ];
         }
 
+    }
+    public function getTop500()
+    {
+        $html = HtmlDomParser::file_get_html('https://moz.com/top500');
+        $top_500_key = $html->find('table#top-500 thead tr th');
+        $top_500_value = $html->find('table#top-500 tbody tr');
+        $top_500 = [];
+        foreach ($top_500_value as $item) {
+            $i = 0;
+            foreach ($item->find('td') as $item_2) {
+                $top_500[] = [
+                    $top_500_key[$i]->innertext() =>trim(strip_tags($item_2->innertext()))
+                ];
+                $i++;
+            }
+        }
+        $j = 0;
+        for ($i = 0; $i < 3500; $i+=7) {
+            $top_new[] = array(
+                $j => array(
+                    $top_500[$i],
+                    $top_500[$i + 1],
+                    $top_500[$i + 2],
+                    $top_500[$i + 3],
+                    $top_500[$i + 4],
+                    $top_500[$i + 5],
+                    $top_500[$i + 6]
+                )
+            );
+            $j++;
+        }
+        var_dump($top_new);
+        die;
     }
 }

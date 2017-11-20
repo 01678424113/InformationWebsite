@@ -13,14 +13,15 @@
 <body>
 
 <div class="col-lg-6 mt-2">
-    <form action="{{route('getAlexa')}}" method="get">
-    <div class="input-group">
+    <form action="{{route('getInformationWebsite')}}" method="get">
+        <div class="input-group">
 
-            <input type="text" class="form-control" name="txt-domain" placeholder="Search for..." aria-label="Search for...">
+            <input type="text" class="form-control" name="txt-domain" placeholder="Search for..."
+                   aria-label="Search for...">
             <span class="input-group-btn">
                 <button class="btn btn-secondary" type="submit">Go!</button>
              </span>
-    </div>
+        </div>
     </form>
 </div>
 
