@@ -10,11 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/','HomeController@index');
+
 Route::get('/get-information-web','HomeController@getInformationWebsite')->name('getInformationWebsite');
 Route::get('/get-top-500','HomeController@getTop500')->name('getTop500');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
