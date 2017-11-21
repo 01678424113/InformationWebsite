@@ -19,3 +19,9 @@ Route::get('/get-top-500','HomeController@getTop500')->name('getTop500');
 Auth::routes();
 
 
+//Admin
+Route::group(['prefix'=>'admin'],function (){
+   Route::get('/','Admin\AdminController@index')->name('home_admin');
+});
+
+
