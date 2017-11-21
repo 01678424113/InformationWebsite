@@ -38,7 +38,6 @@ class HomeController extends Controller
     public function getInformationDomain(Request $request)
     {
         $domain = $request->input('txt-domain');
-
         $check_domain = Domain::where('domain',$domain)->first();
         if(!isset($check_domain)){
 
@@ -137,8 +136,11 @@ class HomeController extends Controller
 
             $html_web = HtmlDomParser::file_get_html('http://'.$domain);
             $titles = $html_web->find('title');
-            $title = $titles[0]->innertext();
-
+            if(isset($titles)){
+                $title = $titles[0]->innertext();
+            }else{
+                $title = strtoupper($domain);
+            }
             $languages = $html_web->find('meta[name=language]');
             if(isset($languages[0]->content)){
                 $language = $languages[0]->content;
