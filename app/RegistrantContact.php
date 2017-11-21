@@ -8,4 +8,9 @@ class RegistrantContact extends Model
 {
     //
     protected $table = 'registrant_contacts';
+
+    public function domain()
+    {
+        return $this->belongsTo(Domain::class);
+    }
 }
