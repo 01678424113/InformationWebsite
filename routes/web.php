@@ -22,6 +22,11 @@ Auth::routes();
 //Admin
 Route::group(['prefix'=>'admin'],function (){
    Route::get('/','Admin\AdminController@index')->name('home_admin');
+
+   Route::get('/list-top-500','Admin\Top500Controller@listTop500')->name('listTop500');
+
+    Route::get('/list-domain','Admin\DomainController@listDomain')->name('listDomain');
+    Route::get('/information-domain','Admin\DomainController@informationDomain')->name('informationDomain');
 });
 
 

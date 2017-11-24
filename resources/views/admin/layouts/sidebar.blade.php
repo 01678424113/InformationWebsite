@@ -52,182 +52,37 @@
             <li class="heading">
                 <h3 class="uppercase">Features</h3>
             </li>
+{{--------------------------Top 500-----------------------------------------}}
             <li class="nav-item  ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>
-                    <span class="title">Tables</span>
+                    <span class="title">Top 500</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item  ">
                         <a href="table_static_basic.html" class="nav-link ">
-                            <span class="title">Basic Tables</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="table_static_responsive.html" class="nav-link ">
-                            <span class="title">Responsive Tables</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="table_bootstrap.html" class="nav-link ">
-                            <span class="title">Bootstrap Tables</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="javascript:;" class="nav-link nav-toggle">
-                            <span class="title">Datatables</span>
-                            <span class="arrow"></span>
-                        </a>
-                        <ul class="sub-menu">
-                            <li class="nav-item ">
-                                <a href="table_datatables_managed.html" class="nav-link "> Managed
-                                    Datatables </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="table_datatables_buttons.html" class="nav-link "> Buttons
-                                    Extension </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="table_datatables_colreorder.html" class="nav-link "> Colreorder
-                                    Extension </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="table_datatables_rowreorder.html" class="nav-link "> Rowreorder
-                                    Extension </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="table_datatables_scroller.html" class="nav-link "> Scroller
-                                    Extension </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="table_datatables_fixedheader.html" class="nav-link "> FixedHeader
-                                    Extension </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="table_datatables_responsive.html" class="nav-link "> Responsive
-                                    Extension </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="table_datatables_editable.html" class="nav-link "> Editable
-                                    Datatables </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="table_datatables_ajax.html" class="nav-link "> Ajax Datatables </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item  ">
-                <a href="?p=" class="nav-link nav-toggle">
-                    <i class="icon-wallet"></i>
-                    <span class="title">Portlets</span>
-                    <span class="arrow"></span>
-                </a>
-                <ul class="sub-menu">
-                    <li class="nav-item  ">
-                        <a href="portlet_boxed.html" class="nav-link ">
-                            <span class="title">Boxed Portlets</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="portlet_light.html" class="nav-link ">
-                            <span class="title">Light Portlets</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="portlet_solid.html" class="nav-link ">
-                            <span class="title">Solid Portlets</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="portlet_ajax.html" class="nav-link ">
-                            <span class="title">Ajax Portlets</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="portlet_draggable.html" class="nav-link ">
-                            <span class="title">Draggable Portlets</span>
+                            <span class="title"><a href="{{route('listTop500')}}">List domain</a></span>
                         </a>
                     </li>
                 </ul>
             </li>
+            {{--------------------------Domain-----------------------------------------}}
             <li class="nav-item  ">
                 <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-bar-chart"></i>
-                    <span class="title">Charts</span>
+                    <i class="icon-briefcase"></i>
+                    <span class="title">Domain</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item  ">
-                        <a href="charts_amcharts.html" class="nav-link ">
-                            <span class="title">amChart</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="charts_flotcharts.html" class="nav-link ">
-                            <span class="title">Flot Charts</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="charts_flowchart.html" class="nav-link ">
-                            <span class="title">Flow Charts</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="charts_google.html" class="nav-link ">
-                            <span class="title">Google Charts</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="charts_echarts.html" class="nav-link ">
-                            <span class="title">eCharts</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="charts_morris.html" class="nav-link ">
-                            <span class="title">Morris Charts</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="javascript:;" class="nav-link nav-toggle">
-                            <span class="title">HighCharts</span>
-                            <span class="arrow"></span>
-                        </a>
-                        <ul class="sub-menu">
-                            <li class="nav-item ">
-                                <a href="charts_highcharts.html" class="nav-link "> HighCharts </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="charts_highstock.html" class="nav-link "> HighStock </a>
-                            </li>
-                            <li class="nav-item ">
-                                <a href="charts_highmaps.html" class="nav-link "> HighMaps </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item  ">
-                <a href="javascript:;" class="nav-link nav-toggle">
-                    <i class="icon-pointer"></i>
-                    <span class="title">Maps</span>
-                    <span class="arrow"></span>
-                </a>
-                <ul class="sub-menu">
-                    <li class="nav-item  ">
-                        <a href="maps_google.html" class="nav-link ">
-                            <span class="title">Google Maps</span>
-                        </a>
-                    </li>
-                    <li class="nav-item  ">
-                        <a href="maps_vector.html" class="nav-link ">
-                            <span class="title">Vector Maps</span>
+                        <a href="table_static_basic.html" class="nav-link ">
+                            <span class="title"><a href="{{route('listDomain')}}">List domain</a></span>
                         </a>
                     </li>
                 </ul>
             </li>
+
         </ul>
         <!-- END SIDEBAR MENU -->
         <!-- END SIDEBAR MENU -->
