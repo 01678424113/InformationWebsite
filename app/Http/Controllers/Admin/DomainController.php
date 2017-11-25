@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\AlexaInformation;
 use App\Domain;
+use App\WebsiteInformation;
+use App\WhoisInformation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -24,10 +27,20 @@ class DomainController extends Controller
         return view('admin.domain.list-domain',$response);
     }
 
-    public function informationDomain()
+    public function informationDomain(Request $request)
     {
+        $domain_id = $request->domain_id;
         $response = [
             'title'=>'Information domain'
         ];
+        $alexa_inf = AlexaInformation::where('domain_id',$domain_id)->get();
+        $website_inf = WebsiteInformation::where('domain_id',$domain_id)->get();
+        $whois_inf = WhoisInformation::where('domain_id',$domain_id)->get();
+
+
+        $response['alexa_inf'] = $alexa_inf;
+        $response['website_inf'] = $website_inf;
+        $response['who_is_inf'] = $whois_inf;
+        return view('admin.domain.information-domain',$response);
     }
 }
