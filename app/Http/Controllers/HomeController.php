@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\AdministrativeContact;
+
 use App\AlexaInformation;
 use App\Domain;
-use App\DomainInformation;
-use App\RegistrantContact;
-use App\TechnicalContact;
 use App\WebsiteInformation;
 use App\WhoisInformation;
 use Illuminate\Http\Request;
