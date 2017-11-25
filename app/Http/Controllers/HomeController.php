@@ -9,6 +9,7 @@ use App\DomainInformation;
 use App\RegistrantContact;
 use App\TechnicalContact;
 use App\WebsiteInformation;
+use App\WhoisInformation;
 use Illuminate\Http\Request;
 use Sunra\PhpSimple\HtmlDomParser;
 use Spatie\Browsershot\Browsershot;
@@ -20,10 +21,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+  /*  public function __construct()
     {
         $this->middleware('auth');
-    }
+    }*/
 
     /**
      * Show the application dashboard.
@@ -32,7 +33,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.page.index');
+        return view('frontend.layout');
     }
 
     public function getInformationDomain(Request $request)
@@ -78,8 +79,9 @@ class HomeController extends Controller
             $image_search_traffic = 'https://traffic.alexa.com/graph?o=lt&y=q&b=ffffff&n=666666&f=999999&p=4e8cff&r=1y&t=2&z=0&c=1&h=150&w=340&u=' . $domain;
             //Top 5 Keyword search engines
             $keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
+            $keyword = "";
             for ($i = 1; $i < 10; $i += 2) {
-                $keyword[] = $keywords[$i]->innertext();
+                $keyword = $keyword . $keywords[$i]->innertext() . ", " ;
             }
             //Backlink
             $backlinks = $html_alexa->find('section#linksin-panel-content span.box1-r');
@@ -123,6 +125,7 @@ class HomeController extends Controller
             $alexa_information->rate_school = $rate_school;
             $alexa_information->created_at = microtime(true);
 
+            //dd($alexa_information);
             $alexa_information->save();
 
             //-----------------------------------------------------------------------------------------//
@@ -222,6 +225,7 @@ class HomeController extends Controller
             $website_information->image_screen_shot = $image_path;
             $website_information->created_at = microtime(true);
 
+            //dd($website_information);
             $website_information->save();
 
             //-----------------------------------------------------------------------------------------//
@@ -238,39 +242,30 @@ class HomeController extends Controller
             //DOMAIN INFORMATION
             $domain_whois_informations = $df_block[0]->find('.df-row');
             $i = 0;
-            if(isset($administrative_contact)){
+            $who_is_information = new WhoisInformation();
+            $who_is_information->domain_id = $domain_id;
+            $who_is_information->domain = $domain;
+            if(isset($domain_whois_informations)){
                 foreach ($domain_whois_informations as $item) {
                     $domain_whois_information[] = [
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                     ];
                 }
-                $domain_information = new DomainInformation();
-                $domain_information->domain_id = $domain_id;
-                $domain_information->domain = $domain_whois_information[0]["Domain:"];
-                $domain_information->registrar = $domain_whois_information[1]["Registrar:"];
-                $domain_information->registration_date = $domain_whois_information[2]["Registration Date:"];
-                $domain_information->expiration_date = $domain_whois_information[3]["Expiration Date:"];
-                $domain_information->updated_date = $domain_whois_information[4]["Updated Date:"];
-                $domain_information->status = $domain_whois_information[5]["Status:"];
-                $domain_information->name_servers = $domain_whois_information[6]["Name Servers:"];
-                $domain_information->created_at = microtime(true);
-
-                $domain_information->save();
+               $who_is_information->domain_registrar = $domain_whois_information[1]["Registrar:"];
+               $who_is_information->domain_registration_date = $domain_whois_information[2]["Registration Date:"];
+               $who_is_information->domain_expiration_date = $domain_whois_information[3]["Expiration Date:"];
+               $who_is_information->domain_updated_date = $domain_whois_information[4]["Updated Date:"];
+               $who_is_information->domain_status = $domain_whois_information[5]["Status:"];
+               $who_is_information->domain_name_servers = $domain_whois_information[6]["Name Servers:"];
             }else{
-                $domain_information = new DomainInformation();
-                $domain_information->domain_id = $domain_id;
-                $domain_information->domain = $domain;
-                $domain_information->registrar = "No data";
-                $domain_information->registration_date = "No data";
-                $domain_information->expiration_date = "No data";
-                $domain_information->updated_date = "No data";
-                $domain_information->status = "No data";
-                $domain_information->name_servers = "No data";
-                $domain_information->created_at = microtime(true);
-
-                $domain_information->save();
+               $who_is_information->domain_registrar = "N/A";
+               $who_is_information->domain_registration_date = "N/A";
+               $who_is_information->domain_expiration_date = "N/A";
+               $who_is_information->domain_updated_date = "N/A";
+               $who_is_information->domain_status = "N/A";
+               $who_is_information->domain_name_servers = "N/A";
             }
-
+            //dd($domain_information);
 
             //REGISTRANT CONTACT
             $registrant_whois_contacts = $df_block[1]->find('.df-row');
@@ -281,37 +276,27 @@ class HomeController extends Controller
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                     ];
                 }
-                $registrant_contact = new RegistrantContact();
-                $registrant_contact->domain_id = $domain_id;
-                $registrant_contact->name = $registrant_whois_contact[0]["Name:"];
-                $registrant_contact->organization = $registrant_whois_contact[1]["Organization:"];
-                $registrant_contact->street = $registrant_whois_contact[2]["Street:"];
-                $registrant_contact->city = $registrant_whois_contact[3]["City:"];
-                $registrant_contact->state = $registrant_whois_contact[4]["State:"];
-                $registrant_contact->postal_code = $registrant_whois_contact[5]["Postal Code:"];
-                $registrant_contact->country = $registrant_whois_contact[6]["Country:"];
-                $registrant_contact->phone = $registrant_whois_contact[7]["Phone:"];
-                $registrant_contact->fax = $registrant_whois_contact[8]["Fax:"];
-                $registrant_contact->email = strip_tags($registrant_whois_contact[9]["Email:"]);
-                $registrant_contact->created_at = microtime(true);
-
-                $registrant_contact->save();
+                $who_is_information->regis_name = $registrant_whois_contact[0]["Name:"];
+                $who_is_information->regis_organization = $registrant_whois_contact[1]["Organization:"];
+                $who_is_information->regis_street = $registrant_whois_contact[2]["Street:"];
+                $who_is_information->regis_city = $registrant_whois_contact[3]["City:"];
+                $who_is_information->regis_state = $registrant_whois_contact[4]["State:"];
+                $who_is_information->regis_postal_code = $registrant_whois_contact[5]["Postal Code:"];
+                $who_is_information->regis_country = $registrant_whois_contact[6]["Country:"];
+                $who_is_information->regis_phone = $registrant_whois_contact[7]["Phone:"];
+                $who_is_information->regis_fax = $registrant_whois_contact[8]["Fax:"];
+                $who_is_information->regis_email = strip_tags($registrant_whois_contact[9]["Email:"]);
             }else{
-                $registrant_contact = new RegistrantContact();
-                $registrant_contact->domain_id = $domain_id;
-                $registrant_contact->name = $domain;
-                $registrant_contact->organization = "No data";
-                $registrant_contact->street = "No data";
-                $registrant_contact->city = "No data";
-                $registrant_contact->state = "No data";
-                $registrant_contact->postal_code = "No data";
-                $registrant_contact->country = "No data";
-                $registrant_contact->phone = "No data";
-                $registrant_contact->fax = "No data";
-                $registrant_contact->email = "No data";
-                $registrant_contact->created_at = microtime(true);
-
-                $registrant_contact->save();
+                $who_is_information->regis_name = $domain;
+                $who_is_information->regis_organization = "N/A";
+                $who_is_information->regis_street = "N/A";
+                $who_is_information->regis_city = "N/A";
+                $who_is_information->regis_state = "N/A";
+                $who_is_information->regis_postal_code = "N/A";
+                $who_is_information->regis_country = "N/A";
+                $who_is_information->regis_phone = "N/A";
+                $who_is_information->regis_fax = "N/A";
+                $who_is_information->regis_email = "N/A";
             }
 
             //ADMINISTRATIVE CONTACT
@@ -323,37 +308,27 @@ class HomeController extends Controller
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                     ];
                 }
-                $administrative_contact = new AdministrativeContact();
-                $administrative_contact->domain_id = $domain_id;
-                $administrative_contact->name = $administrative_whois_contact[0]["Name:"];
-                $administrative_contact->organization = $administrative_whois_contact[1]["Organization:"];
-                $administrative_contact->street = $administrative_whois_contact[2]["Street:"];
-                $administrative_contact->city = $administrative_whois_contact[3]["City:"];
-                $administrative_contact->state = $administrative_whois_contact[4]["State:"];
-                $administrative_contact->postal_code = $administrative_whois_contact[5]["Postal Code:"];
-                $administrative_contact->country = $administrative_whois_contact[6]["Country:"];
-                $administrative_contact->phone = $administrative_whois_contact[7]["Phone:"];
-                $administrative_contact->fax = $administrative_whois_contact[8]["Fax:"];
-                $administrative_contact->email = strip_tags($administrative_whois_contact[9]["Email:"]);
-                $administrative_contact->created_at = microtime(true);
-
-                $administrative_contact->save();
+                $who_is_information->adm_name = $administrative_whois_contact[0]["Name:"];
+                $who_is_information->adm_organization = $administrative_whois_contact[1]["Organization:"];
+                $who_is_information->adm_street = $administrative_whois_contact[2]["Street:"];
+                $who_is_information->adm_city = $administrative_whois_contact[3]["City:"];
+                $who_is_information->adm_state = $administrative_whois_contact[4]["State:"];
+                $who_is_information->adm_postal_code = $administrative_whois_contact[5]["Postal Code:"];
+                $who_is_information->adm_country = $administrative_whois_contact[6]["Country:"];
+                $who_is_information->adm_phone = $administrative_whois_contact[7]["Phone:"];
+                $who_is_information->adm_fax = $administrative_whois_contact[8]["Fax:"];
+                $who_is_information->adm_email = strip_tags($administrative_whois_contact[9]["Email:"]);
             }else{
-                $administrative_contact = new RegistrantContact();
-                $administrative_contact->domain_id = $domain_id;
-                $administrative_contact->name = $domain;
-                $administrative_contact->organization = "No data";
-                $administrative_contact->street = "No data";
-                $administrative_contact->city = "No data";
-                $administrative_contact->state = "No data";
-                $administrative_contact->postal_code = "No data";
-                $administrative_contact->country = "No data";
-                $administrative_contact->phone = "No data";
-                $administrative_contact->fax = "No data";
-                $administrative_contact->email = "No data";
-                $administrative_contact->created_at = microtime(true);
-
-                $administrative_contact->save();
+                $who_is_information->adm_name = $domain;
+                $who_is_information->adm_organization = "N/A";
+                $who_is_information->adm_street = "N/A";
+                $who_is_information->adm_city = "N/A";
+                $who_is_information->adm_state = "N/A";
+                $who_is_information->adm_postal_code = "N/A";
+                $who_is_information->adm_country = "N/A";
+                $who_is_information->adm_phone = "N/A";
+                $who_is_information->adm_fax = "N/A";
+                $who_is_information->adm_email = "N/A";
             }
 
             //TECHNICAL CONTACT
@@ -365,44 +340,39 @@ class HomeController extends Controller
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                     ];
                 }
-                $technical_contact = new TechnicalContact();
-                $technical_contact->domain_id = $domain_id;
-                $technical_contact->name = $technical_whois_contact[0]["Name:"];
-                $technical_contact->organization = $technical_whois_contact[1]["Organization:"];
-                $technical_contact->street = $technical_whois_contact[2]["Street:"];
-                $technical_contact->city = $technical_whois_contact[3]["City:"];
-                $technical_contact->state = $technical_whois_contact[4]["State:"];
-                $technical_contact->postal_code = $technical_whois_contact[5]["Postal Code:"];
-                $technical_contact->country = $technical_whois_contact[6]["Country:"];
-                $technical_contact->phone = $technical_whois_contact[7]["Phone:"];
-                $technical_contact->fax = $technical_whois_contact[8]["Fax:"];
-                $technical_contact->email = strip_tags($technical_whois_contact[9]["Email:"]);
-                $technical_contact->created_at = microtime(true);
-
-                $technical_contact->save();
+                $who_is_information->tech_name = $technical_whois_contact[0]["Name:"];
+                $who_is_information->tech_organization = $technical_whois_contact[1]["Organization:"];
+                $who_is_information->tech_street = $technical_whois_contact[2]["Street:"];
+                $who_is_information->tech_city = $technical_whois_contact[3]["City:"];
+                $who_is_information->tech_state = $technical_whois_contact[4]["State:"];
+                $who_is_information->tech_postal_code = $technical_whois_contact[5]["Postal Code:"];
+                $who_is_information->tech_country = $technical_whois_contact[6]["Country:"];
+                $who_is_information->tech_phone = $technical_whois_contact[7]["Phone:"];
+                $who_is_information->tech_fax = $technical_whois_contact[8]["Fax:"];
+                $who_is_information->tech_email = strip_tags($technical_whois_contact[9]["Email:"]);
             }else{
-                $technical_contact = new RegistrantContact();
-                $technical_contact->domain_id = $domain_id;
-                $technical_contact->name = $domain;
-                $technical_contact->organization = "No data";
-                $technical_contact->street = "No data";
-                $technical_contact->city = "No data";
-                $technical_contact->state = "No data";
-                $technical_contact->postal_code = "No data";
-                $technical_contact->country = "No data";
-                $technical_contact->phone = "No data";
-                $technical_contact->fax = "No data";
-                $technical_contact->email = "No data";
-                $technical_contact->created_at = microtime(true);
-
-                $technical_contact->save();
+                $who_is_information->tech_name = $domain;
+                $who_is_information->tech_organization = "N/A";
+                $who_is_information->tech_street = "N/A";
+                $who_is_information->tech_city = "N/A";
+                $who_is_information->tech_state = "N/A";
+                $who_is_information->tech_postal_code = "N/A";
+                $who_is_information->tech_country = "N/A";
+                $who_is_information->tech_phone = "N/A";
+                $who_is_information->tech_fax = "N/A";
+                $who_is_information->tech_email = "N/A";
             }
-
+            try{
+                $who_is_information->save();
+                return redirect()->back();
+            }catch(\Exception $e){
+                return redirect()->back()->with('error','Error connect database !');
+            }
             //-----------------------------------------------------------------------------------------//
             //--------------------------------------End Who is-----------------------------------------//
             //-----------------------------------------------------------------------------------------//
 
-            return redirect()->back();
+
         }
 
 
