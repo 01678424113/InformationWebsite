@@ -39,7 +39,11 @@
                                     <tr>
                                         <td>{{$domain->domain}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-info"><a href="{{route('informationDomain')}}">Watch now</a></button>
+                                            <form action="{{route('informationDomain')}}" method="get">
+                                                {{csrf_field()}}
+                                                <input type="text" name="domain_id" value="{{$domain->id}}" style="display:none;">
+                                                <button type="submit" class="btn btn-info">Watch now</button>
+                                            </form>
                                         </td>
                                         <td>{{$domain->created_at}}</td>
                                         <td>{{$domain->created_at}}</td>
