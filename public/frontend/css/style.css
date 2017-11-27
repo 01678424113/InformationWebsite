@@ -103,7 +103,7 @@ Section Text:       15px/1.7 "Open Sans", arial, sans-serif;
 .align-left{ text-align:left !important;}
 .align-right{ text-align:right !important; }
 .left{float:left !important;}
-.right{float:right !important;}
+/*.right{float:right !important;}*/
 .relative{position:relative;}
 .hidden{display:none;}
 .inline-block{display:inline-block;}
