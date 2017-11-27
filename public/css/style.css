@@ -1,14 +1,118 @@
-body .btn-search {
-  height: 50px;
-  background: #ffffff12;
-  color: white;
-  font-size: 16px;
-  border: 2px solid white; }
-  body .btn-search:hover {
-    background: #ffffff45 !important; }
-body .table-top-500 {
-  border: 1px solid gray;
-  border-radius: 4px;
-  padding: 20px; }
+body {
+  font-family: 'Open Sans', sans-serif; }
+  body .btn-search {
+    height: 50px;
+    background: #ffffff12;
+    color: white;
+    font-size: 16px;
+    border: 2px solid white; }
+    body .btn-search:hover {
+      background: #ffffff45 !important; }
+  body .table-top-500 {
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 20px; }
+
+/*-----------------------------------------------------------Style chung ---------------------------------------------*/
+.title-inf {
+  margin-bottom: 15px;
+  margin-left: 15px;
+  text-align: center;
+  font-size: 35px; }
+
+.hr-inf {
+  width: 100px;
+  border-color: #c7c7c7; }
+
+.table thead tr {
+  border-bottom: #ededed 2px solid; }
+  .table thead tr td {
+    font-size: 22px;
+    font-weight: 300;
+    color: #1F76A3; }
+.table tbody tr {
+  border-bottom: #ededed 2px solid;
+  font-size: 17px; }
+  .table tbody tr .td-attribute {
+    width: 30%; }
+  .table tbody tr .td-parameter {
+    color: #096898;
+    font-weight: 500; }
+
+/*----------------------------------------------Information website-----------------------------------------------------*/
+body .information-website {
+  display: flex;
+  justify-content: center; }
+  body .information-website .right .domain-website {
+    border-bottom: #c7c7c7 1px solid;
+    margin-bottom: 10px; }
+    body .information-website .right .domain-website h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 30px;
+      padding: 10px;
+      padding-left: 30px;
+      color: #1F76A3; }
+  body .information-website .right .table td {
+    border: 0; }
+    body .information-website .right .table td .right-addon {
+      padding: 25px;
+      padding-top: 0; }
+      body .information-website .right .table td .right-addon h1 {
+        margin: 0;
+        margin-bottom: 10px;
+        font-size: 31px; }
+        body .information-website .right .table td .right-addon h1 img {
+          width: 20px; }
+      body .information-website .right .table td .right-addon p {
+        margin-bottom: 5px; }
+  body .information-website .right .table th {
+    border: 0; }
+  body .information-website .right .table .stickyHeader-screenshotContainer {
+    position: relative;
+    float: right;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 27px 0 15px 9.8%;
+    overflow: hidden;
+    transition: all .5s ease; }
+    body .information-website .right .table .stickyHeader-screenshotContainer .stickyHeader-screenshotBg {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 5px;
+      left: 5px;
+      width: 100%;
+      height: 100%;
+      background-size: 170% auto;
+      background-position: 50% 15%;
+      -webkit-filter: blur(6px);
+      filter: blur(6px); }
+    body .information-website .right .table .stickyHeader-screenshotContainer img {
+      position: relative;
+      max-width: 250px; }
+  body .information-website .right .rank {
+    padding: 20px;
+    border: 1px solid rgba(216, 216, 216, 0.5);
+    background: #fafafa;
+    border-radius: 5px; }
+    body .information-website .right .rank .numscroller {
+      margin-bottom: 0;
+      text-align: right;
+      font-size: 30px;
+      color: #2b3d52; }
+    body .information-website .right .rank i {
+      font-size: 22px;
+      margin-right: 5px; }
+    body .information-website .right .rank span {
+      font-size: 22px;
+      color: #2b3d52; }
+    body .information-website .right .rank a {
+      color: #4a86c5;
+      text-decoration: none; }
+  body .information-website .right .traffic-over {
+    padding: 15px; }
+    body .information-website .right .traffic-over .table thead tr td {
+      font-size: 22px; }
 
 /*# sourceMappingURL=style.css.map */

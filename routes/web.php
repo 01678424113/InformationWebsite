@@ -12,6 +12,7 @@
 */
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/','HomeController@index');
+Route::get('/information-website','HomeController@informationWebsite')->name('informationWebsite');
 
 Route::get('/get-information-web','HomeController@getInformationDomain')->name('getInformationDomain');
 Route::get('/get-top-500','HomeController@getTop500')->name('getTop500');

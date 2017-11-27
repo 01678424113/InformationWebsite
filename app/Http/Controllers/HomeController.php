@@ -39,6 +39,11 @@ class HomeController extends Controller
         return view('frontend.page.index',$response);
     }
 
+    public function informationWebsite()
+    {
+        return view('frontend.page.information-website');
+    }
+
     public function getInformationDomain(Request $request)
     {
         $domain = $request->input('txt-domain');
