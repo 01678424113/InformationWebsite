@@ -21,7 +21,10 @@
     <link rel="stylesheet" href="frontend/css/owl.carousel.css">
     <link rel="stylesheet" href="frontend/css/magnific-popup.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    @yield('style')
+    <link rel="stylesheet" href="css/style-information-website.css">
     <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body class="appear-animate">
 
@@ -203,6 +206,8 @@
 
 
 <!-- JS -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/numscroller-1.0.js"></script>
 <script type="text/javascript" src="frontend/js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="frontend/js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="frontend/js/bootstrap.min.js"></script>
@@ -219,7 +224,7 @@
 <script type="text/javascript" src="frontend/js/isotope.pkgd.min.js"></script>
 <script type="text/javascript" src="frontend/js/imagesloaded.pkgd.min.js"></script>
 <script type="text/javascript" src="frontend/js/jquery.magnific-popup.min.js"></script>
-<!-- Replace test API Key "AIzaSyAZsDkJFLS0b59q7cmW0EprwfcfUA8d9dg" with your own one below 
+<!-- Replace test API Key "AIzaSyAZsDkJFLS0b59q7cmW0EprwfcfUA8d9dg" with your own one below
 **** You can get API Key here - https://developers.google.com/maps/documentation/javascript/get-api-key -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsDkJFLS0b59q7cmW0EprwfcfUA8d9dg"></script>
 <script type="text/javascript" src="frontend/js/gmap3.min.js"></script>
@@ -231,5 +236,6 @@
 <script type="text/javascript" src="frontend/js/jquery.ajaxchimp.min.js"></script>
 <!--[if lt IE 10]><script type="text/javascript" src="frontend/js/placeholder.js"></script><![endif]-->
 
+@yield('script')
 </body>
 </html>
