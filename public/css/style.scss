@@ -1,0 +1,17 @@
+body {
+  .btn-search {
+    height: 50px;
+    background: #ffffff12;
+    color: white;
+    font-size: 16px;
+    border: 2px solid white;
+    &:hover {
+      background: #ffffff45 !important;
+    }
+  }
+  .table-top-500 {
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 20px;
+  }
+}

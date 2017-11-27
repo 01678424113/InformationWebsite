@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\AlexaInformation;
 use App\Domain;
+use App\Top500Domain;
 use App\WebsiteInformation;
 use App\WhoisInformation;
 use Illuminate\Http\Request;
@@ -30,7 +31,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.layout');
+        $response = [
+            'title'=>'Home'
+        ];
+        $top_500s = Top500Domain::all();
+        $response['top_500s'] = $top_500s;
+        return view('frontend.page.index',$response);
     }
 
     public function getInformationDomain(Request $request)
