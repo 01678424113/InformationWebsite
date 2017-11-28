@@ -1,3 +1,125 @@
+<!-- Navigation panel -->
+<nav class="main-nav js-stick" style="box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);">
+    <div class="full-wrapper relative clearfix">
+        <!-- Logo ( * your text or image into link tag *) -->
+        <div class="nav-logo-wrap local-scroll">
+            <a href="mp-index.html" class="logo">
+                <img src="frontend/images/logo-dark.png" alt="" />
+            </a>
+        </div>
+        <div class="mobile-nav">
+            <i class="fa fa-bars"></i>
+        </div>
+
+        <!-- Main Menu -->
+        <div class="inner-nav desktop-nav">
+            <ul class="clearlist">
+
+                <!-- Item With Sub -->
+                <li>
+                    <a href="#" class="mn-has-sub">Home <i class="fa fa-angle-down"></i></a>
+
+                    <!-- Sub Multilevel -->
+                    <ul class="mn-sub mn-has-multi">
+
+                        <!-- Sub Column -->
+                        <li class="mn-sub-multi">
+                            <a class="mn-group-title">Multi Page</a>
+
+                            <ul>
+                                <li>
+                                    <a href="mp-index.html">Main Demo</a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <!-- End Sub Column -->
+
+                    </ul>
+                    <!-- End Sub Multilevel -->
+
+                </li>
+                <!-- End Item With Sub -->
+
+                <!-- Item With Sub -->
+                <li>
+                    <a href="#" class="mn-has-sub">Pages <i class="fa fa-angle-down"></i></a>
+
+                </li>
+                <!-- End Item With Sub -->
+
+                <!-- Item With Sub -->
+                <li>
+                    <a href="#" class="mn-has-sub">Elements <i class="fa fa-angle-down"></i></a>
+
+
+                </li>
+                <!-- End Item With Sub -->
+
+                <!-- Item With Sub -->
+                <li>
+                    <a href="#" class="mn-has-sub active">Portfolio <i class="fa fa-angle-down"></i></a>
+
+
+                </li>
+                <!-- End Item With Sub -->
+
+                <!-- Item With Sub -->
+                <li>
+                    <a href="#" class="mn-has-sub">Blog <i class="fa fa-angle-down"></i></a>
+
+
+                </li>
+                <!-- End Item With Sub -->
+
+                <!-- Item With Sub -->
+                <li>
+                    <a href="#" class="mn-has-sub">Shop <i class="fa fa-angle-down"></i></a>
+
+
+                </li>
+                <!-- End Item With Sub -->
+
+                <!-- Divider -->
+                <li><a>&nbsp;</a></li>
+                <!-- End Divider -->
+
+                <!-- Search -->
+                <li>
+                    <a href="#" class="mn-has-sub"><i class="fa fa-search"></i> Search</a>
+
+                </li>
+                <!-- End Search -->
+
+                <!-- Cart -->
+                <li>
+                    <a href="#"><i class="fa fa-shopping-cart"></i> Cart(0)</a>
+                </li>
+                <!-- End Cart -->
+
+                <!-- Languages -->
+                <li>
+                    <a href="#" class="mn-has-sub">Eng <i class="fa fa-angle-down"></i></a>
+
+                    <ul class="mn-sub">
+
+                        <li><a href="">English</a></li>
+                        <li><a href="">France</a></li>
+                        <li><a href="">Germany</a></li>
+
+                    </ul>
+
+                </li>
+                <!-- End Languages -->
+
+            </ul>
+        </div>
+        <!-- End Main Menu -->
+
+
+    </div>
+</nav>
+<!-- End Navigation panel -->
 <!-- Home Section -->
 <section class="home-section bg-dark-alfa-70 parallax-2 fixed-height-small"
          data-background="image/technology.jpg" id="home">
@@ -39,31 +161,3 @@
     </div>
 </section>
 <!-- End Home Section -->
-
-<!-- Navigation panel -->
-<nav class="main-nav dark transparent stick-fixed">
-    <div class="full-wrapper relative clearfix">
-        <!-- Logo ( * your text or image into link tag *) -->
-        <div class="nav-logo-wrap local-scroll">
-            <a href="#top" class="logo">
-                <img src="frontend/images/logo-white.png" alt=""/>
-            </a>
-        </div>
-        <div class="mobile-nav">
-            <i class="fa fa-bars"></i>
-        </div>
-        <!-- Main Menu -->
-        <div class="inner-nav desktop-nav">
-            <ul class="clearlist scroll-nav local-scroll">
-                <li class="active"><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#news">News</a></li>
-                <li><a href="#contact">Contacts</a></li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-- End Navigation panel -->

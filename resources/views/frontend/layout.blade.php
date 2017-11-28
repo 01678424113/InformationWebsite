@@ -109,95 +109,9 @@
 
             </div>
 
-            <!-- Contact Form -->
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-
-                    <form class="form contact-form" id="contact_form">
-                        <div class="clearfix">
-
-                            <div class="cf-left-col">
-
-                                <!-- Name -->
-                                <div class="form-group">
-                                    <input type="text" name="name" id="name" class="input-md round form-control" placeholder="Name" pattern=".{3,100}" required>
-                                </div>
-
-                                <!-- Email -->
-                                <div class="form-group">
-                                    <input type="email" name="email" id="email" class="input-md round form-control" placeholder="Email" pattern=".{5,100}" required>
-                                </div>
-
-                            </div>
-
-                            <div class="cf-right-col">
-
-                                <!-- Message -->
-                                <div class="form-group">
-                                    <textarea name="message" id="message" class="input-md round form-control" style="height: 84px;" placeholder="Message"></textarea>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="clearfix">
-
-                            <div class="cf-left-col">
-
-                                <!-- Inform Tip -->
-                                <div class="form-tip pt-20">
-                                    <i class="fa fa-info-circle"></i> All the fields are required
-                                </div>
-
-                            </div>
-
-                            <div class="cf-right-col">
-
-                                <!-- Send Button -->
-                                <div class="align-right pt-10">
-                                    <button class="submit_btn btn btn-mod btn-medium btn-round" id="submit_btn">Submit Message</button>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <div id="result"></div>
-                    </form>
-
-                </div>
-            </div>
-            <!-- End Contact Form -->
-
         </div>
     </section>
     <!-- End Contact Section -->
-
-
-    <!-- Google Map -->
-    <div class="google-map">
-
-        <div data-address="Belt Parkway, Queens, NY, United States" id="map-canvas"></div>
-
-        <div class="map-section">
-
-            <div class="map-toggle">
-                <div class="mt-icon">
-                    <i class="fa fa-map-marker"></i>
-                </div>
-                <div class="mt-text font-alt">
-                    <div class="mt-open">Open the map <i class="fa fa-angle-down"></i></div>
-                    <div class="mt-close">Close the map <i class="fa fa-angle-up"></i></div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-    <!-- End Google Map -->
 
    @include('frontend.layouts.footer')
 

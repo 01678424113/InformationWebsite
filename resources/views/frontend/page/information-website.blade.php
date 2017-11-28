@@ -38,15 +38,13 @@
 
 <!-- Page Wrap -->
 <div class="page" id="top">
-
     <!-- Navigation panel -->
     <nav class="main-nav js-stick" style="box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);">
-        <div class="full-wrapper relative clearfix"
-             style="display: flex;justify-content: flex-end;align-items: center;">
+        <div class="full-wrapper relative clearfix">
             <!-- Logo ( * your text or image into link tag *) -->
             <div class="nav-logo-wrap local-scroll">
                 <a href="mp-index.html" class="logo">
-                    <img src="images/logo-dark.png" alt=""/>
+                    <img src="frontend/images/logo-dark.png" alt="" />
                 </a>
             </div>
             <div class="mobile-nav">
@@ -72,10 +70,6 @@
                                     <li>
                                         <a href="mp-index.html">Main Demo</a>
                                     </li>
-                                    <li>
-                                        <a href="mp-index-01.html">Image Parallax 1</a>
-                                    </li>
-
                                 </ul>
 
                             </li>
@@ -91,33 +85,13 @@
                     <li>
                         <a href="#" class="mn-has-sub">Pages <i class="fa fa-angle-down"></i></a>
 
-                        <!-- Sub Multilevel -->
-                        <ul class="mn-sub mn-has-multi">
-
-                            <li class="mn-sub-multi">
-                                <a class="mn-group-title">Group 1</a>
-
-                                <ul>
-                                    <li>
-                                        <a href="pages-about-1.html">About Us 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-about-2.html">About Us 2</a>
-                                    </li>
-                                </ul>
-
-                            </li>
-
-                        </ul>
-                        <!-- End Sub Multilevel -->
-
                     </li>
                     <!-- End Item With Sub -->
 
                     <!-- Item With Sub -->
                     <li>
-
                         <a href="#" class="mn-has-sub">Elements <i class="fa fa-angle-down"></i></a>
+
 
                     </li>
                     <!-- End Item With Sub -->
@@ -125,18 +99,24 @@
                     <!-- Item With Sub -->
                     <li>
                         <a href="#" class="mn-has-sub active">Portfolio <i class="fa fa-angle-down"></i></a>
+
+
                     </li>
                     <!-- End Item With Sub -->
 
                     <!-- Item With Sub -->
                     <li>
                         <a href="#" class="mn-has-sub">Blog <i class="fa fa-angle-down"></i></a>
+
+
                     </li>
                     <!-- End Item With Sub -->
 
                     <!-- Item With Sub -->
                     <li>
                         <a href="#" class="mn-has-sub">Shop <i class="fa fa-angle-down"></i></a>
+
+
                     </li>
                     <!-- End Item With Sub -->
 
@@ -147,6 +127,7 @@
                     <!-- Search -->
                     <li>
                         <a href="#" class="mn-has-sub"><i class="fa fa-search"></i> Search</a>
+
                     </li>
                     <!-- End Search -->
 
@@ -159,6 +140,15 @@
                     <!-- Languages -->
                     <li>
                         <a href="#" class="mn-has-sub">Eng <i class="fa fa-angle-down"></i></a>
+
+                        <ul class="mn-sub">
+
+                            <li><a href="">English</a></li>
+                            <li><a href="">France</a></li>
+                            <li><a href="">Germany</a></li>
+
+                        </ul>
+
                     </li>
                     <!-- End Languages -->
 
@@ -170,6 +160,7 @@
         </div>
     </nav>
     <!-- End Navigation panel -->
+
 
     <!-- Portfolio Section -->
     <section class="page-section" style="background: #FAFAFA">
@@ -1156,7 +1147,7 @@
 
                                             </table>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" style="text-align: center">
                                             <img src="https://traffic.alexa.com/graph?o=lt&y=q&b=ffffff&n=666666&f=999999&p=4e8cff&r=1y&t=2&z=0&c=1&h=150&w=340&u=facebook.com"
                                                  alt="">
                                             <h4 style="text-align: center">Search traffic</h4>
@@ -1350,70 +1341,7 @@
     </section>
     <!-- End Portfolio Section -->
 
-
-    <!-- Call Action Section -->
-    <section class="small-section bg-dark">
-        <div class="container relative">
-
-            <div class="align-center">
-                <h3 class="banner-heading font-alt">Like Our Creative Works?</h3>
-                <div>
-                    <a href="#" class="btn btn-mod btn-w btn-medium btn-round">Start Project</a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <!-- End Call Action Section -->
-
-
-    <!-- Foter -->
-    <footer class="page-section bg-gray-lighter footer pb-60">
-        <div class="container">
-
-            <!-- Footer Logo -->
-            <div class="local-scroll mb-30 wow fadeInUp" data-wow-duration="1.5s">
-                <a href="#top"><img src="images/logo-footer.png" width="78" height="36" alt=""/></a>
-            </div>
-            <!-- End Footer Logo -->
-
-            <!-- Social Links -->
-            <div class="footer-social-links mb-110 mb-xs-60">
-                <a href="#" title="Facebook" target="_blank"><i class="fa fa-facebook"></i></a>
-                <a href="#" title="Twitter" target="_blank"><i class="fa fa-twitter"></i></a>
-                <a href="#" title="Behance" target="_blank"><i class="fa fa-behance"></i></a>
-                <a href="#" title="LinkedIn+" target="_blank"><i class="fa fa-linkedin"></i></a>
-                <a href="#" title="Pinterest" target="_blank"><i class="fa fa-pinterest"></i></a>
-            </div>
-            <!-- End Social Links -->
-
-            <!-- Footer Text -->
-            <div class="footer-text">
-
-                <!-- Copyright -->
-                <div class="footer-copy font-alt">
-                    <a href="http://themeforest.net/user/theme-guru/portfolio" target="_blank">&copy; Rhythm 2017</a>.
-                </div>
-                <!-- End Copyright -->
-
-                <div class="footer-made">
-                    Made with love for great people.
-                </div>
-
-            </div>
-            <!-- End Footer Text -->
-
-        </div>
-
-
-        <!-- Top Link -->
-        <div class="local-scroll">
-            <a href="#top" class="link-to-top"><i class="fa fa-caret-up"></i></a>
-        </div>
-        <!-- End Top Link -->
-
-    </footer>
-    <!-- End Foter -->
+   @include('frontend.layouts.footer')
 
 
 </div>

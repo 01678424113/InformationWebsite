@@ -139,7 +139,7 @@ class HomeController extends Controller
             $alexa_information->rate_work = $rate_work;
             $alexa_information->rate_school = $rate_school;
             $alexa_information->created_at = microtime(true);
-dd($alexa_information);
+
             //dd($alexa_information);
             $alexa_information->save();
 
