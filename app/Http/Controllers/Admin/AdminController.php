@@ -10,7 +10,11 @@ class AdminController extends Controller
     //
     public function index()
     {
-        return view('admin.page.index');
+        $response = [
+            'title'=>'',
+            'page'=>'home'
+        ];
+        return view('admin.page.index',$response);
     }
 
 

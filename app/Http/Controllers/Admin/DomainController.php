@@ -14,7 +14,8 @@ class DomainController extends Controller
     public function listDomain()
     {
         $response = [
-            'title'=>'List domain'
+            'title'=>'List domain',
+            'page'=>'domain'
         ];
         $domain_query = Domain::select([
            'id',
@@ -31,7 +32,8 @@ class DomainController extends Controller
     {
         $domain_id = $request->domain_id;
         $response = [
-            'title'=>'Information domain'
+            'title'=>'Information domain',
+            'page'=>'domain'
         ];
         $alexa_inf = AlexaInformation::where('domain_id',$domain_id)->get();
         $website_inf = WebsiteInformation::where('domain_id',$domain_id)->get();

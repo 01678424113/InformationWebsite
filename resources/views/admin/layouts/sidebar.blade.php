@@ -41,10 +41,16 @@
                 </form>
                 <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
-            <li class="nav-item start active open">
-                <a href="javascript:;" class="nav-link nav-toggle">
+            <li class="nav-item start
+            @if($page === 'home')
+                {{"active open"}}
+            @endif
+            ">
+                <a href="{{route('home_admin')}}" class="nav-link nav-toggle">
                     <i class="icon-home"></i>
-                    <span class="title">Dashboard</span>
+                    <span class="title">
+                        Dashboard
+                    </span>
                     <span class="selected"></span>
                     <span class="arrow open"></span>
                 </a>
@@ -52,8 +58,12 @@
             <li class="heading">
                 <h3 class="uppercase">Features</h3>
             </li>
-{{--------------------------Top 500-----------------------------------------}}
-            <li class="nav-item  ">
+            {{--------------------------Top 500-----------------------------------------}}
+            <li class="nav-item
+                  @if($page === 'top-500')
+                    {{"active open"}}
+                    @endif
+            ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>
                     <span class="title">Top 500</span>
@@ -61,14 +71,18 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item  ">
-                        <a href="table_static_basic.html" class="nav-link ">
-                            <span class="title"><a href="{{route('listTop500')}}">List domain</a></span>
+                        <a href="{{route('listTop500')}}" class="nav-link ">
+                            <span class="title">List domain</span>
                         </a>
                     </li>
                 </ul>
             </li>
             {{--------------------------Domain-----------------------------------------}}
-            <li class="nav-item  ">
+            <li class="nav-item
+              @if($page === 'domain')
+            {{"active open"}}
+            @endif
+            ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>
                     <span class="title">Domain</span>
@@ -76,13 +90,46 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item  ">
-                        <a href="table_static_basic.html" class="nav-link ">
-                            <span class="title"><a href="{{route('listDomain')}}">List domain</a></span>
+                        <a href="{{route('listDomain')}}" class="nav-link ">
+                            <span class="title">List domain</span>
                         </a>
                     </li>
                 </ul>
             </li>
-
+            {{-------------------------Setting------------------------------------------}}
+            <li class="nav-item
+             @if($page === 'setting')
+                {{"active open"}}
+            @endif
+            ">
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-briefcase"></i>
+                    <span class="title">Setting</span>
+                    <span class="arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="nav-item  ">
+                        <a href="{{route('listSettingDomain')}}" class="nav-link ">
+                            <span class="title">Domain</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="{{route('listSettingKeyword')}}" class="nav-link ">
+                            <span class="title">Keyword</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="{{route('listSettingIndex')}}" class="nav-link ">
+                            <span class="title">Page index</span>
+                        </a>
+                    </li>
+                    <li class="nav-item  ">
+                        <a href="{{route('listSettingView')}}" class="nav-link ">
+                            <span class="title">Page view</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
         <!-- END SIDEBAR MENU -->
         <!-- END SIDEBAR MENU -->

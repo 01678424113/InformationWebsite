@@ -12,7 +12,8 @@ class Top500Controller extends Controller
     public function listTop500()
     {
         $response = [
-          'title'=>'Top 500 domain'
+            'title' => 'Top 500 domain',
+            'page' => 'top-500'
         ];
         $top_500_query = Top500Domain::select([
             'rank',
@@ -23,8 +24,8 @@ class Top500Controller extends Controller
             'domain_moztrust',
             'change_rank'
         ]);
-        $top_500s = $top_500_query->orderBy('rank','ASC')->get();
+        $top_500s = $top_500_query->orderBy('rank', 'ASC')->get();
         $response['top_500s'] = $top_500s;
-        return view('admin.top-500-domain.list-top-500',$response);
+        return view('admin.top-500-domain.list-top-500', $response);
     }
 }
