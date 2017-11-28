@@ -19,10 +19,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-  /*  public function __construct()
-    {
-        $this->middleware('auth');
-    }*/
+    /*  public function __construct()
+      {
+          $this->middleware('auth');
+      }*/
 
     /**
      * Show the application dashboard.
@@ -32,11 +32,11 @@ class HomeController extends Controller
     public function index()
     {
         $response = [
-            'title'=>'Home'
+            'title' => 'Home'
         ];
         $top_500s = Top500Domain::all();
         $response['top_500s'] = $top_500s;
-        return view('frontend.page.index',$response);
+        return view('frontend.page.index', $response);
     }
 
     public function informationWebsite()
@@ -47,13 +47,13 @@ class HomeController extends Controller
     public function getInformationDomain(Request $request)
     {
         $domain = $request->input('txt-domain');
-        $check_domain = Domain::where('domain',$domain)->first();
-        if(!isset($check_domain)){
+        $check_domain = Domain::where('domain', $domain)->first();
+        if (isset($check_domain)) {
 
             $new_domain = new Domain();
             $new_domain->domain = $domain;
             $new_domain->created_at = microtime(true);
-            $new_domain->save();
+            //$new_domain->save();
             $domain_id = $new_domain->id;
 
             //-----------------------------------------------------------------------------------------//
@@ -66,7 +66,6 @@ class HomeController extends Controller
                 $globalRank_text = trim($item->innertext());
                 $globalRank_text = preg_match('/\>(.+)/', $globalRank_text, $result);
                 $globalRank = trim($result[1]);
-
             }
             //Country
             $countries = $html_alexa->find('span.countryRank .col-pad h4.metrics-title a');
@@ -89,12 +88,19 @@ class HomeController extends Controller
             $keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
             $keyword = "";
             for ($i = 1; $i < 10; $i += 2) {
-                $keyword = $keyword . $keywords[$i]->innertext() . ", " ;
+                $keyword = $keyword . $keywords[$i]->innertext() . ", ";
             }
             //Backlink
             $backlinks = $html_alexa->find('section#linksin-panel-content span.box1-r');
             foreach ($backlinks as $item) {
                 $backlink = $item->innertext();
+            }
+            //Upstream sites
+            $upstream_sites = $html_alexa->find('section#upstream-content #keywords_upstream_site_table tbody tr');
+            for($i = 1; $i<6 ; $i++){
+                $upstream_site[] = [
+                    ['site'=>$upstream_sites[$i]->find('td')[0]->innertext(),'rate'=>$upstream_sites[$i]->find('td')[1]->innertext()]
+                ];
             }
             //Rate gender, home, school, work
             $genders_left = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-l span.pybar-bg');
@@ -125,6 +131,7 @@ class HomeController extends Controller
             $alexa_information->time_on_site = $time_on_site;
             $alexa_information->image_search_traffic = $image_search_traffic;
             $alexa_information->top_5_keyword = json_encode($keyword);
+            $alexa_information->upstream_site = json_encode($upstream_site);
             $alexa_information->quantity_backlink = $backlink;
             $alexa_information->rate_male = $rate_male;
             $alexa_information->rate_female = $rate_female;
@@ -132,7 +139,7 @@ class HomeController extends Controller
             $alexa_information->rate_work = $rate_work;
             $alexa_information->rate_school = $rate_school;
             $alexa_information->created_at = microtime(true);
-
+dd($alexa_information);
             //dd($alexa_information);
             $alexa_information->save();
 
@@ -145,66 +152,66 @@ class HomeController extends Controller
             //--------------------------------------Domain----------------------------------------------//
             //-----------------------------------------------------------------------------------------//
 
-            $html_web = HtmlDomParser::file_get_html('http://'.$domain);
+            $html_web = HtmlDomParser::file_get_html('http://' . $domain);
             $titles = $html_web->find('title');
-            if(isset($titles)){
+            if (isset($titles)) {
                 $title = $titles[0]->innertext();
-            }else{
+            } else {
                 $title = strtoupper($domain);
             }
             $languages = $html_web->find('meta[name=language]');
-            if(isset($languages[0]->content)){
+            if (isset($languages[0]->content)) {
                 $language = $languages[0]->content;
-            }else{
+            } else {
                 $language = "";
             }
 
             $distributions = $html_web->find('meta[name=distribution]');
-            if(isset($distributions[0]->content)){
+            if (isset($distributions[0]->content)) {
                 $distribution = $distributions[0]->content;
-            }else{
+            } else {
                 $distribution = "";
             }
 
             $revisit_afters = $html_web->find('meta[name=revisit-after]');
-            if(isset($revisit_afters[0]->content)){
+            if (isset($revisit_afters[0]->content)) {
                 $revisit_after = $revisit_afters[0]->content;
-            }else{
+            } else {
                 $revisit_after = "";
             }
 
             $authors = $html_web->find('meta[name=author]');
-            if(isset($authors[0]->content)){
+            if (isset($authors[0]->content)) {
                 $author = $authors[0]->content;
-            }else{
+            } else {
                 $author = "";
             }
 
             $descriptions = $html_web->find('meta[name=description]');
-            if(isset($descriptions[0]->content)){
+            if (isset($descriptions[0]->content)) {
                 $description = $descriptions[0]->content;
-            }else{
+            } else {
                 $description = "";
             }
 
             $website_keywords = $html_web->find('meta[name=keywords]');
-            if(isset($website_keywords[0]->content)){
+            if (isset($website_keywords[0]->content)) {
                 $website_keyword = $website_keywords[0]->content;
-            }else{
+            } else {
                 $website_keyword = "";
             }
 
             $geo_placenames = $html_web->find('meta[name=geo.placename]');
-            if(isset($geo_placenames[0]->content)){
+            if (isset($geo_placenames[0]->content)) {
                 $geo_placename = $geo_placenames[0]->content;
-            }else{
+            } else {
                 $geo_placename = "";
             }
 
             $geo_positions = $html_web->find('meta[name=geo.position]');
-            if(isset($geo_positions[0]->content)){
+            if (isset($geo_positions[0]->content)) {
                 $geo_position = $geo_positions[0]->content;
-            }else{
+            } else {
                 $geo_position = "";
             }
 
@@ -253,32 +260,32 @@ class HomeController extends Controller
             $who_is_information = new WhoisInformation();
             $who_is_information->domain_id = $domain_id;
             $who_is_information->domain = $domain;
-            if(isset($domain_whois_informations)){
+            if (isset($domain_whois_informations)) {
                 foreach ($domain_whois_informations as $item) {
                     $domain_whois_information[] = [
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                     ];
                 }
-               $who_is_information->domain_registrar = $domain_whois_information[1]["Registrar:"];
-               $who_is_information->domain_registration_date = $domain_whois_information[2]["Registration Date:"];
-               $who_is_information->domain_expiration_date = $domain_whois_information[3]["Expiration Date:"];
-               $who_is_information->domain_updated_date = $domain_whois_information[4]["Updated Date:"];
-               $who_is_information->domain_status = $domain_whois_information[5]["Status:"];
-               $who_is_information->domain_name_servers = $domain_whois_information[6]["Name Servers:"];
-            }else{
-               $who_is_information->domain_registrar = "N/A";
-               $who_is_information->domain_registration_date = "N/A";
-               $who_is_information->domain_expiration_date = "N/A";
-               $who_is_information->domain_updated_date = "N/A";
-               $who_is_information->domain_status = "N/A";
-               $who_is_information->domain_name_servers = "N/A";
+                $who_is_information->domain_registrar = $domain_whois_information[1]["Registrar:"];
+                $who_is_information->domain_registration_date = $domain_whois_information[2]["Registration Date:"];
+                $who_is_information->domain_expiration_date = $domain_whois_information[3]["Expiration Date:"];
+                $who_is_information->domain_updated_date = $domain_whois_information[4]["Updated Date:"];
+                $who_is_information->domain_status = $domain_whois_information[5]["Status:"];
+                $who_is_information->domain_name_servers = $domain_whois_information[6]["Name Servers:"];
+            } else {
+                $who_is_information->domain_registrar = "N/A";
+                $who_is_information->domain_registration_date = "N/A";
+                $who_is_information->domain_expiration_date = "N/A";
+                $who_is_information->domain_updated_date = "N/A";
+                $who_is_information->domain_status = "N/A";
+                $who_is_information->domain_name_servers = "N/A";
             }
             //dd($domain_information);
 
             //REGISTRANT CONTACT
             $registrant_whois_contacts = $df_block[1]->find('.df-row');
             $i = 0;
-            if(isset($registrant_whois_contacts)){
+            if (isset($registrant_whois_contacts)) {
                 foreach ($registrant_whois_contacts as $item) {
                     $registrant_whois_contact[] = [
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
@@ -294,7 +301,7 @@ class HomeController extends Controller
                 $who_is_information->regis_phone = $registrant_whois_contact[7]["Phone:"];
                 $who_is_information->regis_fax = $registrant_whois_contact[8]["Fax:"];
                 $who_is_information->regis_email = strip_tags($registrant_whois_contact[9]["Email:"]);
-            }else{
+            } else {
                 $who_is_information->regis_name = $domain;
                 $who_is_information->regis_organization = "N/A";
                 $who_is_information->regis_street = "N/A";
@@ -310,7 +317,7 @@ class HomeController extends Controller
             //ADMINISTRATIVE CONTACT
             $administrative_whois_contacts = $df_block[2]->find('.df-row');
             $i = 0;
-            if(isset($administrative_whois_contacts)){
+            if (isset($administrative_whois_contacts)) {
                 foreach ($administrative_whois_contacts as $item) {
                     $administrative_whois_contact[] = [
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
@@ -326,7 +333,7 @@ class HomeController extends Controller
                 $who_is_information->adm_phone = $administrative_whois_contact[7]["Phone:"];
                 $who_is_information->adm_fax = $administrative_whois_contact[8]["Fax:"];
                 $who_is_information->adm_email = strip_tags($administrative_whois_contact[9]["Email:"]);
-            }else{
+            } else {
                 $who_is_information->adm_name = $domain;
                 $who_is_information->adm_organization = "N/A";
                 $who_is_information->adm_street = "N/A";
@@ -342,7 +349,7 @@ class HomeController extends Controller
             //TECHNICAL CONTACT
             $technical_whois_contacts = $df_block[3]->find('.df-row');
             $i = 0;
-            if(isset($technical_whois_contacts)){
+            if (isset($technical_whois_contacts)) {
                 foreach ($technical_whois_contacts as $item) {
                     $technical_whois_contact[] = [
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
@@ -358,7 +365,7 @@ class HomeController extends Controller
                 $who_is_information->tech_phone = $technical_whois_contact[7]["Phone:"];
                 $who_is_information->tech_fax = $technical_whois_contact[8]["Fax:"];
                 $who_is_information->tech_email = strip_tags($technical_whois_contact[9]["Email:"]);
-            }else{
+            } else {
                 $who_is_information->tech_name = $domain;
                 $who_is_information->tech_organization = "N/A";
                 $who_is_information->tech_street = "N/A";
@@ -370,11 +377,11 @@ class HomeController extends Controller
                 $who_is_information->tech_fax = "N/A";
                 $who_is_information->tech_email = "N/A";
             }
-            try{
+            try {
                 $who_is_information->save();
                 return redirect()->back();
-            }catch(\Exception $e){
-                return redirect()->back()->with('error','Error connect database !');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', 'Error connect database !');
             }
             //-----------------------------------------------------------------------------------------//
             //--------------------------------------End Who is-----------------------------------------//
@@ -382,7 +389,6 @@ class HomeController extends Controller
 
 
         }
-
 
 
     }

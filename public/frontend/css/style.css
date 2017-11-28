@@ -1512,7 +1512,7 @@ a.logo:hover{
     height: 55px !important;
 }
 .small-height .inner-nav ul li a{
-    height: 55px !important;
+    height: 60px !important;
     line-height: 55px !important;
 }
 .inner-nav{
@@ -1881,7 +1881,7 @@ a.logo:hover{
     box-shadow:  none;
 }
 .main-nav.dark .inner-nav ul > li > a{
-    color: rgba(255,255,255, .7);
+    color: white;
 }
 .main-nav.dark .inner-nav ul > li > a:hover,
 .main-nav.dark .inner-nav ul > li > a.active{
