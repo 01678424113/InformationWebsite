@@ -94,7 +94,7 @@ class HomeController extends Controller
             $upstream_sites = $html_alexa->find('section#upstream-content #keywords_upstream_site_table tbody tr');
             for ($i = 1; $i < 6; $i++) {
                 $upstream_site[] = [
-                    ['site' => $upstream_sites[$i]->find('td')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td')[1]->innertext()]
+                    ['site' => $upstream_sites[$i]->find('td a')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td span')[1]->innertext()]
                 ];
             }
             //Website related
@@ -224,6 +224,8 @@ class HomeController extends Controller
                 $icon = $html_web->find('link[rel=shortcut icon]');
                 if(isset($icon[0]->href)){
                     $icon = $icon[0]->href;
+                }else{
+                    $icon = "";
                 }
             }
             if(!strpos($icon, 'http' )){
@@ -433,6 +435,7 @@ class HomeController extends Controller
             //-----------------------------------------------------------------------------------------//
 
 
+
             //-----------------------------------------------------------------------------------------//
             //--------------------------------------Who is---------------------------------------------//
             //-----------------------------------------------------------------------------------------//
@@ -476,23 +479,67 @@ class HomeController extends Controller
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                     ];
                 }
-                $who_is_information->regis_name = $registrant_whois_contact[0]["Name:"];
-                $who_is_information->regis_organization = $registrant_whois_contact[1]["Organization:"];
-                $who_is_information->regis_street = $registrant_whois_contact[2]["Street:"];
-                $who_is_information->regis_city = $registrant_whois_contact[3]["City:"];
-                $who_is_information->regis_state = $registrant_whois_contact[4]["State:"];
-                $who_is_information->regis_postal_code = $registrant_whois_contact[5]["Postal Code:"];
-                $who_is_information->regis_country = $registrant_whois_contact[6]["Country:"];
-                $who_is_information->regis_phone = $registrant_whois_contact[7]["Phone:"];
-                if(isset($registrant_whois_contact[8]["Fax:"])){
-                    $who_is_information->regis_fax = $registrant_whois_contact[8]["Fax:"];
-                    $who_is_information->regis_email = strip_tags($registrant_whois_contact[9]["Email:"]);
-                }else{
-                    $who_is_information->regis_fax = "N/A";
-                    $who_is_information->regis_email = strip_tags($registrant_whois_contact[8]["Email:"]);
+                foreach ($registrant_whois_contact as $item) {
+                    if(isset($item["Name:"])){
+                        $who_is_information->regis_name = $item["Name:"];
+                    }else{
+                        $who_is_information->regis_name = "";
+                    }
+
+                    if(isset($item["Organization:"])){
+                        $who_is_information->regis_organization = $item["Organization:"];
+                    }else{
+                        $who_is_information->regis_organization = "";
+                    }
+
+                    if(isset($item["Street:"])){
+                        $who_is_information->regis_street = $item["Street:"];
+                    }else{
+                        $who_is_information->regis_street = "";
+                    }
+
+                    if(isset($item["City:"])){
+                        $who_is_information->regis_city = $item["City:"];
+                    }else{
+                        $who_is_information->regis_city = "";
+                    }
+
+                    if(isset($item["State:"])){
+                        $who_is_information->regis_state = $item["State:"];
+                    }else{
+                        $who_is_information->regis_state = "";
+                    }
+
+                    if(isset($item["Postal Code:"])){
+                        $who_is_information->regis_postal_code = $item["Postal Code:"];
+                    }else{
+                        $who_is_information->regis_postal_code = "";
+                    }
+
+                    if(isset($item["Country"])){
+                        $who_is_information->regis_country = $item["Country"];
+                    }else{
+                        $who_is_information->regis_country = "";
+                    }
+
+                    if(isset($item["Phone:"])){
+                        $who_is_information->regis_phone = $item["Phone:"];
+                    }else{
+                        $who_is_information->regis_phone = "";
+                    }
+
+                    if(isset($item["Fax:"])){
+                        $who_is_information->regis_fax = $item["Fax:"];
+                    }else{
+                        $who_is_information->regis_fax = "";
+                    }
+
+                    if(isset($item["Email:"])){
+                        $who_is_information->regis_email = $item["Email:"];
+                    }else{
+                        $who_is_information->regis_email = "";
+                    }
                 }
-
-
             } else {
                 $who_is_information->regis_name = $domain;
                 $who_is_information->regis_organization = "N/A";
@@ -515,20 +562,66 @@ class HomeController extends Controller
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                     ];
                 }
-                $who_is_information->adm_name = $administrative_whois_contact[0]["Name:"];
-                $who_is_information->adm_organization = $administrative_whois_contact[1]["Organization:"];
-                $who_is_information->adm_street = $administrative_whois_contact[2]["Street:"];
-                $who_is_information->adm_city = $administrative_whois_contact[3]["City:"];
-                $who_is_information->adm_state = $administrative_whois_contact[4]["State:"];
-                $who_is_information->adm_postal_code = $administrative_whois_contact[5]["Postal Code:"];
-                $who_is_information->adm_country = $administrative_whois_contact[6]["Country:"];
-                $who_is_information->adm_phone = $administrative_whois_contact[7]["Phone:"];
-                if(isset($administrative_whois_contact[8]["Fax:"])){
-                    $who_is_information->adm_fax = $administrative_whois_contact[8]["Fax:"];
-                    $who_is_information->adm_email = strip_tags($administrative_whois_contact[9]["Email:"]);
-                }else{
-                    $who_is_information->adm_fax = "N/A";
-                    $who_is_information->adm_email = strip_tags($administrative_whois_contact[8]["Email:"]);
+                foreach ($administrative_whois_contact as $item) {
+                    if(isset($item["Name:"])){
+                        $who_is_information->adm_name = $item["Name:"];
+                    }else{
+                        $who_is_information->adm_name = "";
+                    }
+
+                    if(isset($item["Organization:"])){
+                        $who_is_information->adm_organization = $item["Organization:"];
+                    }else{
+                        $who_is_information->adm_organization = "";
+                    }
+
+                    if(isset($item["Street:"])){
+                        $who_is_information->adm_street = $item["Street:"];
+                    }else{
+                        $who_is_information->adm_street = "";
+                    }
+
+                    if(isset($item["City:"])){
+                        $who_is_information->adm_city = $item["City:"];
+                    }else{
+                        $who_is_information->adm_city = "";
+                    }
+
+                    if(isset($item["State:"])){
+                        $who_is_information->adm_state = $item["State:"];
+                    }else{
+                        $who_is_information->adm_state = "";
+                    }
+
+                    if(isset($item["Postal Code:"])){
+                        $who_is_information->adm_postal_code = $item["Postal Code:"];
+                    }else{
+                        $who_is_information->adm_postal_code = "";
+                    }
+
+                    if(isset($item["Country"])){
+                        $who_is_information->adm_country = $item["Country"];
+                    }else{
+                        $who_is_information->adm_country = "";
+                    }
+
+                    if(isset($item["Phone:"])){
+                        $who_is_information->adm_phone = $item["Phone:"];
+                    }else{
+                        $who_is_information->adm_phone = "";
+                    }
+
+                    if(isset($item["Fax:"])){
+                        $who_is_information->adm_fax = $item["Fax:"];
+                    }else{
+                        $who_is_information->adm_fax = "";
+                    }
+
+                    if(isset($item["Email:"])){
+                        $who_is_information->adm_email = $item["Email:"];
+                    }else{
+                        $who_is_information->adm_email = "";
+                    }
                 }
             } else {
                 $who_is_information->adm_name = $domain;
@@ -552,21 +645,69 @@ class HomeController extends Controller
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                     ];
                 }
-                $who_is_information->tech_name = $technical_whois_contact[0]["Name:"];
-                $who_is_information->tech_organization = $technical_whois_contact[1]["Organization:"];
-                $who_is_information->tech_street = $technical_whois_contact[2]["Street:"];
-                $who_is_information->tech_city = $technical_whois_contact[3]["City:"];
-                $who_is_information->tech_state = $technical_whois_contact[4]["State:"];
-                $who_is_information->tech_postal_code = $technical_whois_contact[5]["Postal Code:"];
-                $who_is_information->tech_country = $technical_whois_contact[6]["Country:"];
-                $who_is_information->tech_phone = $technical_whois_contact[7]["Phone:"];
-                if(isset($technical_whois_contact[8]["Fax:"])){
-                    $who_is_information->tech_fax = $technical_whois_contact[8]["Fax:"];
-                    $who_is_information->tech_email = strip_tags($technical_whois_contact[9]["Email:"]);
-                }else{
-                    $who_is_information->tech_fax = "N/A";
-                    $who_is_information->tech_email = strip_tags($technical_whois_contact[8]["Email:"]);
+
+                foreach ($technical_whois_contact as $item) {
+                    if(isset($item["Name:"])){
+                        $who_is_information->tech_name = $item["Name:"];
+                    }else{
+                        $who_is_information->tech_name = "";
+                    }
+
+                    if(isset($item["Organization:"])){
+                        $who_is_information->tech_organization = $item["Organization:"];
+                    }else{
+                        $who_is_information->tech_organization = "";
+                    }
+
+                    if(isset($item["Street:"])){
+                        $who_is_information->tech_street = $item["Street:"];
+                    }else{
+                        $who_is_information->tech_street = "";
+                    }
+
+                    if(isset($item["City:"])){
+                        $who_is_information->tech_city = $item["City:"];
+                    }else{
+                        $who_is_information->tech_city = "";
+                    }
+
+                    if(isset($item["State:"])){
+                        $who_is_information->tech_state = $item["State:"];
+                    }else{
+                        $who_is_information->tech_state = "";
+                    }
+
+                    if(isset($item["Postal Code:"])){
+                        $who_is_information->tech_postal_code = $item["Postal Code:"];
+                    }else{
+                        $who_is_information->tech_postal_code = "";
+                    }
+
+                    if(isset($item["Country"])){
+                        $who_is_information->tech_country = $item["Country"];
+                    }else{
+                        $who_is_information->tech_country = "";
+                    }
+
+                    if(isset($item["Phone:"])){
+                        $who_is_information->tech_phone = $item["Phone:"];
+                    }else{
+                        $who_is_information->tech_phone = "";
+                    }
+
+                    if(isset($item["Fax:"])){
+                        $who_is_information->tech_fax = $item["Fax:"];
+                    }else{
+                        $who_is_information->tech_fax = "";
+                    }
+
+                    if(isset($item["Email:"])){
+                        $who_is_information->tech_email = $item["Email:"];
+                    }else{
+                        $who_is_information->tech_email = "";
+                    }
                 }
+
             } else {
                 $who_is_information->tech_name = $domain;
                 $who_is_information->tech_organization = "N/A";
@@ -678,7 +819,7 @@ class HomeController extends Controller
         $upstream_sites = $html_alexa->find('section#upstream-content #keywords_upstream_site_table tbody tr');
         for ($i = 1; $i < 6; $i++) {
             $upstream_site[] = [
-                ['site' => $upstream_sites[$i]->find('td')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td')[1]->innertext()]
+                ['site' => $upstream_sites[$i]->find('td a')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td span')[1]->innertext()]
             ];
         }
         //Website related
@@ -892,23 +1033,67 @@ class HomeController extends Controller
                     $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                 ];
             }
-            $who_is_information->regis_name = $registrant_whois_contact[0]["Name:"];
-            $who_is_information->regis_organization = $registrant_whois_contact[1]["Organization:"];
-            $who_is_information->regis_street = $registrant_whois_contact[2]["Street:"];
-            $who_is_information->regis_city = $registrant_whois_contact[3]["City:"];
-            $who_is_information->regis_state = $registrant_whois_contact[4]["State:"];
-            $who_is_information->regis_postal_code = $registrant_whois_contact[5]["Postal Code:"];
-            $who_is_information->regis_country = $registrant_whois_contact[6]["Country:"];
-            $who_is_information->regis_phone = $registrant_whois_contact[7]["Phone:"];
-            if(isset($registrant_whois_contact[8]["Fax:"])){
-                $who_is_information->regis_fax = $registrant_whois_contact[8]["Fax:"];
-                $who_is_information->regis_email = strip_tags($registrant_whois_contact[9]["Email:"]);
-            }else{
-                $who_is_information->regis_fax = "N/A";
-                $who_is_information->regis_email = strip_tags($registrant_whois_contact[8]["Email:"]);
+            foreach ($registrant_whois_contact as $item) {
+                if(isset($item["Name:"])){
+                    $who_is_information->regis_name = $item["Name:"];
+                }else{
+                    $who_is_information->regis_name = "";
+                }
+
+                if(isset($item["Organization:"])){
+                    $who_is_information->regis_organization = $item["Organization:"];
+                }else{
+                    $who_is_information->regis_organization = "";
+                }
+
+                if(isset($item["Street:"])){
+                    $who_is_information->regis_street = $item["Street:"];
+                }else{
+                    $who_is_information->regis_street = "";
+                }
+
+                if(isset($item["City:"])){
+                    $who_is_information->regis_city = $item["City:"];
+                }else{
+                    $who_is_information->regis_city = "";
+                }
+
+                if(isset($item["State:"])){
+                    $who_is_information->regis_state = $item["State:"];
+                }else{
+                    $who_is_information->regis_state = "";
+                }
+
+                if(isset($item["Postal Code:"])){
+                    $who_is_information->regis_postal_code = $item["Postal Code:"];
+                }else{
+                    $who_is_information->regis_postal_code = "";
+                }
+
+                if(isset($item["Country"])){
+                    $who_is_information->regis_country = $item["Country"];
+                }else{
+                    $who_is_information->regis_country = "";
+                }
+
+                if(isset($item["Phone:"])){
+                    $who_is_information->regis_phone = $item["Phone:"];
+                }else{
+                    $who_is_information->regis_phone = "";
+                }
+
+                if(isset($item["Fax:"])){
+                    $who_is_information->regis_fax = $item["Fax:"];
+                }else{
+                    $who_is_information->regis_fax = "";
+                }
+
+                if(isset($item["Email:"])){
+                    $who_is_information->regis_email = $item["Email:"];
+                }else{
+                    $who_is_information->regis_email = "";
+                }
             }
-
-
         } else {
             $who_is_information->regis_name = $domain;
             $who_is_information->regis_organization = "N/A";
@@ -931,20 +1116,66 @@ class HomeController extends Controller
                     $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                 ];
             }
-            $who_is_information->adm_name = $administrative_whois_contact[0]["Name:"];
-            $who_is_information->adm_organization = $administrative_whois_contact[1]["Organization:"];
-            $who_is_information->adm_street = $administrative_whois_contact[2]["Street:"];
-            $who_is_information->adm_city = $administrative_whois_contact[3]["City:"];
-            $who_is_information->adm_state = $administrative_whois_contact[4]["State:"];
-            $who_is_information->adm_postal_code = $administrative_whois_contact[5]["Postal Code:"];
-            $who_is_information->adm_country = $administrative_whois_contact[6]["Country:"];
-            $who_is_information->adm_phone = $administrative_whois_contact[7]["Phone:"];
-            if(isset($administrative_whois_contact[8]["Fax:"])){
-                $who_is_information->adm_fax = $administrative_whois_contact[8]["Fax:"];
-                $who_is_information->adm_email = strip_tags($administrative_whois_contact[9]["Email:"]);
-            }else{
-                $who_is_information->adm_fax = "N/A";
-                $who_is_information->adm_email = strip_tags($administrative_whois_contact[8]["Email:"]);
+            foreach ($administrative_whois_contact as $item) {
+                if(isset($item["Name:"])){
+                    $who_is_information->adm_name = $item["Name:"];
+                }else{
+                    $who_is_information->adm_name = "";
+                }
+
+                if(isset($item["Organization:"])){
+                    $who_is_information->adm_organization = $item["Organization:"];
+                }else{
+                    $who_is_information->adm_organization = "";
+                }
+
+                if(isset($item["Street:"])){
+                    $who_is_information->adm_street = $item["Street:"];
+                }else{
+                    $who_is_information->adm_street = "";
+                }
+
+                if(isset($item["City:"])){
+                    $who_is_information->adm_city = $item["City:"];
+                }else{
+                    $who_is_information->adm_city = "";
+                }
+
+                if(isset($item["State:"])){
+                    $who_is_information->adm_state = $item["State:"];
+                }else{
+                    $who_is_information->adm_state = "";
+                }
+
+                if(isset($item["Postal Code:"])){
+                    $who_is_information->adm_postal_code = $item["Postal Code:"];
+                }else{
+                    $who_is_information->adm_postal_code = "";
+                }
+
+                if(isset($item["Country"])){
+                    $who_is_information->adm_country = $item["Country"];
+                }else{
+                    $who_is_information->adm_country = "";
+                }
+
+                if(isset($item["Phone:"])){
+                    $who_is_information->adm_phone = $item["Phone:"];
+                }else{
+                    $who_is_information->adm_phone = "";
+                }
+
+                if(isset($item["Fax:"])){
+                    $who_is_information->adm_fax = $item["Fax:"];
+                }else{
+                    $who_is_information->adm_fax = "";
+                }
+
+                if(isset($item["Email:"])){
+                    $who_is_information->adm_email = $item["Email:"];
+                }else{
+                    $who_is_information->adm_email = "";
+                }
             }
         } else {
             $who_is_information->adm_name = $domain;
@@ -968,21 +1199,69 @@ class HomeController extends Controller
                     $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                 ];
             }
-            $who_is_information->tech_name = $technical_whois_contact[0]["Name:"];
-            $who_is_information->tech_organization = $technical_whois_contact[1]["Organization:"];
-            $who_is_information->tech_street = $technical_whois_contact[2]["Street:"];
-            $who_is_information->tech_city = $technical_whois_contact[3]["City:"];
-            $who_is_information->tech_state = $technical_whois_contact[4]["State:"];
-            $who_is_information->tech_postal_code = $technical_whois_contact[5]["Postal Code:"];
-            $who_is_information->tech_country = $technical_whois_contact[6]["Country:"];
-            $who_is_information->tech_phone = $technical_whois_contact[7]["Phone:"];
-            if(isset($technical_whois_contact[8]["Fax:"])){
-                $who_is_information->tech_fax = $technical_whois_contact[8]["Fax:"];
-                $who_is_information->tech_email = strip_tags($technical_whois_contact[9]["Email:"]);
-            }else{
-                $who_is_information->tech_fax = "N/A";
-                $who_is_information->tech_email = strip_tags($technical_whois_contact[8]["Email:"]);
+
+            foreach ($technical_whois_contact as $item) {
+                if(isset($item["Name:"])){
+                    $who_is_information->tech_name = $item["Name:"];
+                }else{
+                    $who_is_information->tech_name = "";
+                }
+
+                if(isset($item["Organization:"])){
+                    $who_is_information->tech_organization = $item["Organization:"];
+                }else{
+                    $who_is_information->tech_organization = "";
+                }
+
+                if(isset($item["Street:"])){
+                    $who_is_information->tech_street = $item["Street:"];
+                }else{
+                    $who_is_information->tech_street = "";
+                }
+
+                if(isset($item["City:"])){
+                    $who_is_information->tech_city = $item["City:"];
+                }else{
+                    $who_is_information->tech_city = "";
+                }
+
+                if(isset($item["State:"])){
+                    $who_is_information->tech_state = $item["State:"];
+                }else{
+                    $who_is_information->tech_state = "";
+                }
+
+                if(isset($item["Postal Code:"])){
+                    $who_is_information->tech_postal_code = $item["Postal Code:"];
+                }else{
+                    $who_is_information->tech_postal_code = "";
+                }
+
+                if(isset($item["Country"])){
+                    $who_is_information->tech_country = $item["Country"];
+                }else{
+                    $who_is_information->tech_country = "";
+                }
+
+                if(isset($item["Phone:"])){
+                    $who_is_information->tech_phone = $item["Phone:"];
+                }else{
+                    $who_is_information->tech_phone = "";
+                }
+
+                if(isset($item["Fax:"])){
+                    $who_is_information->tech_fax = $item["Fax:"];
+                }else{
+                    $who_is_information->tech_fax = "";
+                }
+
+                if(isset($item["Email:"])){
+                    $who_is_information->tech_email = $item["Email:"];
+                }else{
+                    $who_is_information->tech_email = "";
+                }
             }
+
         } else {
             $who_is_information->tech_name = $domain;
             $who_is_information->tech_organization = "N/A";
