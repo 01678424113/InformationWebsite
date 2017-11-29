@@ -82,7 +82,7 @@
 <script>
     $('.input-search').change(function () {
         var domain = $('.input-search').val();
-        $('.btn-search').attr('href', '/InformationWebsite/public/' + domain);
+        $('.btn-search').attr('href', '/InformationWebsite/public/inf/' + domain);
     })
 </script>
 @yield('script')

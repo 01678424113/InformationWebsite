@@ -16,7 +16,7 @@ Route::get('/', 'Frontend\HomeController@home');
 Route::get('/top-500','Frontend\HomeController@home')->name('top500');
 
 Route::get('/get-information-web/{domain_name}', 'Frontend\HomeController@getInformationDomain')->name('getInformationDomain');
-Route::get('/{domain_name}', 'Frontend\HomeController@informationDomain')->name('informationDomain');
+Route::get('/inf/{domain_name}', 'Frontend\HomeController@informationDomain')->name('informationDomain');
 Route::get('/update/{domain_name}', 'Frontend\HomeController@updateInformationDomain')->name('updateInformationDomain');
 
 Auth::routes();

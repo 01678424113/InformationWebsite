@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\AlexaInformation;
 use App\Domain;
+use App\Setting;
 use App\Top500Domain;
 use App\WebsiteInformation;
 use App\WhoisInformation;
@@ -81,7 +82,7 @@ class HomeController extends Controller
             //Rate keyword
             $rate_keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.text-right span');
             $rate_keyword = "";
-            for ($i = 0; $i < 5; $i ++) {
+            for ($i = 0; $i < 5; $i++) {
                 $rate_keyword = $rate_keyword . $rate_keywords[$i]->innertext() . ", ";
             }
             //Backlink
@@ -156,9 +157,9 @@ class HomeController extends Controller
             $html_web = HtmlDomParser::file_get_html('http://' . $domain);
             $titles = $html_web->find('title');
             if (isset($titles)) {
-                $title = $titles[0]->innertext();
+                $title_website = $titles[0]->innertext();
             } else {
-                $title = strtoupper($domain);
+                $title_website = strtoupper($domain);
             }
             $languages = $html_web->find('meta[name=language]');
             if (isset($languages[0]->content)) {
@@ -190,9 +191,9 @@ class HomeController extends Controller
 
             $descriptions = $html_web->find('meta[name=description]');
             if (isset($descriptions[0]->content)) {
-                $description = $descriptions[0]->content;
+                $description_website = $descriptions[0]->content;
             } else {
-                $description = "N/A";
+                $description_website = "N/A";
             }
 
             $website_keywords = $html_web->find('meta[name=keywords]');
@@ -216,6 +217,18 @@ class HomeController extends Controller
                 $geo_position = "N/A";
             }
 
+            $icon = $html_web->find('link[rel=icon]');
+            if (isset($icon[0]->href)) {
+                $icon = $icon[0]->href;
+            } else {
+                $icon = $html_web->find('link[rel=shortcut icon]');
+                if(isset($icon[0]->href)){
+                    $icon = $icon[0]->href;
+                }
+            }
+            if(!strpos($icon, 'http' )){
+                $icon ='http://'.$domain.$icon;
+            }
             //Screen short website
             $image_path = explode('.', $domain);
             $image_path = $image_path[0] . '.jpg';
@@ -226,18 +239,189 @@ class HomeController extends Controller
                 ->setWidth('1024')
                 ->setHeight('768')
                 ->save($image_path);
+            //Auto tạo content
+            //Create auto title and content video
+            //Get value form database
+            $settings_title = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'title_view')->get();
+            $settings_h1 = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'h1_view')->get();
+            $settings_content_top = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'content_view_top')->get();
+            $settings_content_bot = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'content_view_bot')->get();
+            $settings_description = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'description_view')->get();
+            $settings_alt = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'alt')->get();
+
+            $settings_domain = Setting::select(['value_setting'])->where('setting_page', 'domain')->where('key_setting', 'domain')->get();
+            $settings_keyword_1 = Setting::select(['value_setting'])->where('key_setting', 'keyword_1')->get();
+            $settings_keyword_2 = Setting::select(['value_setting'])->where('key_setting', 'keyword_2')->get();
+            $settings_keyword_link = Setting::select(['value_setting'])->where('key_setting', 'keyword_link')->get();
+
+            $settings_title = $settings_title[0]->value_setting;
+            $settings_h1 = $settings_h1[0]->value_setting;
+            $settings_content_top = $settings_content_top[0]->value_setting;
+            $settings_content_bot = $settings_content_bot[0]->value_setting;
+            $settings_description = $settings_description[0]->value_setting;
+            $settings_alt = $settings_alt[0]->value_setting;
+
+            $settings_domain = $settings_domain[0]->value_setting;
+            $settings_keyword_1 = $settings_keyword_1[0]->value_setting;
+            $settings_keyword_2 = $settings_keyword_2[0]->value_setting;
+            $settings_keyword_link = $settings_keyword_link[0]->value_setting;
+
+            //Split data form text to array
+            $titles = explode(';', $settings_title);
+            $h1s = explode(';', $settings_h1);
+            $contents_top = explode(';', $settings_content_top);
+            $contents_bot = explode(';', $settings_content_bot);
+            $descriptions = explode(';', $settings_description);
+            $alts = explode(';', $settings_alt);
+
+            $domains = explode(';', $settings_domain);
+            $keyword_1s = explode(';', $settings_keyword_1);
+            $keyword_2s = explode(';', $settings_keyword_2);
+            $keyword_links = explode(';', $settings_keyword_link);
+
+
+            //Random numerical order in array
+            $rd_number_title = random_int(0, count($titles) - 2);
+            $rd_number_h1 = random_int(0, count($h1s) - 1);
+            $rd_number_content_top = random_int(0, count($contents_top) - 2);
+            $rd_number_content_bot = random_int(0, count($contents_bot) - 2);
+            $rd_number_description = random_int(0, count($descriptions) - 2);
+            $rd_number_alt = random_int(0, count($alts) - 2);
+
+            //Take element in array
+            $rd_title = trim($titles[$rd_number_title]);
+            $rd_h1 = trim($h1s[$rd_number_h1]);
+            $rd_content_top = trim($contents_top[$rd_number_content_top]);
+            $rd_content_bot = trim($contents_bot[$rd_number_content_bot]);
+            $rd_description = trim($descriptions[$rd_number_description]);
+            $rd_alt = trim($alts[$rd_number_alt]);
+
+            //Auto create title
+            $rd_number_domain = random_int(0, count($domains) - 1);
+            $rd_number_keyword_1 = random_int(0, count($keyword_1s) - 2);
+            $rd_number_keyword_2 = random_int(0, count($keyword_2s) - 2);
+            $rd_number_keyword_link = random_int(0, count($keyword_links) - 2);
+
+
+            $rd_domain = trim($domains[$rd_number_domain]);
+            $rd_keyword_1 = trim($keyword_1s[$rd_number_keyword_1]);
+            $rd_keyword_2 = trim($keyword_2s[$rd_number_keyword_2]);
+            $rd_keyword_link = trim($keyword_links[$rd_number_keyword_link]);
+
+
+            $title_rp_name = str_replace('%name%', $domain, $rd_title);
+            $title_rp_domain = str_replace('%domainname%', $rd_domain, $title_rp_name);
+            $title_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $title_rp_domain);
+            $title_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $title_rp_keyword_1);
+            $title = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $title_rp_keyword_2);
+
+            //Auto create h1
+            $rd_number_domain = random_int(0, count($domains) - 1);
+            $rd_number_keyword_1 = random_int(0, count($keyword_1s) - 2);
+            $rd_number_keyword_2 = random_int(0, count($keyword_2s) - 2);
+            $rd_number_keyword_link = random_int(0, count($keyword_links) - 2);
+
+            $rd_domain = trim($domains[$rd_number_domain]);
+            $rd_keyword_1 = trim($keyword_1s[$rd_number_keyword_1]);
+            $rd_keyword_2 = trim($keyword_2s[$rd_number_keyword_2]);
+            $rd_keyword_link = trim($keyword_links[$rd_number_keyword_link]);
+
+            $h1_rp_name = str_replace('%name%', $domain, $rd_h1);
+            $h1_rp_domain = str_replace('%domainname%', $rd_domain, $h1_rp_name);
+            $h1_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $h1_rp_domain);
+            $h1_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $h1_rp_keyword_1);
+            $h1 = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $h1_rp_keyword_2);
+
+            //Auto create content top
+            $rd_number_domain = random_int(0, count($domains) - 1);
+            $rd_number_keyword_1 = random_int(0, count($keyword_1s) - 2);
+            $rd_number_keyword_2 = random_int(0, count($keyword_2s) - 2);
+            $rd_number_keyword_link = random_int(0, count($keyword_links) - 2);
+
+            $rd_domain = trim($domains[$rd_number_domain]);
+            $rd_keyword_1 = trim($keyword_1s[$rd_number_keyword_1]);
+            $rd_keyword_2 = trim($keyword_2s[$rd_number_keyword_2]);
+            $rd_keyword_link = trim($keyword_links[$rd_number_keyword_link]);
+            $rd_keyword_link = ucfirst($rd_keyword_link);
+
+
+            $content_top_rp_name = str_replace('%name%',$domain, $rd_content_top);
+            $content_top_rp_domain = str_replace('%domainname%', $rd_domain, $content_top_rp_name);
+            $content_top_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $content_top_rp_domain);
+            $content_top_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $content_top_rp_keyword_1);
+            $content_top = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $content_top_rp_keyword_2);
+
+            //Auto create content bot
+            $rd_number_domain = random_int(0, count($domains) - 1);
+            $rd_number_keyword_1 = random_int(0, count($keyword_1s) - 2);
+            $rd_number_keyword_2 = random_int(0, count($keyword_2s) - 2);
+            $rd_number_keyword_link = random_int(0, count($keyword_links) - 2);
+
+            $rd_domain = trim($domains[$rd_number_domain]);
+            $rd_keyword_1 = trim($keyword_1s[$rd_number_keyword_1]);
+            $rd_keyword_2 = trim($keyword_2s[$rd_number_keyword_2]);
+            $rd_keyword_link = trim($keyword_links[$rd_number_keyword_link]);
+
+            $content_bot_rp_name = str_replace('%name%', $domain, $rd_content_bot);
+            $content_bot_rp_domain = str_replace('%domainname%', $rd_domain, $content_bot_rp_name);
+            $content_bot_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $content_bot_rp_domain);
+            $content_bot_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $content_bot_rp_keyword_1);
+            $content_bot = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $content_bot_rp_keyword_2);
+
+            //Auto create description
+            $rd_number_domain = random_int(0, count($domains) - 1);
+            $rd_number_keyword_1 = random_int(0, count($keyword_1s) - 2);
+            $rd_number_keyword_2 = random_int(0, count($keyword_2s) - 2);
+            $rd_number_keyword_link = random_int(0, count($keyword_links) - 2);
+
+            $rd_domain = trim($domains[$rd_number_domain]);
+            $rd_keyword_1 = trim($keyword_1s[$rd_number_keyword_1]);
+            $rd_keyword_2 = trim($keyword_2s[$rd_number_keyword_2]);
+            $rd_keyword_link = trim($keyword_links[$rd_number_keyword_link]);
+
+            $description_rp_name = str_replace('%name%', $domain, $rd_description);
+            $description_rp_domain = str_replace('%domainname%', $rd_domain, $description_rp_name);
+            $description_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $description_rp_domain);
+            $description_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $description_rp_keyword_1);
+            $description = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $description_rp_keyword_2);
+
+            //Auto create description
+            $rd_number_domain = random_int(0, count($domains) - 1);
+            $rd_number_keyword_1 = random_int(0, count($keyword_1s) - 2);
+            $rd_number_keyword_2 = random_int(0, count($keyword_2s) - 2);
+            $rd_number_keyword_link = random_int(0, count($keyword_links) - 2);
+
+            $rd_domain = trim($domains[$rd_number_domain]);
+            $rd_keyword_1 = trim($keyword_1s[$rd_number_keyword_1]);
+            $rd_keyword_2 = trim($keyword_2s[$rd_number_keyword_2]);
+            $rd_keyword_link = trim($keyword_links[$rd_number_keyword_link]);
+
+            $alt_rp_name = str_replace('%name%', $domain, $rd_alt);
+            //$alt_rp_domain = str_replace('%domainname%', $rd_domain, $alt_rp_name);
+            $alt_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $alt_rp_name);
+            $alt_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $alt_rp_keyword_1);
+            //$alt = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $alt_rp_keyword_2);
+            $alt = $alt_rp_keyword_2;
 
             $website_information = new WebsiteInformation();
+            $website_information->title_website_auto = $title;
+            $website_information->h1_website_auto = $h1;
+            $website_information->content_top_website_auto = $content_top;
+            $website_information->content_bot_website_auto = $content_bot;
+            $website_information->description_website_auto = $description;
+            $website_information->alt_website_auto = $alt;
+
             $website_information->domain_id = $domain_id;
-            $website_information->title = $title;
+            $website_information->title = $title_website;
             $website_information->language = $language;
             $website_information->distributions = $distribution;
             $website_information->revisit_affter = $revisit_after;
             $website_information->author = $author;
-            $website_information->description = $description;
-            $website_information->keyword = $website_keyword;
+            $website_information->description = addslashes($description_website);
+            $website_information->keyword = addslashes($website_keyword);
             $website_information->place_name = $geo_placename;
             $website_information->position = $geo_position;
+            $website_information->icon = $icon;
             $website_information->image_screen_shot = $image_path;
             $website_information->created_at = microtime(true);
 
@@ -300,8 +484,15 @@ class HomeController extends Controller
                 $who_is_information->regis_postal_code = $registrant_whois_contact[5]["Postal Code:"];
                 $who_is_information->regis_country = $registrant_whois_contact[6]["Country:"];
                 $who_is_information->regis_phone = $registrant_whois_contact[7]["Phone:"];
-                $who_is_information->regis_fax = $registrant_whois_contact[8]["Fax:"];
-                $who_is_information->regis_email = strip_tags($registrant_whois_contact[9]["Email:"]);
+                if(isset($registrant_whois_contact[8]["Fax:"])){
+                    $who_is_information->regis_fax = $registrant_whois_contact[8]["Fax:"];
+                    $who_is_information->regis_email = strip_tags($registrant_whois_contact[9]["Email:"]);
+                }else{
+                    $who_is_information->regis_fax = "N/A";
+                    $who_is_information->regis_email = strip_tags($registrant_whois_contact[8]["Email:"]);
+                }
+
+
             } else {
                 $who_is_information->regis_name = $domain;
                 $who_is_information->regis_organization = "N/A";
@@ -332,8 +523,13 @@ class HomeController extends Controller
                 $who_is_information->adm_postal_code = $administrative_whois_contact[5]["Postal Code:"];
                 $who_is_information->adm_country = $administrative_whois_contact[6]["Country:"];
                 $who_is_information->adm_phone = $administrative_whois_contact[7]["Phone:"];
-                $who_is_information->adm_fax = $administrative_whois_contact[8]["Fax:"];
-                $who_is_information->adm_email = strip_tags($administrative_whois_contact[9]["Email:"]);
+                if(isset($administrative_whois_contact[8]["Fax:"])){
+                    $who_is_information->adm_fax = $administrative_whois_contact[8]["Fax:"];
+                    $who_is_information->adm_email = strip_tags($administrative_whois_contact[9]["Email:"]);
+                }else{
+                    $who_is_information->adm_fax = "N/A";
+                    $who_is_information->adm_email = strip_tags($administrative_whois_contact[8]["Email:"]);
+                }
             } else {
                 $who_is_information->adm_name = $domain;
                 $who_is_information->adm_organization = "N/A";
@@ -364,8 +560,13 @@ class HomeController extends Controller
                 $who_is_information->tech_postal_code = $technical_whois_contact[5]["Postal Code:"];
                 $who_is_information->tech_country = $technical_whois_contact[6]["Country:"];
                 $who_is_information->tech_phone = $technical_whois_contact[7]["Phone:"];
-                $who_is_information->tech_fax = $technical_whois_contact[8]["Fax:"];
-                $who_is_information->tech_email = strip_tags($technical_whois_contact[9]["Email:"]);
+                if(isset($technical_whois_contact[8]["Fax:"])){
+                    $who_is_information->tech_fax = $technical_whois_contact[8]["Fax:"];
+                    $who_is_information->tech_email = strip_tags($technical_whois_contact[9]["Email:"]);
+                }else{
+                    $who_is_information->tech_fax = "N/A";
+                    $who_is_information->tech_email = strip_tags($technical_whois_contact[8]["Email:"]);
+                }
             } else {
                 $who_is_information->tech_name = $domain;
                 $who_is_information->tech_organization = "N/A";
@@ -381,7 +582,7 @@ class HomeController extends Controller
             try {
                 $who_is_information->save();
 
-                return redirect()->route('informationDomain',['domain_name'=>$domain]);
+                return redirect()->route('informationDomain', ['domain_name' => $domain]);
             } catch (Exception $e) {
                 return redirect()->back()->with('error', 'Error connect database !');
             }
@@ -465,7 +666,7 @@ class HomeController extends Controller
         //Rate keyword
         $rate_keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.text-right span');
         $rate_keyword = "";
-        for ($i = 0; $i < 5; $i ++) {
+        for ($i = 0; $i < 5; $i++) {
             $rate_keyword = $rate_keyword . $rate_keywords[$i]->innertext() . ", ";
         }
         //Backlink
@@ -479,6 +680,11 @@ class HomeController extends Controller
             $upstream_site[] = [
                 ['site' => $upstream_sites[$i]->find('td')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td')[1]->innertext()]
             ];
+        }
+        //Website related
+        $website_related_html = $html_alexa->find('section#related-content table#audience_overlap_table tbody tr td a');
+        foreach ($website_related_html as $item) {
+            $website_related[] = $item->innertext();
         }
         //Rate gender, home, school, work
         $genders_left = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-l span.pybar-bg');
@@ -499,7 +705,7 @@ class HomeController extends Controller
         $rate_school = ($rate_left[7] + $rate_right[7]) / 2;
         $rate_work = ($rate_left[8] + $rate_right[8]) / 2;
 
-        $alexa_information = AlexaInformation::where('domain_id',$domain_id)->first();
+        $alexa_information = new AlexaInformation();
         $alexa_information->domain_id = $domain_id;
         $alexa_information->global_rank = $globalRank;
         $alexa_information->country = $country;
@@ -511,6 +717,7 @@ class HomeController extends Controller
         $alexa_information->top_5_keyword = json_encode($keyword);
         $alexa_information->rate_keyword = json_encode($rate_keyword);
         $alexa_information->upstream_site = json_encode($upstream_site);
+        $alexa_information->website_related = json_encode($website_related);
         $alexa_information->quantity_backlink = $backlink;
         $alexa_information->rate_male = $rate_male;
         $alexa_information->rate_female = $rate_female;
@@ -568,9 +775,9 @@ class HomeController extends Controller
 
         $descriptions = $html_web->find('meta[name=description]');
         if (isset($descriptions[0]->content)) {
-            $description = $descriptions[0]->content;
+            $description_website = $descriptions[0]->content;
         } else {
-            $description = "N/A";
+            $description_website = "N/A";
         }
 
         $website_keywords = $html_web->find('meta[name=keywords]');
@@ -594,6 +801,18 @@ class HomeController extends Controller
             $geo_position = "N/A";
         }
 
+        $icon = $html_web->find('link[rel=icon]');
+        if (isset($icon[0]->href)) {
+            $icon = $icon[0]->href;
+        } else {
+            $icon = $html_web->find('link[rel=shortcut icon]');
+            if(isset($icon[0]->href)){
+                $icon = $icon[0]->href;
+            }
+        }
+        if(!strpos($icon, 'http' )){
+            $icon ='http://'.$domain.$icon;
+        }
         //Screen short website
         $image_path = explode('.', $domain);
         $image_path = $image_path[0] . '.jpg';
@@ -605,17 +824,20 @@ class HomeController extends Controller
             ->setHeight('768')
             ->save($image_path);
 
-        $website_information = WebsiteInformation::where('domain_id',$domain_id)->first();
+
+        $website_information = new WebsiteInformation();
+
         $website_information->domain_id = $domain_id;
         $website_information->title = $title;
         $website_information->language = $language;
         $website_information->distributions = $distribution;
         $website_information->revisit_affter = $revisit_after;
         $website_information->author = $author;
-        $website_information->description = $description;
-        $website_information->keyword = $website_keyword;
+        $website_information->description = addslashes($description_website);
+        $website_information->keyword = addslashes($website_keyword);
         $website_information->place_name = $geo_placename;
         $website_information->position = $geo_position;
+        $website_information->icon = $icon;
         $website_information->image_screen_shot = $image_path;
         $website_information->created_at = microtime(true);
 
@@ -636,7 +858,7 @@ class HomeController extends Controller
         //DOMAIN INFORMATION
         $domain_whois_informations = $df_block[0]->find('.df-row');
         $i = 0;
-        $who_is_information = WhoisInformation::where('domain_id',$domain_id)->first();
+        $who_is_information = new WhoisInformation();
         $who_is_information->domain_id = $domain_id;
         $who_is_information->domain = $domain;
         if (isset($domain_whois_informations)) {
@@ -678,8 +900,15 @@ class HomeController extends Controller
             $who_is_information->regis_postal_code = $registrant_whois_contact[5]["Postal Code:"];
             $who_is_information->regis_country = $registrant_whois_contact[6]["Country:"];
             $who_is_information->regis_phone = $registrant_whois_contact[7]["Phone:"];
-            $who_is_information->regis_fax = $registrant_whois_contact[8]["Fax:"];
-            $who_is_information->regis_email = strip_tags($registrant_whois_contact[9]["Email:"]);
+            if(isset($registrant_whois_contact[8]["Fax:"])){
+                $who_is_information->regis_fax = $registrant_whois_contact[8]["Fax:"];
+                $who_is_information->regis_email = strip_tags($registrant_whois_contact[9]["Email:"]);
+            }else{
+                $who_is_information->regis_fax = "N/A";
+                $who_is_information->regis_email = strip_tags($registrant_whois_contact[8]["Email:"]);
+            }
+
+
         } else {
             $who_is_information->regis_name = $domain;
             $who_is_information->regis_organization = "N/A";
@@ -710,8 +939,13 @@ class HomeController extends Controller
             $who_is_information->adm_postal_code = $administrative_whois_contact[5]["Postal Code:"];
             $who_is_information->adm_country = $administrative_whois_contact[6]["Country:"];
             $who_is_information->adm_phone = $administrative_whois_contact[7]["Phone:"];
-            $who_is_information->adm_fax = $administrative_whois_contact[8]["Fax:"];
-            $who_is_information->adm_email = strip_tags($administrative_whois_contact[9]["Email:"]);
+            if(isset($administrative_whois_contact[8]["Fax:"])){
+                $who_is_information->adm_fax = $administrative_whois_contact[8]["Fax:"];
+                $who_is_information->adm_email = strip_tags($administrative_whois_contact[9]["Email:"]);
+            }else{
+                $who_is_information->adm_fax = "N/A";
+                $who_is_information->adm_email = strip_tags($administrative_whois_contact[8]["Email:"]);
+            }
         } else {
             $who_is_information->adm_name = $domain;
             $who_is_information->adm_organization = "N/A";
@@ -742,8 +976,13 @@ class HomeController extends Controller
             $who_is_information->tech_postal_code = $technical_whois_contact[5]["Postal Code:"];
             $who_is_information->tech_country = $technical_whois_contact[6]["Country:"];
             $who_is_information->tech_phone = $technical_whois_contact[7]["Phone:"];
-            $who_is_information->tech_fax = $technical_whois_contact[8]["Fax:"];
-            $who_is_information->tech_email = strip_tags($technical_whois_contact[9]["Email:"]);
+            if(isset($technical_whois_contact[8]["Fax:"])){
+                $who_is_information->tech_fax = $technical_whois_contact[8]["Fax:"];
+                $who_is_information->tech_email = strip_tags($technical_whois_contact[9]["Email:"]);
+            }else{
+                $who_is_information->tech_fax = "N/A";
+                $who_is_information->tech_email = strip_tags($technical_whois_contact[8]["Email:"]);
+            }
         } else {
             $who_is_information->tech_name = $domain;
             $who_is_information->tech_organization = "N/A";
@@ -758,21 +997,14 @@ class HomeController extends Controller
         }
         try {
             $who_is_information->save();
-            $alexa_inf = AlexaInformation::where('domain_id', $domain_id)->get();
-            $website_inf = WebsiteInformation::where('domain_id', $domain_id)->get();
-            $who_is_inf = WhoisInformation::where('domain_id', $domain_id)->get();
 
-
-            $response['alexa_inf'] = $alexa_inf;
-            $response['website_inf'] = $website_inf;
-            $response['who_is_inf'] = $who_is_inf;
-            return view('frontend.page.information-website', $response);
+            return redirect()->route('informationDomain', ['domain_name' => $domain]);
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Error connect database !');
         }
         //-----------------------------------------------------------------------------------------//
         //--------------------------------------End Who is-----------------------------------------//
         //-----------------------------------------------------------------------------------------//
-
     }
+
 }

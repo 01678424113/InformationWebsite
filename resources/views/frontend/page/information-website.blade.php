@@ -5,11 +5,14 @@
         <div class="container relative">
             <div class="information-website">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         {{--Domain website--}}
                         <div class="row" style="margin: 0">
                             <div class="sidebar-inf">
-                                <div class="col-md-3">
+                                <div class="col-md-1 col-sm-1 col-xs-1" style="height: 100%;display: flex;justify-content: center;align-items: center;padding-right: 0">
+                                    <img src="{{$website_inf[0]['icon']}}" alt="" style="width: 30px;height: 30px;">
+                                </div>
+                                <div class="col-md-3 col-sm-4 col-xs-5" style="padding: 0">
                                     <div class="domain-website">
                                         <h1>{{$who_is_inf[0]['domain']}}</h1>
                                     </div>
@@ -19,10 +22,10 @@
                         <div class="right">
                             {{--Rank website--}}
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <table class="table" style="border-bottom: #c7c7c7 1px solid;">
                                         <tr>
-                                            <td class="title search col-md-7">
+                                            <td class="title search col-md-7 col-xs-12">
                                                 <div class="inner-addon right-addon">
                                                     <div class="row">
                                                         <div class="col-md-12">
@@ -63,10 +66,8 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <th valign="middle" colspan="2" style="margin-top: 10px"
-                                                class="title text-center stickyHeader-screenshotContainer col-md-6">
-                            <span class="stickyHeader-screenshotBg"
-                                  style="background-image: url({{$website_inf[0]['image_screen_shot']}})"></span>
+                                            <th valign="middle" colspan="2" style="margin-top: 10px" class="title text-center stickyHeader-screenshotContainer col-md-5 hidden-xs ">
+                                                <span class="stickyHeader-screenshotBg" style="background-image: url({{$website_inf[0]['image_screen_shot']}})"></span>
                                                 <img src="{{$website_inf[0]['image_screen_shot']}}" alt="">
                                             </th>
                                         </tr>
@@ -75,11 +76,11 @@
                             </div>
                             {{--Information website--}}
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h3 class="title-inf">Information website</h3>
                                     <hr class="hr-inf">
                                     <div class="information-html">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                             <table class="table table-hover">
                                                 <thead>
                                                 <tr>
@@ -144,12 +145,12 @@
                             </div>
                             {{--Traffic Over--}}
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h3 class="title-inf">Traffic over</h3>
                                     <hr class="hr-inf">
                                     <div class="traffic-over">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <tr>
@@ -172,7 +173,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="col-md-12">
+                                          {{--  <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <svg version="1.1"
                                                      style="width: 759px; height: 275px;margin-bottom: 10px">
                                                     <desc>JavaScript chart by amCharts 3.4.1</desc>
@@ -924,8 +925,8 @@
                                                 </svg>
                                                 <h4 style="text-align: center;padding-bottom: 10px;border-bottom: #c7c7c7 1px solid;">
                                                     Map visitors by country</h4>
-                                            </div>
-                                            <div class="col-md-6">
+                                            </div>--}}
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <table class="table table-hover">
                                                     <tr>
                                                         <td style="width: 65%;" class="td-attribute">Bounce rate</td>
@@ -946,7 +947,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <table class="table table-hover">
                                                     <tr>
                                                         <td class="td-attribute">Male rate</td>
@@ -977,12 +978,12 @@
                             </div>
                             {{--Keyword search traffic--}}
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h3 class="title-inf">Where do facebook.com's visitors come from?</h3>
                                     <hr class="hr-inf">
                                     <br>
                                     <div class="keyword-top-search">
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
                                             <table class="table table-hover">
                                                 <thead>
                                                 <tr>
@@ -1005,7 +1006,7 @@
 
                                             </table>
                                         </div>
-                                        <div class="col-md-6" style="text-align: center">
+                                        <div class="col-md-6 col-sm-6 col-xs-12" style="text-align: center;margin-top: 40px;">
                                             <img src="{{$alexa_inf[0]['image_search_traffic']}}"
                                                  alt="">
                                             <h4 style="text-align: center">Search traffic</h4>
@@ -1015,7 +1016,7 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="chart">
                                         <script type="text/javascript">
                                             window.onload = function () {
@@ -1051,9 +1052,9 @@
                                         <div id="chartUpstream" style=""></div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="website_related">
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                             <h3>Website related</h3>
                                             <table class="table table-hover">
                                                 <tr>
@@ -1082,13 +1083,13 @@
                             </div>
                             {{--Whois information--}}
                             <div class="row">
-                                <div class="col-md-12">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <h3 class="title-inf">Whois information</h3>
                                     <hr class="hr-inf">
                                     <br>
                                     <div class="information-who-is" style="padding-left: 15px;padding-right: 15px;">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <h4 class="danger">Domain information</h4>
                                                 <div class="tech-who-is-inf">
                                                     <table class="table table-hover">
@@ -1127,7 +1128,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <h4 class="info">Admin contact</h4>
                                                 <div class="domain-who-is-inf">
                                                     <table class="table table-hover">
@@ -1180,7 +1181,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <h4 class="success">Registant contact</h4>
                                                 <div class="adm-who-is-inf">
                                                     <table class="table table-hover">
@@ -1231,7 +1232,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
                                                 <h4 class="warning">Domain information</h4>
                                                 <div class="regis-who-is-inf">
                                                     <table class="table table-hover">
