@@ -1,167 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Rhythm &mdash; One & Multi Page Creative Theme</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <meta charset="utf-8">
-    <meta name="author" content="Roman Kirichik">
-    <!--[if IE]>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-
-    <!-- Favicons -->
-    <link rel="shortcut icon" href="images/favicon.png">
-    <base href="{{asset('')}}">
-    <!-- CSS -->
-    <link rel="stylesheet" href="frontend/css/bootstrap.min.css">
-    <link rel="stylesheet" href="frontend/css/style.css">
-    <link rel="stylesheet" href="frontend/css/style-responsive.css">
-    <link rel="stylesheet" href="frontend/css/animate.min.css">
-    <link rel="stylesheet" href="frontend/css/vertical-rhythm.min.css">
-    <link rel="stylesheet" href="frontend/css/owl.carousel.css">
-    <link rel="stylesheet" href="frontend/css/magnific-popup.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/style-information-website.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=vietnamese"
-          rel="stylesheet">
-
-</head>
-<body class="appear-animate">
-
-<!-- Page Loader -->
-<div class="page-loader">
-    <div class="loader">Loading...</div>
-</div>
-<!-- End Page Loader -->
-
-<!-- Page Wrap -->
-<div class="page" id="top">
-    <!-- Navigation panel -->
-    <nav class="main-nav js-stick" style="box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);">
-        <div class="full-wrapper relative clearfix">
-            <!-- Logo ( * your text or image into link tag *) -->
-            <div class="nav-logo-wrap local-scroll">
-                <a href="mp-index.html" class="logo">
-                    <img src="frontend/images/logo-dark.png" alt="" />
-                </a>
-            </div>
-            <div class="mobile-nav">
-                <i class="fa fa-bars"></i>
-            </div>
-
-            <!-- Main Menu -->
-            <div class="inner-nav desktop-nav">
-                <ul class="clearlist">
-
-                    <!-- Item With Sub -->
-                    <li>
-                        <a href="#" class="mn-has-sub">Home <i class="fa fa-angle-down"></i></a>
-
-                        <!-- Sub Multilevel -->
-                        <ul class="mn-sub mn-has-multi">
-
-                            <!-- Sub Column -->
-                            <li class="mn-sub-multi">
-                                <a class="mn-group-title">Multi Page</a>
-
-                                <ul>
-                                    <li>
-                                        <a href="mp-index.html">Main Demo</a>
-                                    </li>
-                                </ul>
-
-                            </li>
-                            <!-- End Sub Column -->
-
-                        </ul>
-                        <!-- End Sub Multilevel -->
-
-                    </li>
-                    <!-- End Item With Sub -->
-
-                    <!-- Item With Sub -->
-                    <li>
-                        <a href="#" class="mn-has-sub">Pages <i class="fa fa-angle-down"></i></a>
-
-                    </li>
-                    <!-- End Item With Sub -->
-
-                    <!-- Item With Sub -->
-                    <li>
-                        <a href="#" class="mn-has-sub">Elements <i class="fa fa-angle-down"></i></a>
-
-
-                    </li>
-                    <!-- End Item With Sub -->
-
-                    <!-- Item With Sub -->
-                    <li>
-                        <a href="#" class="mn-has-sub active">Portfolio <i class="fa fa-angle-down"></i></a>
-
-
-                    </li>
-                    <!-- End Item With Sub -->
-
-                    <!-- Item With Sub -->
-                    <li>
-                        <a href="#" class="mn-has-sub">Blog <i class="fa fa-angle-down"></i></a>
-
-
-                    </li>
-                    <!-- End Item With Sub -->
-
-                    <!-- Item With Sub -->
-                    <li>
-                        <a href="#" class="mn-has-sub">Shop <i class="fa fa-angle-down"></i></a>
-
-
-                    </li>
-                    <!-- End Item With Sub -->
-
-                    <!-- Divider -->
-                    <li><a>&nbsp;</a></li>
-                    <!-- End Divider -->
-
-                    <!-- Search -->
-                    <li>
-                        <a href="#" class="mn-has-sub"><i class="fa fa-search"></i> Search</a>
-
-                    </li>
-                    <!-- End Search -->
-
-                    <!-- Cart -->
-                    <li>
-                        <a href="#"><i class="fa fa-shopping-cart"></i> Cart(0)</a>
-                    </li>
-                    <!-- End Cart -->
-
-                    <!-- Languages -->
-                    <li>
-                        <a href="#" class="mn-has-sub">Eng <i class="fa fa-angle-down"></i></a>
-
-                        <ul class="mn-sub">
-
-                            <li><a href="">English</a></li>
-                            <li><a href="">France</a></li>
-                            <li><a href="">Germany</a></li>
-
-                        </ul>
-
-                    </li>
-                    <!-- End Languages -->
-
-                </ul>
-            </div>
-            <!-- End Main Menu -->
-
-
-        </div>
-    </nav>
-    <!-- End Navigation panel -->
-
-
+@extends('frontend.layout')
+@section('content')
     <!-- Portfolio Section -->
     <section class="page-section" style="background: #FAFAFA">
         <div class="container relative">
@@ -173,20 +11,7 @@
                             <div class="sidebar-inf">
                                 <div class="col-md-3">
                                     <div class="domain-website">
-                                        <h1>Facebook.com</h1>
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="icon-sidebar-inf-web">
-
-                                    <span>
-                                    <i class="fa fa-address-book" aria-hidden="true"></i>
-                                        <small>Rank</small>
-                                    </span>
-                                        <span>
-                                    <i class="fa fa-address-book" aria-hidden="true"></i>
-                                        <small>Rank</small>
-                                    </span>
+                                        <h1>{{$who_is_inf[0]['domain']}}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -200,6 +25,15 @@
                                             <td class="title search col-md-7">
                                                 <div class="inner-addon right-addon">
                                                     <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="rank"
+                                                                 style="margin-top: 10px;margin-bottom: 10px;text-align: center">
+                                                                <p>Update : {{$alexa_inf[0]['created_at']}}</p>
+                                                                <a href="{{route('updateInformationDomain',['domain_name'=>$who_is_inf[0]['domain']])}}"
+                                                                   class="btn btn-info" style="color:white">Click
+                                                                    update new</a>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-md-6">
                                                             <div class="rank">
                                                                 <i class="fa fa-globe" aria-hidden="true"></i>
@@ -208,7 +42,8 @@
                                                                 <div class='numscroller numscroller-big-bottom'
                                                                      data-slno='1'
                                                                      data-min='0'
-                                                                     data-max='100' data-delay='1' data-increment="1">0
+                                                                     data-max='{{$alexa_inf[0]['global_rank']}}'
+                                                                     data-delay='1' data-increment="1">0
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -216,22 +51,23 @@
                                                             <div class="rank">
                                                                 <i class="fa fa-flag" aria-hidden="true"></i>
                                                                 <span>Country rank</span><br>
-                                                                <a href="">USA</a>
+                                                                <a href="">{{$alexa_inf[0]['country']}}</a>
                                                                 <div class='numscroller numscroller-big-bottom'
                                                                      data-slno='1'
                                                                      data-min='0'
-                                                                     data-max='300' data-delay='1' data-increment="1">0
+                                                                     data-max='{{$alexa_inf[0]['country_rank']}}'
+                                                                     data-delay='1' data-increment="1">0
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <th valign="middle" colspan="2"
+                                            <th valign="middle" colspan="2" style="margin-top: 10px"
                                                 class="title text-center stickyHeader-screenshotContainer col-md-6">
                             <span class="stickyHeader-screenshotBg"
-                                  style="background-image: url(https://site-images.similarcdn.com/image?url=facebook.com&amp;t=1&amp;s=1&amp;h=1215141726915202198)"></span>
-                                                <img src="upload/google.jpg" alt="">
+                                  style="background-image: url({{$website_inf[0]['image_screen_shot']}})"></span>
+                                                <img src="{{$website_inf[0]['image_screen_shot']}}" alt="">
                                             </th>
                                         </tr>
                                     </table>
@@ -254,51 +90,51 @@
                                                 <tbody>
                                                 <tr>
                                                     <td class="td-attribute">Domain</td>
-                                                    <td class="td-parameter">facebook.com</td>
+                                                    <td class="td-parameter">{{$who_is_inf[0]['domain']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Title</td>
-                                                    <td class="td-parameter">facebook.com</td>
+                                                    <td class="td-parameter">{{$website_inf[0]['title']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Language</td>
-                                                    <td class="td-parameter">English</td>
+                                                    <td class="td-parameter">{{$website_inf[0]['language']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Description</td>
-                                                    <td class="td-parameter">facebook.com</td>
+                                                    <td class="td-parameter">{{$website_inf[0]['description']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Keyword</td>
-                                                    <td class="td-parameter">facebook.com</td>
+                                                    <td class="td-parameter">{{$website_inf[0]['keyword']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Backlink</td>
-                                                    <td class="td-parameter">500000</td>
+                                                    <td class="td-parameter">{{$alexa_inf[0]['quantity_backlink']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Author</td>
-                                                    <td class="td-parameter">facebook.com</td>
+                                                    <td class="td-parameter">{{$website_inf[0]['author']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Position</td>
-                                                    <td class="td-parameter">USA</td>
+                                                    <td class="td-parameter">{{$website_inf[0]['position']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Place name</td>
-                                                    <td class="td-parameter">facebook.com</td>
+                                                    <td class="td-parameter">{{$website_inf[0]['place_name']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Distributions</td>
-                                                    <td class="td-parameter">facebook.com</td>
+                                                    <td class="td-parameter">{{$website_inf[0]['distributions']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Revisit affter</td>
-                                                    <td class="td-parameter">facebook.com</td>
+                                                    <td class="td-parameter">{{$website_inf[0]['revisit_affter']}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="td-attribute">Update at</td>
-                                                    <td class="td-parameter">27/11/2017</td>
+                                                    <td class="td-parameter">{{$website_inf[0]['created_at']}}</td>
                                                 </tr>
                                                 </tbody>
                                             </table>
@@ -1093,11 +929,19 @@
                                                 <table class="table table-hover">
                                                     <tr>
                                                         <td style="width: 65%;" class="td-attribute">Bounce rate</td>
-                                                        <td class="td-parameter">25.2%</td>
+                                                        <td class="td-parameter">{{$alexa_inf[0]['bounce_rate']}}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td style="width: 65%;" class="td-attribute">Bounce rate</td>
-                                                        <td class="td-parameter">50%</td>
+                                                        <td style="width: 65%;" class="td-attribute">Page views per
+                                                            visitor
+                                                        </td>
+                                                        <td class="td-parameter">{{$alexa_inf[0]['pageviews_per_visitor']}}
+                                                            %
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="width: 65%;" class="td-attribute">Time on site</td>
+                                                        <td class="td-parameter">{{$alexa_inf[0]['time_on_site']}}%</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -1106,11 +950,23 @@
                                                 <table class="table table-hover">
                                                     <tr>
                                                         <td class="td-attribute">Male rate</td>
-                                                        <td class="td-parameter">25.2%</td>
+                                                        <td class="td-parameter">{{$alexa_inf[0]['rate_male']}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Female rate</td>
-                                                        <td class="td-parameter">50%</td>
+                                                        <td class="td-parameter">{{$alexa_inf[0]['rate_female']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="td-attribute">Home</td>
+                                                        <td class="td-parameter">{{$alexa_inf[0]['rate_home']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="td-attribute">School</td>
+                                                        <td class="td-parameter">{{$alexa_inf[0]['rate_school']}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="td-attribute">Work</td>
+                                                        <td class="td-parameter">{{$alexa_inf[0]['rate_work']}}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -1135,20 +991,22 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
-                                                    <td>facebook</td>
-                                                    <td>2%</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>google</td>
-                                                    <td>3%</td>
-                                                </tr>
+                                                <?php
+                                                $keywords = explode(',', $alexa_inf[0]['top_5_keyword']);
+                                                $rate_keywords = explode(',', $alexa_inf[0]['rate_keyword'])
+                                                ?>
+                                                @for($i = 0 ; $i < 5; $i++)
+                                                    <tr>
+                                                        <td>{{trim($keywords[$i],'"')}}</td>
+                                                        <td>{{trim($rate_keywords[$i],'"')}}</td>
+                                                    </tr>
+                                                @endfor
                                                 </tbody>
 
                                             </table>
                                         </div>
                                         <div class="col-md-6" style="text-align: center">
-                                            <img src="https://traffic.alexa.com/graph?o=lt&y=q&b=ffffff&n=666666&f=999999&p=4e8cff&r=1y&t=2&z=0&c=1&h=150&w=340&u=facebook.com"
+                                            <img src="{{$alexa_inf[0]['image_search_traffic']}}"
                                                  alt="">
                                             <h4 style="text-align: center">Search traffic</h4>
                                         </div>
@@ -1194,22 +1052,29 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="site-link-to-website">
+                                    <div class="website_related">
                                         <div class="col-md-12">
-                                            <h3>Sites link to website</h3>
+                                            <h3>Website related</h3>
                                             <table class="table table-hover">
                                                 <tr>
-                                                    <th>Site</th>
-                                                    <th>Page</th>
+                                                    <th>#</th>
+                                                    <th>Domain</th>
                                                 </tr>
-                                                <tr>
-                                                    <td>baidu.com</td>
-                                                    <td>e.t.qq.com/lgdgaming</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>google.com</td>
-                                                    <td>3c-events.yahoo.com</td>
-                                                </tr>
+                                                <?php
+                                                $website_related = json_decode($alexa_inf[0]['website_related']);
+                                                $i = 0;
+                                                ?>
+                                                @foreach($website_related as $item)
+                                                    <tr>
+                                                        <td>{{$i}}</td>
+                                                        <td>
+                                                            <a href="{{route('informationDomain',['domain_name'=>$item])}}">
+                                                                {{$item}}
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php $i++; ?>
+                                                @endforeach
                                             </table>
                                         </div>
                                     </div>
@@ -1221,113 +1086,201 @@
                                     <h3 class="title-inf">Whois information</h3>
                                     <hr class="hr-inf">
                                     <br>
-                                    <div class="information-who-is">
-                                        <div class="col-md-6">
-                                            <h4 class="danger">Domain information</h4>
-                                            <div class="tech-who-is-inf">
-                                                <table class="table table-hover">
-                                                    <tr class="danger">
-                                                        <th class="th">Attribute</th>
-                                                        <th class="th">Parameter</th>
-                                                    </tr>
-                                                    <tr class="danger">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="danger">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="danger">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="danger">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                </table>
+                                    <div class="information-who-is" style="padding-left: 15px;padding-right: 15px;">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h4 class="danger">Domain information</h4>
+                                                <div class="tech-who-is-inf">
+                                                    <table class="table table-hover">
+                                                        <tr class="danger">
+                                                            <th class="th">Attribute</th>
+                                                            <th class="th">Parameter</th>
+                                                        </tr>
+                                                        <tr class="danger">
+                                                            <td>Domain</td>
+                                                            <td>{{$who_is_inf[0]['domain']}}</td>
+                                                        </tr>
+                                                        <tr class="danger">
+                                                            <td>Registrar</td>
+                                                            <td>{{$who_is_inf[0]['domain_registrar']}}</td>
+                                                        </tr>
+                                                        <tr class="danger">
+                                                            <td>Registration date</td>
+                                                            <td>{{$who_is_inf[0]['domain_registration_date']}}</td>
+                                                        </tr>
+                                                        <tr class="danger">
+                                                            <td>Expiration date</td>
+                                                            <td>{{$who_is_inf[0]['domain_expiration_date']}}</td>
+                                                        </tr>
+                                                        <tr class="danger">
+                                                            <td>Updated date</td>
+                                                            <td>{{$who_is_inf[0]['domain_updated_date']}}</td>
+                                                        </tr>
+                                                        <tr class="danger">
+                                                            <td>Status</td>
+                                                            <td>{!! $who_is_inf[0]['domain_status'] !!}</td>
+                                                        </tr>
+                                                        <tr class="danger">
+                                                            <td>Name servers</td>
+                                                            <td>{!! $who_is_inf[0]['domain_name_servers'] !!}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h4 class="info">Admin contact</h4>
+                                                <div class="domain-who-is-inf">
+                                                    <table class="table table-hover">
+                                                        <tr class="info">
+                                                            <th>Attribute</th>
+                                                            <th>Parameter</th>
+                                                        </tr>
+                                                        <tr class="info">
+                                                            <td>Admin</td>
+                                                            <td>{{$who_is_inf[0]['adm_name']}}</td>
+                                                        </tr>
+                                                        <tr class="info">
+                                                            <td>Organization</td>
+                                                            <td>{{$who_is_inf[0]['adm_organization']}}</td>
+                                                        </tr>
+                                                        <tr class="info">
+                                                            <td>Street</td>
+                                                            <td>{{$who_is_inf[0]['adm_street']}}</td>
+                                                        </tr>
+                                                        <tr class="info">
+                                                            <td>City</td>
+                                                            <td>{{$who_is_inf[0]['adm_city']}}</td>
+                                                        </tr>
+                                                        <tr class="info">
+                                                            <td>State</td>
+                                                            <td>{{$who_is_inf[0]['adm_state']}}</td>
+                                                        </tr>
+                                                        <tr class="info">
+                                                            <td>Poscal code</td>
+                                                            <td>{{$who_is_inf[0]['adm_postal_code']}}</td>
+                                                        </tr>
+                                                        <tr class="info">
+                                                            <td>Country</td>
+                                                            <td>{{$who_is_inf[0]['adm_country']}}</td>
+                                                        </tr>
+                                                        <tr class="info">
+                                                            <td>Phone</td>
+                                                            <td>{{$who_is_inf[0]['adm_phone']}}</td>
+                                                        </tr>
+                                                        <tr class="info">
+                                                            <td>Fax</td>
+                                                            <td>{{$who_is_inf[0]['adm_fax']}}</td>
+                                                        </tr>
+                                                        <tr class="info">
+                                                            <td>Email</td>
+                                                            <td>{{$who_is_inf[0]['adm_email']}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <h4 class="info">Domain information</h4>
-                                            <div class="domain-who-is-inf">
-                                                <table class="table table-hover">
-                                                    <tr class="info">
-                                                        <th>Attribute</th>
-                                                        <th>Parameter</th>
-                                                    </tr>
-                                                    <tr class="info">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="info">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="info">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="info">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                </table>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h4 class="success">Registant contact</h4>
+                                                <div class="adm-who-is-inf">
+                                                    <table class="table table-hover">
+                                                        <tr class="success">
+                                                            <th class="th">Attribute</th>
+                                                            <th class="th">Parameter</th>
+                                                        </tr>
+                                                        <tr class="success">
+                                                            <td>Admin</td>
+                                                            <td>{{$who_is_inf[0]['regis_name']}}</td>
+                                                        </tr>
+                                                        <tr class="success">
+                                                            <td>Organization</td>
+                                                            <td>{{$who_is_inf[0]['regis_organization']}}</td>
+                                                        </tr>
+                                                        <tr class="success">
+                                                            <td>Street</td>
+                                                            <td>{{$who_is_inf[0]['regis_street']}}</td>
+                                                        </tr>
+                                                        <tr class="success">
+                                                            <td>City</td>
+                                                            <td>{{$who_is_inf[0]['regis_city']}}</td>
+                                                        </tr>
+                                                        <tr class="success">
+                                                            <td>State</td>
+                                                            <td>{{$who_is_inf[0]['regis_state']}}</td>
+                                                        </tr>
+                                                        <tr class="success">
+                                                            <td>Poscal code</td>
+                                                            <td>{{$who_is_inf[0]['regis_postal_code']}}</td>
+                                                        </tr>
+                                                        <tr class="success">
+                                                            <td>Country</td>
+                                                            <td>{{$who_is_inf[0]['regis_country']}}</td>
+                                                        </tr>
+                                                        <tr class="success">
+                                                            <td>Phone</td>
+                                                            <td>{{$who_is_inf[0]['regis_phone']}}</td>
+                                                        </tr>
+                                                        <tr class="success">
+                                                            <td>Fax</td>
+                                                            <td>{{$who_is_inf[0]['regis_fax']}}</td>
+                                                        </tr>
+                                                        <tr class="success">
+                                                            <td>Email</td>
+                                                            <td>{{$who_is_inf[0]['regis_email']}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h4 class="success">Domain information</h4>
-                                            <div class="adm-who-is-inf">
-                                                <table class="table table-hover">
-                                                    <tr class="success">
-                                                        <th class="th">Attribute</th>
-                                                        <th class="th">Parameter</th>
-                                                    </tr>
-                                                    <tr class="success">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="success">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="success">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="success">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h4 class="warning">Domain information</h4>
-                                            <div class="regis-who-is-inf">
-                                                <table class="table table-hover">
-                                                    <tr class="warning">
-                                                        <th class="th">Attribute</th>
-                                                        <th class="th">Parameter</th>
-                                                    </tr>
-                                                    <tr class="warning">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="warning">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="warning">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                    <tr class="warning">
-                                                        <td>Domain</td>
-                                                        <td>facebook.com</td>
-                                                    </tr>
-                                                </table>
+                                            <div class="col-md-6">
+                                                <h4 class="warning">Domain information</h4>
+                                                <div class="regis-who-is-inf">
+                                                    <table class="table table-hover">
+                                                        <tr class="warning">
+                                                            <th class="th">Attribute</th>
+                                                            <th class="th">Parameter</th>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <td>Admin</td>
+                                                            <td>{{$who_is_inf[0]['tech_name']}}</td>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <td>Organization</td>
+                                                            <td>{{$who_is_inf[0]['tech_organization']}}</td>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <td>Street</td>
+                                                            <td>{{$who_is_inf[0]['tech_street']}}</td>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <td>City</td>
+                                                            <td>{{$who_is_inf[0]['tech_city']}}</td>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <td>State</td>
+                                                            <td>{{$who_is_inf[0]['tech_state']}}</td>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <td>Poscal code</td>
+                                                            <td>{{$who_is_inf[0]['tech_postal_code']}}</td>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <td>Country</td>
+                                                            <td>{{$who_is_inf[0]['tech_country']}}</td>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <td>Phone</td>
+                                                            <td>{{$who_is_inf[0]['tech_phone']}}</td>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <td>Fax</td>
+                                                            <td>{{$who_is_inf[0]['tech_fax']}}</td>
+                                                        </tr>
+                                                        <tr class="warning">
+                                                            <td>Email</td>
+                                                            <td>{{$who_is_inf[0]['tech_email']}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1340,43 +1293,4 @@
         </div>
     </section>
     <!-- End Portfolio Section -->
-
-   @include('frontend.layouts.footer')
-
-
-</div>
-<!-- End Page Wrap -->
-<!-- JS -->
-<script type="text/javascript" src="frontend/js/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.easing.1.3.js"></script>
-<script type="text/javascript" src="frontend/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="frontend/js/SmoothScroll.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.scrollTo.min.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.localScroll.min.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.viewport.mini.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.countTo.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.appear.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.sticky.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.parallax-1.1.3.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.fitvids.js"></script>
-<script type="text/javascript" src="frontend/js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="frontend/js/isotope.pkgd.min.js"></script>
-<script type="text/javascript" src="frontend/js/imagesloaded.pkgd.min.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.magnific-popup.min.js"></script>
-<!-- Replace test API Key "AIzaSyAZsDkJFLS0b59q7cmW0EprwfcfUA8d9dg" with your own one below
-**** You can get API Key here - https://developers.google.com/maps/documentation/javascript/get-api-key -->
-<script type="text/javascript"
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsDkJFLS0b59q7cmW0EprwfcfUA8d9dg"></script>
-<script type="text/javascript" src="frontend/js/gmap3.min.js"></script>
-<script type="text/javascript" src="frontend/js/wow.min.js"></script>
-<script type="text/javascript" src="frontend/js/masonry.pkgd.min.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.simple-text-rotator.min.js"></script>
-<script type="text/javascript" src="frontend/js/all.js"></script>
-<script type="text/javascript" src="frontend/js/contact-form.js"></script>
-<script type="text/javascript" src="frontend/js/jquery.ajaxchimp.min.js"></script>
-<!--[if lt IE 10]>
-<script type="text/javascript" src="frontend/js/placeholder.js"></script><![endif]-->
-<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
-</body>
-</html>
+@endsection

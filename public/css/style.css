@@ -108,7 +108,7 @@ body .information-website {
       filter: blur(6px); }
     body .information-website .right .table .stickyHeader-screenshotContainer img {
       position: relative;
-      max-width: 250px; }
+      max-width: 300px; }
   body .information-website .right .rank {
     padding: 20px;
     border: 1px solid rgba(216, 216, 216, 0.5);

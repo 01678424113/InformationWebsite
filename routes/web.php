@@ -16,7 +16,8 @@ Route::get('/', 'Frontend\HomeController@home');
 Route::get('/top-500','Frontend\HomeController@home')->name('top500');
 
 Route::get('/get-information-web/{domain_name}', 'Frontend\HomeController@getInformationDomain')->name('getInformationDomain');
-Route::get('/{domain_name}', 'Frontend\HomeController@informationWebsite')->name('informationWebsite');
+Route::get('/{domain_name}', 'Frontend\HomeController@informationDomain')->name('informationDomain');
+Route::get('/update/{domain_name}', 'Frontend\HomeController@updateInformationDomain')->name('updateInformationDomain');
 
 Auth::routes();
 
@@ -30,7 +31,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/list-top-500', 'Admin\Top500Controller@listTop500')->name('listTop500');
     //Domain
     Route::get('/list-domain', 'Admin\DomainController@listDomain')->name('listDomain');
-    Route::get('/information-domain', 'Admin\DomainController@informationDomain')->name('informationDomain');
+    Route::get('/information-domain', 'Admin\DomainController@informationDomain')->name('informationDomainAdmin');
     //Setting
     Route::get('/list-setting-domain', 'Admin\SettingController@listSettingDomain')->name('listSettingDomain');
     Route::get('/add-setting-domain', 'Admin\SettingController@getAddSettingDomain')->name('getAddSettingDomain');

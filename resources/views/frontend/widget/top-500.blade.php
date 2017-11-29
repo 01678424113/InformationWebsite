@@ -74,7 +74,9 @@
                                     @endif"
                                     >
                                         <td>{{$i}}</td>
-                                        <td>{{$domain_relative->domain}}</td>
+                                        <td>
+                                            <a href="{{route('informationDomain',['domain_name'=>$domain_relative->domain])}}">{{$domain_relative->domain}}</a>
+                                        </td>
                                         <td>{{$domain_relative->alexa->global_rank}}</td>
                                     </tr>
                                     <?php $i++; ?>

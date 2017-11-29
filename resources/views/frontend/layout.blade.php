@@ -50,7 +50,7 @@
 
 <!-- JS -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="js/numscroller-1.0.js"></script>
+<script type="text/javascript" src="js/numscroller-1.0.js"></script>
 <script type="text/javascript" src="frontend/js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="frontend/js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="frontend/js/bootstrap.min.js"></script>
@@ -78,6 +78,7 @@
 <script type="text/javascript" src="frontend/js/contact-form.js"></script>
 <script type="text/javascript" src="frontend/js/jquery.ajaxchimp.min.js"></script>
 <!--[if lt IE 10]><script type="text/javascript" src="frontend/js/placeholder.js"></script><![endif]-->
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
     $('.input-search').change(function () {
         var domain = $('.input-search').val();
