@@ -78,7 +78,12 @@
 <script type="text/javascript" src="frontend/js/contact-form.js"></script>
 <script type="text/javascript" src="frontend/js/jquery.ajaxchimp.min.js"></script>
 <!--[if lt IE 10]><script type="text/javascript" src="frontend/js/placeholder.js"></script><![endif]-->
-
+<script>
+    $('.input-search').change(function () {
+        var domain = $('.input-search').val();
+        $('.btn-search').attr('href', '/InformationWebsite/public/' + domain);
+    })
+</script>
 @yield('script')
 </body>
 </html>

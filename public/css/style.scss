@@ -6,6 +6,9 @@ body {
     color: white;
     font-size: 16px;
     border: 1px solid white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
     &:hover {
       background: #ffffff45 !important;
       color: white;

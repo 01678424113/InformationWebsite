@@ -47,23 +47,23 @@
                 <!-- Item With Sub -->
                 <li>
                     <a href="#" class="mn-has-sub">Home</a>
-{{--
-                    <!-- Sub Multilevel -->
-                    <ul class="mn-sub mn-has-multi">
+                    {{--
+                                        <!-- Sub Multilevel -->
+                                        <ul class="mn-sub mn-has-multi">
 
-                        <!-- Sub Column -->
-                        <li class="mn-sub-multi">
-                            <ul>
-                                <li>
-                                    <a href="mp-index.html">Main Demo</a>
-                                </li>
-                            </ul>
+                                            <!-- Sub Column -->
+                                            <li class="mn-sub-multi">
+                                                <ul>
+                                                    <li>
+                                                        <a href="mp-index.html">Main Demo</a>
+                                                    </li>
+                                                </ul>
 
-                        </li>
-                        <!-- End Sub Column -->
+                                            </li>
+                                            <!-- End Sub Column -->
 
-                    </ul>
-                    <!-- End Sub Multilevel -->--}}
+                                        </ul>
+                                        <!-- End Sub Multilevel -->--}}
 
                 </li>
                 <!-- End Item With Sub -->
@@ -118,19 +118,17 @@
                     {{-- <a href="#about" class="btn btn-mod btn-border-w btn-medium btn-round hidden-xs">See More</a>
                      <span class="hidden-xs">&nbsp;</span>
                      <a href="http://vimeo.com/50201327" class="btn btn-mod btn-border-w btn-medium btn-round lightbox mfp-iframe">Play Reel</a>--}}
-                    <form action="{{route('getInformationDomain')}}" method="get">
-                        {{csrf_field()}}
-                        <div class="input-group" style="max-width: 700px;margin: auto;">
-                            <input type="text" class="form-control"
-                                   style="height: 50px;background: #ffffff12;color: white;" name="txt-domain"
-                                   placeholder="Enter domain ...">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default btn-search" type="submit">
-                                    Search
-                                </button>
-                            </div>
+
+                    <div class="input-group" style="max-width: 700px;margin: auto;">
+                        <input type="text" class="form-control input-search"
+                               style="height: 50px;background: #ffffff12;color: white;" name="txt-domain"
+                               placeholder="Enter domain ...">
+                        <div class="input-group-btn">
+                            <a class="btn btn-default btn-search" href="">
+                                Search
+                            </a>
                         </div>
-                    </form>
+                    </div>
                 </div>
 
             </div>

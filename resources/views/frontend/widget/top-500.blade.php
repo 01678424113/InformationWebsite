@@ -29,7 +29,11 @@
                                     @endif"
                                     >
                                         <td>{{$top_10->rank}}</td>
-                                        <td>{{$top_10->root_domain}}</td>
+                                        <td>
+                                            <a href="{{route('informationDomain',['domain_name'=>$top_10->root_domain])}}">
+                                                {{$top_10->root_domain}}
+                                            </a>
+                                        </td>
                                         <td>{{$top_10->linking_root_domain}}</td>
                                         <td>{{$top_10->external_link}}</td>
                                         <td>{{$top_10->domain_mozrank}}</td>
