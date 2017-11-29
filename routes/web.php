@@ -21,8 +21,9 @@ Auth::routes();
 
 
 //Admin
-Route::group(['prefix'=>'admin'],function (){
+Route::group(['prefix'=>'admin','middleware'=>'auth'],function (){
    Route::get('/','Admin\AdminController@index')->name('home_admin');
+   Route::get('/logout','Admin\AdminController@logout')->name('logout');
     //Top 500
    Route::get('/list-top-500','Admin\Top500Controller@listTop500')->name('listTop500');
     //Domain

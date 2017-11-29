@@ -30,7 +30,7 @@ class SettingController extends Controller
 
         $response['settings'] = $settings_query->paginate(20);
 
-        return view('admin.setting.list-index', $response);
+        return view('admin.setting.list-domain', $response);
     }
 
     public function getAddSettingDomain()
@@ -45,8 +45,8 @@ class SettingController extends Controller
     public function postAddSettingDomain(SettingRequest $request)
     {
         $setting = new Setting();
-        $setting->setting_page = $request->setting_page;
-        $setting->key_setting = $request->key_setting;
+        $setting->setting_page = 'domain';
+        $setting->key_setting = 'domain';
         $setting->value_setting = $request->value_setting;
         $setting->created_at = round(microtime(true));
         try {
@@ -206,7 +206,7 @@ class SettingController extends Controller
             return redirect()->back()->with('error', 'Setting is not exist !');
         }
         $response = [
-            'title' => 'Edit setting: ' . $setting->key_setting,
+            'title' => 'Edit setting : ' . $setting->key_setting,
             'page'=>'setting'
         ];
         /* switch ($setting->setting_page){

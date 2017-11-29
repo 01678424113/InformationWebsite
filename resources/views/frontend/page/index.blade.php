@@ -10,9 +10,9 @@
 
         @include('frontend.widget.block-seven')
 
-        @include('frontend.widget.block-eight')
+        @include('frontend.widget.block-last-new')
 
-        @include('frontend.widget.block-nine')
+        @include('frontend.widget.block-subcribe')
 
 
     </div>

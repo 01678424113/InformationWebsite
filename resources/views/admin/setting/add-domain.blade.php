@@ -38,15 +38,15 @@
                     <div class="col-md-9">
                         <div class="form-group">
                             <label>Key setting</label>
-                            <input class="form-control" placeholder="Enter text" name="key_setting">
+                            <input class="form-control" placeholder="Enter text" name="key_setting" value="domain" readonly>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Value setting</label>
-                            <textarea class="form-control" rows="3" name="value_setting"></textarea>
+                            <input type="text" name="value_setting" class="form-control">
                         </div>
-                        <button type="submit" class="btn btn-default">Add setting</button>
+                        <button type="submit" class="btn btn-default">Add domain</button>
                         <a href="{{URL::previous()}}" class="btn btn-default">Return</a>
                     </div>
                 </form>

@@ -10,24 +10,6 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
-                <div class="panel-heading" style="height: 55px">
-                    <div class="col-md-6" style="height: 100%;display: flex;align-items: center;">
-                        List settings view
-                    </div>
-                    <div class="col-md-4">
-                        <form action="{{route('listSettingKeyword')}}" method="get">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" name="key_setting_search"
-                                       placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
-                        </form>
-                    </div>
-                </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     @if(session('error'))
@@ -60,7 +42,8 @@
                                            class="btn btn-info">Edit</a>
                                     </td>
                                     <td class="center">
-                                        <button type="button" data-toggle="modal" data-target="#myModal-{{$setting->id}}"
+                                        <button type="button" data-toggle="modal"
+                                                data-target="#myModal-{{$setting->id}}"
                                                 class="btn btn-danger" disabled>Delete
                                         </button>
                                         <!-- Modal delete -->
@@ -78,8 +61,9 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <a href="{{route('deleteSetting',['setting_id'=>$setting->id])}}"
-                                                           class="btn btn-danger" disabled="" >Delete</a>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                           class="btn btn-danger" disabled="">Delete</a>
+                                                        <button type="button" class="btn btn-default"
+                                                                data-dismiss="modal">
                                                             Cancel
                                                         </button>
                                                     </div>

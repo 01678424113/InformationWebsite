@@ -4,10 +4,6 @@
 
         <h2 class="section-title font-alt align-left mb-70 mb-sm-40">
             Latest News
-
-            <a href="blog-classic-sidebar-right.html" class="section-more right">All News in our blog <i
-                        class="fa fa-angle-right"></i></a>
-
         </h2>
 
         <div class="row multi-columns-row">

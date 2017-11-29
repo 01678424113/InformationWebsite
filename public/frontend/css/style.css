@@ -1570,7 +1570,9 @@ a.logo:hover{
     top: 100%;
     left: 0;
     padding: 0;
-    background: rgba(30,30,30, .97);
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #98a5a5ab;
 }
 .mn-sub li{
     display: block;
@@ -1593,7 +1595,7 @@ a.logo:hover{
     border-left: none;
     border-right: none;
     letter-spacing: 0;
-    color: #b0b0b0 !important;
+    color: #777!important;
     cursor: pointer;
 }
 
@@ -1605,7 +1607,8 @@ a.logo:hover{
 .inner-nav ul li .mn-sub li a:hover,
 .mn-sub li a.active{
     background: rgba(255,255,255, .09);
-    color: #f5f5f5 !important;
+    color: black !important;
+    font-weight: 600;
 }
 
 .mn-sub li ul{

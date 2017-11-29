@@ -24,8 +24,6 @@
 
                         <!-- Sub Column -->
                         <li class="mn-sub-multi">
-                            <a class="mn-group-title">Multi Page</a>
-
                             <ul>
                                 <li>
                                     <a href="mp-index.html">Main Demo</a>
@@ -79,24 +77,6 @@
 
                 </li>
                 <!-- End Item With Sub -->
-
-                <!-- Divider -->
-                <li><a>&nbsp;</a></li>
-                <!-- End Divider -->
-
-                <!-- Search -->
-                <li>
-                    <a href="#" class="mn-has-sub"><i class="fa fa-search"></i> Search</a>
-
-                </li>
-                <!-- End Search -->
-
-                <!-- Cart -->
-                <li>
-                    <a href="#"><i class="fa fa-shopping-cart"></i> Cart(0)</a>
-                </li>
-                <!-- End Cart -->
-
                 <!-- Languages -->
                 <li>
                     <a href="#" class="mn-has-sub">Eng <i class="fa fa-angle-down"></i></a>
