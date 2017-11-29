@@ -263,11 +263,11 @@
                                         <tbody>
                                         <tr>
                                             <td>Domain</td>
-                                            <td>{{$who_is_inf[0]->domain_domain}}</td>
+                                            <td>{{$who_is_inf[0]->domain}}</td>
                                         </tr>
                                         <tr>
                                             <td>Registrar</td>
-                                            <td>{{$who_is_inf[0]->domain_regitrar}}</td>
+                                            <td>{{$who_is_inf[0]->domain_registrar}}</td>
                                         </tr>
                                         <tr>
                                             <td>Registration date</td>

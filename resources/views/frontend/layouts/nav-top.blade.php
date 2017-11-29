@@ -2,11 +2,40 @@
 <nav class="main-nav js-stick" style="box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);">
     <div class="full-wrapper relative clearfix">
         <!-- Logo ( * your text or image into link tag *) -->
+        <style>
+            .search-nav-top {
+                width: 130px;
+                box-sizing: border-box;
+                border: 2px solid #ccc;
+                border-radius: 4px;
+                font-size: 16px;
+                background-color: white;
+                background-image: url('https://www.w3schools.com/howto/searchicon.png');
+                background-position: 10px 10px;
+                background-repeat: no-repeat;
+                padding: 6px 20px 6px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+                margin-left: 20px;
+                position: absolute;
+                top: 8px;
+            }
+
+            .search-nav-top:focus {
+                width: 300px;
+            }
+        </style>
         <div class="nav-logo-wrap local-scroll">
-            <a href="mp-index.html" class="logo">
-                <img src="frontend/images/logo-dark.png" alt="" />
+            <span>
+                <a href="mp-index.html" class="logo">
+                <img src="frontend/images/logo-dark.png" alt=""/>
             </a>
+                 <input type="text" class="search-nav-top" name="search" placeholder="Search..">
+            </span>
+
         </div>
+
+
         <div class="mobile-nav">
             <i class="fa fa-bars"></i>
         </div>
@@ -17,8 +46,8 @@
 
                 <!-- Item With Sub -->
                 <li>
-                    <a href="#" class="mn-has-sub">Home <i class="fa fa-angle-down"></i></a>
-
+                    <a href="#" class="mn-has-sub">Home</a>
+{{--
                     <!-- Sub Multilevel -->
                     <ul class="mn-sub mn-has-multi">
 
@@ -34,46 +63,14 @@
                         <!-- End Sub Column -->
 
                     </ul>
-                    <!-- End Sub Multilevel -->
+                    <!-- End Sub Multilevel -->--}}
 
                 </li>
                 <!-- End Item With Sub -->
 
                 <!-- Item With Sub -->
                 <li>
-                    <a href="#" class="mn-has-sub">Pages <i class="fa fa-angle-down"></i></a>
-
-                </li>
-                <!-- End Item With Sub -->
-
-                <!-- Item With Sub -->
-                <li>
-                    <a href="#" class="mn-has-sub">Elements <i class="fa fa-angle-down"></i></a>
-
-
-                </li>
-                <!-- End Item With Sub -->
-
-                <!-- Item With Sub -->
-                <li>
-                    <a href="#" class="mn-has-sub active">Portfolio <i class="fa fa-angle-down"></i></a>
-
-
-                </li>
-                <!-- End Item With Sub -->
-
-                <!-- Item With Sub -->
-                <li>
-                    <a href="#" class="mn-has-sub">Blog <i class="fa fa-angle-down"></i></a>
-
-
-                </li>
-                <!-- End Item With Sub -->
-
-                <!-- Item With Sub -->
-                <li>
-                    <a href="#" class="mn-has-sub">Shop <i class="fa fa-angle-down"></i></a>
-
+                    <a href="{{route('top500')}}" class="mn-has-sub">Top 500 domain</a>
 
                 </li>
                 <!-- End Item With Sub -->
@@ -124,7 +121,9 @@
                     <form action="{{route('getInformationDomain')}}" method="get">
                         {{csrf_field()}}
                         <div class="input-group" style="max-width: 700px;margin: auto;">
-                            <input type="text" class="form-control" style="height: 50px;background: #ffffff12;color: white;" name="txt-domain" placeholder="Enter domain ...">
+                            <input type="text" class="form-control"
+                                   style="height: 50px;background: #ffffff12;color: white;" name="txt-domain"
+                                   placeholder="Enter domain ...">
                             <div class="input-group-btn">
                                 <button class="btn btn-default btn-search" type="submit">
                                     Search

@@ -1,5 +1,5 @@
 <!-- Foter -->
-<footer class="page-section bg-gray-lighter footer pb-60" style="padding-top: 5px">
+<footer class="page-section bg-gray-lighter footer pb-60" style="padding-top: 30px;background-color: #776d6d52;">
     <div class="container">
 
         <!-- Footer Logo -->

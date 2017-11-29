@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Frontend;
 
 use App\AlexaInformation;
 use App\Domain;
@@ -9,46 +8,37 @@ use App\Top500Domain;
 use App\WebsiteInformation;
 use App\WhoisInformation;
 use Illuminate\Http\Request;
-use Sunra\PhpSimple\HtmlDomParser;
+use App\Http\Controllers\Controller;
 use Spatie\Browsershot\Browsershot;
+use Sunra\PhpSimple\HtmlDomParser;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
- /*     public function __construct()
-      {
-          $this->middleware('auth');
-      }*/
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function home()
     {
         $response = [
             'title' => 'Home'
         ];
-        $top_500s = Top500Domain::all();
-        $response['top_500s'] = $top_500s;
+        $top_10s = Top500Domain::where('id','<',11)->get();
+        $response['top_10s'] = $top_10s;
+
+        $domain_relative_query = Domain::select([
+            'id',
+            'domain',
+            'created_at'
+        ]);
+        $response['domain_relatives'] = $domain_relative_query->orderBy('created_at','DESC')->take(1)->get();
         return view('frontend.page.index', $response);
     }
-
     public function informationWebsite()
     {
         return view('frontend.page.information-website');
     }
-
     public function getInformationDomain(Request $request)
     {
         $domain = $request->input('txt-domain');
         $check_domain = Domain::where('domain', $domain)->first();
-        if (isset($check_domain)) {
+        if (!isset($check_domain)) {
 
             $new_domain = new Domain();
             $new_domain->domain = $domain;
@@ -379,51 +369,49 @@ class HomeController extends Controller
             }
             try {
                 $who_is_information->save();
-                return redirect()->back();
+                $alexa_inf = AlexaInformation::where('domain_id',$domain_id)->get();
+                $website_inf = WebsiteInformation::where('domain_id',$domain_id)->get();
+                $whois_inf = WhoisInformation::where('domain_id',$domain_id)->get();
+
+
+                $response['alexa_inf'] = $alexa_inf;
+                $response['website_inf'] = $website_inf;
+                $response['who_is_inf'] = $whois_inf;
+                return view('frontend.page.information-website',$response);
             } catch (\Exception $e) {
                 return redirect()->back()->with('error', 'Error connect database !');
             }
             //-----------------------------------------------------------------------------------------//
             //--------------------------------------End Who is-----------------------------------------//
             //-----------------------------------------------------------------------------------------//
-
-
         }
-
-
+        else{
+            return redirect()->route('informationDomain',['domain_name'=>$domain]);
+        }
     }
 
-    public function getTop500()
+    public function informationDomain($domain_name)
     {
-        $html = HtmlDomParser::file_get_html('https://moz.com/top500');
-        $top_500_key = $html->find('table#top-500 thead tr th');
-        $top_500_value = $html->find('table#top-500 tbody tr');
-        $top_500 = [];
-        foreach ($top_500_value as $item) {
-            $i = 0;
-            foreach ($item->find('td') as $item_2) {
-                $top_500[] = [
-                    $top_500_key[$i]->innertext() => trim(strip_tags($item_2->innertext()))
-                ];
-                $i++;
-            }
+        $response = [
+            'title'=>'Information website : '.$domain_name
+        ];
+        $domain = Domain::where('domain',$domain_name)->first();
+        if(isset($domain)){
+            $domain_id = $domain->id;
+
+            $alexa_inf = AlexaInformation::where('domain_id',$domain_id)->get();
+            $website_inf = WebsiteInformation::where('domain_id',$domain_id)->get();
+            $whois_inf = WhoisInformation::where('domain_id',$domain_id)->get();
+
+
+            $response['alexa_inf'] = $alexa_inf;
+            $response['website_inf'] = $website_inf;
+            $response['who_is_inf'] = $whois_inf;
+            return view('frontend.page.information-website',$response);
         }
-        $j = 0;
-        for ($i = 0; $i < 3500; $i += 7) {
-            $top_new[] = array(
-                $j => array(
-                    $top_500[$i],
-                    $top_500[$i + 1],
-                    $top_500[$i + 2],
-                    $top_500[$i + 3],
-                    $top_500[$i + 4],
-                    $top_500[$i + 5],
-                    $top_500[$i + 6]
-                )
-            );
-            $j++;
-        }
-        var_dump($top_new);
-        die;
+    }
+    public function updateInformationDomain()
+    {
+
     }
 }

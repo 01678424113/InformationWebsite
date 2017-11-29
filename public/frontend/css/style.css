@@ -1536,7 +1536,7 @@ a.logo:hover{
     position: relative;
 }
 .inner-nav ul li a{
-    color: #777;
+    color: #1e3651;
     letter-spacing: 2px;
     display: inline-block;
     -moz-box-sizing: border-box;
@@ -1555,7 +1555,7 @@ a.logo:hover{
 }  
 .inner-nav ul li a:hover,
 .inner-nav ul li a.active{
-    color: #000;
+    color: #337ab7;
     text-decoration: none;
 }
 
@@ -2366,6 +2366,7 @@ a.logo:hover{
     box-sizing: border-box;
     
     padding: 20px 0;
+    padding-bottom: 40px;
 }
 .small-section{
     padding: 70px 0;

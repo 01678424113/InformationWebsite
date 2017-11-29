@@ -8,6 +8,12 @@ class Domain extends Model
 {
     //
     protected $table = 'domains';
+    protected $primaryKey = 'id';
+
+    public function alexa()
+    {
+        return $this->hasOne(AlexaInformation::class);
+    }
 
 
 }

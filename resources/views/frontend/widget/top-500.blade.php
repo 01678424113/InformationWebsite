@@ -1,70 +1,89 @@
 <!-- About Section -->
 <section class="page-section" id="about">
     <div class="container relative">
-
-        <h2 class="section-title font-alt align-left mb-20 mb-sm-40">
-           Top 500 domain
-        </h2>
-
         <div class="section-text mb-50 mb-sm-20">
             <div class="row">
-
-                {{--<div class="col-md-4">
-                    <blockquote>
-                        <p>
-                            Design is&nbsp;not making beauty, beauty emerges from selection, affinities, integration, love.
-                        </p>
-                        <footer>
-                            Louis Kahn
-                        </footer>
-                    </blockquote>
-                </div>
-
-                <div class="col-md-4 col-sm-6 mb-sm-50 mb-xs-30">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In maximus ligula semper metus pellentesque mattis. Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
-                </div>
-
-                <div class="col-md-4 col-sm-6 mb-sm-50 mb-xs-30">
-                    Etiam sit amet fringilla lacus. Pellentesque suscipit ante at ullamcorper pulvinar neque porttitor. Integer lectus. Praesent sed nisi eleifend, fermentum orci amet, iaculis libero. Donec vel ultricies purus. Nam dictum sem, eu aliquam.
-                </div>--}}
-                <div class="table-top-500">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Root domain</th>
-                            <th>Linking Root Domains</th>
-                            <th>External Links</th>
-                            <th>Domain mozRank</th>
-                            <th>Domain mozTrust</th>
-                            <th>Change</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($top_500s as $top_500)
-                            <tr class="
-                            @if((int)$top_500->rank % 2 == 0)
-                                {{"active"}}
-                                    @endif"
-                            >
-                                <td>{{$top_500->rank}}</td>
-                                <td>{{$top_500->root_domain}}</td>
-                                <td>{{$top_500->linking_root_domain}}</td>
-                                <td>{{$top_500->external_link}}</td>
-                                <td>{{$top_500->domain_mozrank}}</td>
-                                <td>{{$top_500->domain_moztrust}}</td>
-                                <td>{{$top_500->change_rank}}</td>
+                <div class="col-md-8">
+                    <h2 class="section-title font-alt align-left mb-20 mb-sm-40">
+                        Top 10 domain
+                    </h2>
+                    <div class="table-top-500">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Root domain</th>
+                                <th>Linking Root Domains</th>
+                                <th>External Links</th>
+                                <th>Domain mozRank</th>
+                                <th>Domain mozTrust</th>
+                                <th>Change</th>
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            @if(count($top_10s) > 0)
+                                <tbody>
+                                @foreach($top_10s as $top_10)
+                                    <tr class="
+                            @if((int)$top_10->rank % 2 == 0)
+                                    {{"active"}}
+                                    @endif"
+                                    >
+                                        <td>{{$top_10->rank}}</td>
+                                        <td>{{$top_10->root_domain}}</td>
+                                        <td>{{$top_10->linking_root_domain}}</td>
+                                        <td>{{$top_10->external_link}}</td>
+                                        <td>{{$top_10->domain_mozrank}}</td>
+                                        <td>{{$top_10->domain_moztrust}}</td>
+                                        <td>{{$top_10->change_rank}}</td>
+                                    </tr>
+                                @endforeach
+                                <tr>
+                                    <td colspan="7" style="text-align: center">
+                                        <a href="">View more ...</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            @endif
+                        </table>
+                    </div>
                 </div>
-
+                <div class="col-md-4">
+                    <h2 class="section-title font-alt align-left mb-20 mb-sm-40">
+                        New checklist
+                    </h2>
+                    <div class="table-top-500">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Domain</th>
+                                <th>Rank</th>
+                            </tr>
+                            </thead>
+                            @if(count($domain_relatives) > 0)
+                                <tbody>
+                                <?php $i = 1; ?>
+                                @foreach($domain_relatives as $domain_relative)
+                                    <tr class="
+                            @if($i % 2 == 0)
+                                    {{"active"}}
+                                    @endif"
+                                    >
+                                        <td>{{$i}}</td>
+                                        <td>{{$domain_relative->domain}}</td>
+                                        <td>{{$domain_relative->alexa->global_rank}}</td>
+                                    </tr>
+                                    <?php $i++; ?>
+                                @endforeach
+                                </tbody>
+                            @endif
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="row">
-
             <!-- Team item -->
             <div class="col-sm-4 mb-xs-30 wow fadeInUp">
                 <div class="team-item">
