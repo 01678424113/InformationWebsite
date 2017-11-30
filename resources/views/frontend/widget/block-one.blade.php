@@ -24,7 +24,7 @@
                                 <tbody>
                                 @foreach($top_10s as $top_10)
                                     <tr class="
-                            @if((int)$top_10->rank % 2 == 0)
+                                    @if((int)$top_10->rank % 2 == 0)
                                     {{"active"}}
                                     @endif"
                                     >
@@ -36,8 +36,8 @@
                                         </td>
                                         <td>{{$top_10->linking_root_domain}}</td>
                                         <td>{{$top_10->external_link}}</td>
-                                        <td>{{$top_10->domain_mozrank}}</td>
-                                        <td>{{$top_10->domain_moztrust}}</td>
+                                        <td style="color: #24ABE2">{{$top_10->domain_mozrank}}</td>
+                                        <td style="color: red">{{$top_10->domain_moztrust}}</td>
                                         <td>{{$top_10->change_rank}}</td>
                                     </tr>
                                 @endforeach
@@ -64,12 +64,12 @@
                                 <th>Rank</th>
                             </tr>
                             </thead>
-                            @if(count($domain_relatives) > 0)
+                        @if(count($domain_relatives) > 0)
                                 <tbody>
                                 <?php $i = 1; ?>
                                 @foreach($domain_relatives as $domain_relative)
                                     <tr class="
-                            @if($i % 2 == 0)
+                                    @if($i % 2 == 0)
                                     {{"active"}}
                                     @endif"
                                     >

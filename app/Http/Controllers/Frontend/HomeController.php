@@ -260,7 +260,7 @@ class HomeController extends Controller
                         $icon = "";
                     }
                 }
-                if (strpos($icon, 'http') != 0) {
+                if (strpos($icon, 'http') === false) {
                     $icon = 'http://' . $domain . $icon;
                 }
                 //Screen short website
@@ -474,12 +474,30 @@ class HomeController extends Controller
                 $html_whois = HtmlDomParser::file_get_html('https://www.whois.com/whois/' . $domain);
                 $df_block = $html_whois->find('div.df-block');
                 //DOMAIN INFORMATION
-                $domain_whois_informations = $df_block[0]->find('.df-row');
-                $i = 0;
                 $who_is_information = new WhoisInformation();
                 $who_is_information->domain_id = $domain_id;
                 $who_is_information->domain = $domain;
-                if (isset($domain_whois_informations)) {
+                foreach ($df_block as $item_block) {
+                    if(isset($item_block->find('.df-heading')[0])){
+                        switch ($item_block->find('.df-heading')[0]->innertext()) {
+                            case 'Domain Information' :
+                                $domain_block = $item_block;
+                                break;
+                            case 'Registrant Contact' :
+                                $regis_block = $item_block;
+                                break;
+                            case 'Administrative Contact' :
+                                $adm_block = $item_block;
+                                break;
+                            case 'Technical Contact' :
+                                $tech_block = $item_block;
+                                break;
+                        }
+                    }
+                }
+
+                if (isset($domain_block)) {
+                    $domain_whois_informations = $domain_block->find('.df-row');
                     foreach ($domain_whois_informations as $item) {
                         $domain_whois_information[] = [
                             $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
@@ -511,7 +529,7 @@ class HomeController extends Controller
                         }
                     }
                 }
-                isset($who_is_information->domain_registrar) ?: $who_is_information->domain_registrar = "N/A";
+                isset($who_is_information->domain_registrar) ?: $who_is_information->domain_registrar = "$domain";
                 isset($who_is_information->domain_registration_date) ?: $who_is_information->domain_registration_date = "N/A";
                 isset($who_is_information->domain_expiration_date) ?: $who_is_information->domain_expiration_date = "N/A";
                 isset($who_is_information->domain_updated_date) ?: $who_is_information->domain_updated_date = "N/A";
@@ -519,22 +537,8 @@ class HomeController extends Controller
                 isset($who_is_information->domain_name_servers) ?: $who_is_information->domain_name_servers = "N/A";
 
                 //REGISTRANT CONTACT
-                foreach ($df_block as $item_block) {
-                    switch ($item_block->find('.df-heading')[0]->innertext()) {
-                        case 'Registrant Contact' :
-                            $regis_block = $item_block;
-                            break;
-                        case 'Administrative Contact' :
-                            $adm_block = $item_block;
-                            break;
-                        case 'Technical Contact' :
-                            $tech_block = $item_block;
-                            break;
-                    }
-                }
                 if (isset($regis_block)) {
                     $registrant_whois_contacts = $regis_block->find('.df-row');
-                    $i = 0;
                     if (isset($registrant_whois_contacts)) {
                         foreach ($registrant_whois_contacts as $item) {
                             $registrant_whois_contact[] = [
@@ -597,7 +601,6 @@ class HomeController extends Controller
                 //ADMINISTRATIVE CONTACT
                 if (isset($adm_block)) {
                     $administrative_whois_contacts = $adm_block->find('.df-row');
-                    $i = 0;
                     if (isset($administrative_whois_contacts)) {
                         foreach ($administrative_whois_contacts as $item) {
                             $administrative_whois_contact[] = [
@@ -660,7 +663,6 @@ class HomeController extends Controller
                 //TECHNICAL CONTACT
                 if (isset($tech_block)) {
                     $technical_whois_contacts = $tech_block->find('.df-row');
-                    $i = 0;
                     if (isset($technical_whois_contacts)) {
                         foreach ($technical_whois_contacts as $item) {
                             $technical_whois_contact[] = [
@@ -714,7 +716,7 @@ class HomeController extends Controller
                 }
                 isset($who_is_information->tech_name) ?: $who_is_information->tech_name = "$domain";
                 isset($who_is_information->tech_organization) ?: $who_is_information->tech_organization = "N/A";
-                isset($who_is_information->tech_street) ?: $who_is_information->techstreet = "N/A";
+                isset($who_is_information->tech_street) ?: $who_is_information->tech_street = "N/A";
                 isset($who_is_information->tech_city) ?: $who_is_information->tech_city = "N/A";
                 isset($who_is_information->tech_state) ?: $who_is_information->tech_state = "N/A";
                 isset($who_is_information->tech_postal_code) ?: $who_is_information->tech_postal_code = "N/A";
@@ -724,17 +726,18 @@ class HomeController extends Controller
                 isset($who_is_information->tech_email) ?: $who_is_information->tech_email = "N/A";
                 try {
                     $who_is_information->save();
-
                     return redirect()->route('informationDomain', ['domain_name' => $domain]);
                 } catch (Exception $e) {
+                    $new_domain->delete();
+                    dd($e);
                     return redirect()->back()->with('error', 'Error connect database !');
                 }
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------End Who is-----------------------------------------//
                 //-----------------------------------------------------------------------------------------//
             } catch (Exception $e) {
-                dd($e);
                 $new_domain->delete();
+                dd($e);
                 return redirect()->back()->with('error', 'Error connect database !');
             }
 
@@ -972,7 +975,7 @@ class HomeController extends Controller
                 $icon = $icon[0]->href;
             }
         }
-        if (!strpos($icon, 'http')) {
+        if (strpos($icon, 'http') === false) {
             $icon = 'http://' . $domain . $icon;
         }
         //Screen short website
@@ -1018,12 +1021,30 @@ class HomeController extends Controller
         $html_whois = HtmlDomParser::file_get_html('https://www.whois.com/whois/' . $domain);
         $df_block = $html_whois->find('div.df-block');
         //DOMAIN INFORMATION
-        $domain_whois_informations = $df_block[0]->find('.df-row');
-        $i = 0;
         $who_is_information = WhoisInformation::where('domain_id',$domain_id)->first();
         $who_is_information->domain_id = $domain_id;
         $who_is_information->domain = $domain;
-        if (isset($domain_whois_informations)) {
+        foreach ($df_block as $item_block) {
+            if(isset($item_block->find('.df-heading')[0])){
+                switch ($item_block->find('.df-heading')[0]->innertext()) {
+                    case 'Domain Information' :
+                        $domain_block = $item_block;
+                        break;
+                    case 'Registrant Contact' :
+                        $regis_block = $item_block;
+                        break;
+                    case 'Administrative Contact' :
+                        $adm_block = $item_block;
+                        break;
+                    case 'Technical Contact' :
+                        $tech_block = $item_block;
+                        break;
+                }
+            }
+        }
+
+        if (isset($domain_block)) {
+            $domain_whois_informations = $domain_block->find('.df-row');
             foreach ($domain_whois_informations as $item) {
                 $domain_whois_information[] = [
                     $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
@@ -1055,7 +1076,7 @@ class HomeController extends Controller
                 }
             }
         }
-        isset($who_is_information->domain_registrar) ?: $who_is_information->domain_registrar = "N/A";
+        isset($who_is_information->domain_registrar) ?: $who_is_information->domain_registrar = "$domain";
         isset($who_is_information->domain_registration_date) ?: $who_is_information->domain_registration_date = "N/A";
         isset($who_is_information->domain_expiration_date) ?: $who_is_information->domain_expiration_date = "N/A";
         isset($who_is_information->domain_updated_date) ?: $who_is_information->domain_updated_date = "N/A";
@@ -1063,22 +1084,8 @@ class HomeController extends Controller
         isset($who_is_information->domain_name_servers) ?: $who_is_information->domain_name_servers = "N/A";
 
         //REGISTRANT CONTACT
-        foreach ($df_block as $item_block) {
-            switch ($item_block->find('.df-heading')[0]->innertext()) {
-                case 'Registrant Contact' :
-                    $regis_block = $item_block;
-                    break;
-                case 'Administrative Contact' :
-                    $adm_block = $item_block;
-                    break;
-                case 'Technical Contact' :
-                    $tech_block = $item_block;
-                    break;
-            }
-        }
         if (isset($regis_block)) {
             $registrant_whois_contacts = $regis_block->find('.df-row');
-            $i = 0;
             if (isset($registrant_whois_contacts)) {
                 foreach ($registrant_whois_contacts as $item) {
                     $registrant_whois_contact[] = [
@@ -1141,7 +1148,6 @@ class HomeController extends Controller
         //ADMINISTRATIVE CONTACT
         if (isset($adm_block)) {
             $administrative_whois_contacts = $adm_block->find('.df-row');
-            $i = 0;
             if (isset($administrative_whois_contacts)) {
                 foreach ($administrative_whois_contacts as $item) {
                     $administrative_whois_contact[] = [
@@ -1204,7 +1210,6 @@ class HomeController extends Controller
         //TECHNICAL CONTACT
         if (isset($tech_block)) {
             $technical_whois_contacts = $tech_block->find('.df-row');
-            $i = 0;
             if (isset($technical_whois_contacts)) {
                 foreach ($technical_whois_contacts as $item) {
                     $technical_whois_contact[] = [
@@ -1258,7 +1263,7 @@ class HomeController extends Controller
         }
         isset($who_is_information->tech_name) ?: $who_is_information->tech_name = "$domain";
         isset($who_is_information->tech_organization) ?: $who_is_information->tech_organization = "N/A";
-        isset($who_is_information->tech_street) ?: $who_is_information->techstreet = "N/A";
+        isset($who_is_information->tech_street) ?: $who_is_information->tech_street = "N/A";
         isset($who_is_information->tech_city) ?: $who_is_information->tech_city = "N/A";
         isset($who_is_information->tech_state) ?: $who_is_information->tech_state = "N/A";
         isset($who_is_information->tech_postal_code) ?: $who_is_information->tech_postal_code = "N/A";
@@ -1268,9 +1273,9 @@ class HomeController extends Controller
         isset($who_is_information->tech_email) ?: $who_is_information->tech_email = "N/A";
         try {
             $who_is_information->save();
-
             return redirect()->route('informationDomain', ['domain_name' => $domain]);
         } catch (Exception $e) {
+            dd($e);
             return redirect()->back()->with('error', 'Error connect database !');
         }
         //-----------------------------------------------------------------------------------------//

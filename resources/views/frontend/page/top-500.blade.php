@@ -44,8 +44,8 @@
                                                 </td>
                                                 <td>{{$top_500->linking_root_domain}}</td>
                                                 <td>{{$top_500->external_link}}</td>
-                                                <td>{{$top_500->domain_mozrank}}</td>
-                                                <td>{{$top_500->domain_moztrust}}</td>
+                                                <td style="color: #24ABE2">{{$top_500->domain_mozrank}}</td>
+                                                <td style="color: red">{{$top_500->domain_moztrust}}</td>
                                                 <td>{{$top_500->change_rank}}</td>
                                             </tr>
                                         @endforeach

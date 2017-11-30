@@ -27,7 +27,7 @@
                                    style="height: 50px;background: #ffffff12;color: white;" name="txt-domain"
                                    placeholder="Enter domain ...">
                             <div class="input-group-btn">
-                                <a class="btn btn-default btn-search domain" href="">
+                                <a class="btn btn-default btn-search" href="">
                                     Search
                                 </a>
                             </div>
