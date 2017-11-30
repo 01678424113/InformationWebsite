@@ -6,13 +6,15 @@
     <meta name="keywords" content="">
     <meta charset="utf-8">
     <meta name="author" content="Roman Kirichik">
-    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <!--[if IE]>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
     <!-- Favicons -->
     <link rel="shortcut icon" href="images/favicon.png">
     <base href="{{asset('')}}">
     <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="frontend/css/bootstrap.min.css">
     <link rel="stylesheet" href="frontend/css/style.css">
     <link rel="stylesheet" href="frontend/css/style-responsive.css">
@@ -24,26 +26,48 @@
     @yield('style')
     <link rel="stylesheet" href="css/style-information-website.css">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=vietnamese" rel="stylesheet">
+    <link rel="stylesheet" href="css/loadding.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=vietnamese"
+          rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 </head>
-<body class="appear-animate">
+<body class="appear-animate" onload="myFunction()" style="background-color: #5BC0DE;">
 
 <!-- Page Loader -->
-<div class="page-loader">
-    <div class="loader">Loading...</div>
+<div id="loader">
+    <div class='body'>
+  <span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </span>
+        <div class='base'>
+            <span></span>
+            <div class='face'></div>
+        </div>
+    </div>
+    <div class='longfazers'>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <h1>Wait a few second. Thank you :) </h1>
 </div>
 <!-- End Page Loader -->
 
 <!-- Page Wrap -->
 <div class="page" id="top">
+    <div id="myDiv" style="display: none">
+        @include('frontend.layouts.nav-top')
 
-  @include('frontend.layouts.nav-top')
 
+        @yield('content')
 
-   @yield('content')
-
-   @include('frontend.layouts.footer')
-
+        @include('frontend.layouts.footer')
+    </div>
 </div>
 <!-- End Page Wrap -->
 
@@ -69,7 +93,8 @@
 <script type="text/javascript" src="frontend/js/jquery.magnific-popup.min.js"></script>
 <!-- Replace test API Key "AIzaSyAZsDkJFLS0b59q7cmW0EprwfcfUA8d9dg" with your own one below
 **** You can get API Key here - https://developers.google.com/maps/documentation/javascript/get-api-key -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsDkJFLS0b59q7cmW0EprwfcfUA8d9dg"></script>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZsDkJFLS0b59q7cmW0EprwfcfUA8d9dg"></script>
 <script type="text/javascript" src="frontend/js/gmap3.min.js"></script>
 <script type="text/javascript" src="frontend/js/wow.min.js"></script>
 <script type="text/javascript" src="frontend/js/masonry.pkgd.min.js"></script>
@@ -77,9 +102,23 @@
 <script type="text/javascript" src="frontend/js/all.js"></script>
 <script type="text/javascript" src="frontend/js/contact-form.js"></script>
 <script type="text/javascript" src="frontend/js/jquery.ajaxchimp.min.js"></script>
-<!--[if lt IE 10]><script type="text/javascript" src="frontend/js/placeholder.js"></script><![endif]-->
+<!--[if lt IE 10]>
+<script type="text/javascript" src="frontend/js/placeholder.js"></script><![endif]-->
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
 <script>
+    var myVar;
+
+    function myFunction() {
+        myVar = setTimeout(showPage, 3000);
+    }
+
+    function showPage() {
+        $('#loader').hide('slow');
+        $('#myDiv').show('slow');
+        $('body').attr('style','');
+    }
     $('.input-search').change(function () {
         var domain = $('.input-search').val();
         $('.btn-search').attr('href', '/InformationWebsite/public/inf/' + domain);

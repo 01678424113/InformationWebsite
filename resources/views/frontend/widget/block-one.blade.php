@@ -20,6 +20,7 @@
                                 <th>Change</th>
                             </tr>
                             </thead>
+
                             @if(count($top_10s) > 0)
                                 <tbody>
                                 @foreach($top_10s as $top_10)
@@ -43,7 +44,7 @@
                                 @endforeach
                                 <tr>
                                     <td colspan="7" style="text-align: center">
-                                        <a href="">View more ...</a>
+                                        <a href="{{route('top500')}}">View more ...</a>
                                     </td>
                                 </tr>
                                 </tbody>

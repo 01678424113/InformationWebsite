@@ -27,10 +27,12 @@
         </style>
         <div class="nav-logo-wrap local-scroll">
             <span>
-                <a href="mp-index.html" class="logo">
+                <a href="{{route('home')}}" class="logo">
                 <img src="frontend/images/logo-dark.png" alt=""/>
             </a>
-                 <input type="text" class="search-nav-top" name="search" placeholder="Search..">
+
+                <input type="text" class="search-nav-top" name="txt-domain" placeholder="Enter domain ...">
+
             </span>
 
         </div>

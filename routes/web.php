@@ -13,7 +13,7 @@
 Route::get('/home', 'Frontend\HomeController@home')->name('home');
 Route::get('/', 'Frontend\HomeController@home');
 
-Route::get('/top-500','Frontend\HomeController@home')->name('top500');
+Route::get('/top-500','Frontend\HomeController@top500')->name('top500');
 
 Route::get('/get-information-web/{domain_name}', 'Frontend\HomeController@getInformationDomain')->name('getInformationDomain');
 Route::get('/inf/{domain_name}', 'Frontend\HomeController@informationDomain')->name('informationDomain');
