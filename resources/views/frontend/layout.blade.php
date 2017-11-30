@@ -105,23 +105,17 @@
 <!--[if lt IE 10]>
 <script type="text/javascript" src="frontend/js/placeholder.js"></script><![endif]-->
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
+<script type="text/javascript" src="js/loadding.js"></script>
 
 <script>
-    var myVar;
-
-    function myFunction() {
-        myVar = setTimeout(showPage, 3000);
-    }
-
-    function showPage() {
-        $('#loader').hide('slow');
-        $('#myDiv').show('slow');
-        $('body').attr('style','');
-    }
     $('.input-search').change(function () {
         var domain = $('.input-search').val();
         $('.btn-search').attr('href', '/InformationWebsite/public/inf/' + domain);
+    });
+    $('.domain').click(function () {
+        $('#loader').show('slow');
+        $('#myDiv').hide('slow');
+        $('body').attr('style','background-color: #5BC0DE;');
     })
 </script>
 @yield('script')

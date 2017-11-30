@@ -60,7 +60,8 @@ body .information-website {
       margin: 0;
       font-size: 30px;
       color: #1F76A3;
-      padding: 10px; }
+      padding: 10px;
+      position: inherit; }
     body .information-website .sidebar-inf .icon-sidebar-inf-web span {
       display: inline-block; }
       body .information-website .sidebar-inf .icon-sidebar-inf-web span i {

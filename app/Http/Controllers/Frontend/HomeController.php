@@ -52,7 +52,7 @@ class HomeController extends Controller
 
     public function getInformationDomain($domain_name)
     {
-        $domain = $domain_name;
+        $domain = trim($domain_name);
         $check_domain = Domain::where('domain', $domain)->first();
         if (!isset($check_domain)) {
 
@@ -260,7 +260,7 @@ class HomeController extends Controller
                         $icon = "";
                     }
                 }
-                if (!strpos($icon, 'http')) {
+                if (strpos($icon, 'http') != 0) {
                     $icon = 'http://' . $domain . $icon;
                 }
                 //Screen short website
@@ -595,7 +595,7 @@ class HomeController extends Controller
                 isset($who_is_information->regis_fax) ?: $who_is_information->regis_fax = "N/A";
                 isset($who_is_information->regis_email) ?: $who_is_information->regis_email = "N/A";
                 //ADMINISTRATIVE CONTACT
-                if(isset($adm_block)){
+                if (isset($adm_block)) {
                     $administrative_whois_contacts = $adm_block->find('.df-row');
                     $i = 0;
                     if (isset($administrative_whois_contacts)) {
@@ -658,7 +658,7 @@ class HomeController extends Controller
                 isset($who_is_information->adm_fax) ?: $who_is_information->adm_fax = "N/A";
                 isset($who_is_information->adm_email) ?: $who_is_information->adm_email = "N/A";
                 //TECHNICAL CONTACT
-                if(isset($tech_block)){
+                if (isset($tech_block)) {
                     $technical_whois_contacts = $tech_block->find('.df-row');
                     $i = 0;
                     if (isset($technical_whois_contacts)) {
@@ -745,6 +745,7 @@ class HomeController extends Controller
 
     public function informationDomain($domain_name)
     {
+        $domain_name = trim($domain_name);
         $response = [
             'title' => 'Information domain : ' . $domain_name,
         ];
@@ -1019,7 +1020,7 @@ class HomeController extends Controller
         //DOMAIN INFORMATION
         $domain_whois_informations = $df_block[0]->find('.df-row');
         $i = 0;
-        $who_is_information = WhoisInformation::where('domain_id', $domain_id)->first();
+        $who_is_information = WhoisInformation::where('domain_id',$domain_id)->first();
         $who_is_information->domain_id = $domain_id;
         $who_is_information->domain = $domain;
         if (isset($domain_whois_informations)) {
@@ -1028,70 +1029,102 @@ class HomeController extends Controller
                     $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                 ];
             }
-            $who_is_information->domain_registrar = $domain_whois_information[1]["Registrar:"];
-            $who_is_information->domain_registration_date = $domain_whois_information[2]["Registration Date:"];
-            $who_is_information->domain_expiration_date = $domain_whois_information[3]["Expiration Date:"];
-            $who_is_information->domain_updated_date = $domain_whois_information[4]["Updated Date:"];
-            $who_is_information->domain_status = $domain_whois_information[5]["Status:"];
-            $who_is_information->domain_name_servers = $domain_whois_information[6]["Name Servers:"];
-        } else {
-            $who_is_information->domain_registrar = "N/A";
-            $who_is_information->domain_registration_date = "N/A";
-            $who_is_information->domain_expiration_date = "N/A";
-            $who_is_information->domain_updated_date = "N/A";
-            $who_is_information->domain_status = "N/A";
-            $who_is_information->domain_name_servers = "N/A";
+            foreach ($domain_whois_information as $item) {
+                if (isset($item["Registrar:"])) {
+                    $who_is_information->domain_registrar = $item["Registrar:"];
+                }
+
+                if (isset($item["Registration Date:"])) {
+                    $who_is_information->domain_registration_date = $item["Registration Date:"];
+                }
+
+                if (isset($item["Expiration Date:"])) {
+                    $who_is_information->domain_expiration_date = $item["Expiration Date:"];
+                }
+
+                if (isset($item["Updated Date:"])) {
+                    $who_is_information->domain_updated_date = $item["Updated Date:"];
+                }
+
+                if (isset($item["Status:"])) {
+                    $who_is_information->domain_status = $item["Status:"];
+                }
+
+                if (isset($item["Name Servers:"])) {
+                    $who_is_information->domain_name_servers = $item["Name Servers:"];
+                }
+            }
         }
-        //dd($domain_information);
+        isset($who_is_information->domain_registrar) ?: $who_is_information->domain_registrar = "N/A";
+        isset($who_is_information->domain_registration_date) ?: $who_is_information->domain_registration_date = "N/A";
+        isset($who_is_information->domain_expiration_date) ?: $who_is_information->domain_expiration_date = "N/A";
+        isset($who_is_information->domain_updated_date) ?: $who_is_information->domain_updated_date = "N/A";
+        isset($who_is_information->domain_status) ?: $who_is_information->domain_status = "N/A";
+        isset($who_is_information->domain_name_servers) ?: $who_is_information->domain_name_servers = "N/A";
 
         //REGISTRANT CONTACT
-        $registrant_whois_contacts = $df_block[1]->find('.df-row');
-        $i = 0;
-        if (isset($registrant_whois_contacts)) {
-            foreach ($registrant_whois_contacts as $item) {
-                $registrant_whois_contact[] = [
-                    $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
-                ];
+        foreach ($df_block as $item_block) {
+            switch ($item_block->find('.df-heading')[0]->innertext()) {
+                case 'Registrant Contact' :
+                    $regis_block = $item_block;
+                    break;
+                case 'Administrative Contact' :
+                    $adm_block = $item_block;
+                    break;
+                case 'Technical Contact' :
+                    $tech_block = $item_block;
+                    break;
             }
-            foreach ($registrant_whois_contact as $item) {
-                if (isset($item["Name:"])) {
-                    $who_is_information->regis_name = $item["Name:"];
+        }
+        if (isset($regis_block)) {
+            $registrant_whois_contacts = $regis_block->find('.df-row');
+            $i = 0;
+            if (isset($registrant_whois_contacts)) {
+                foreach ($registrant_whois_contacts as $item) {
+                    $registrant_whois_contact[] = [
+                        $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
+                    ];
                 }
+                foreach ($registrant_whois_contact as $item) {
+                    if (isset($item["Name:"])) {
+                        $who_is_information->regis_name = $item["Name:"];
+                    }
 
-                if (isset($item["Organization:"])) {
-                    $who_is_information->regis_organization = $item["Organization:"];
-                }
+                    if (isset($item["Organization:"])) {
+                        $who_is_information->regis_organization = $item["Organization:"];
+                    }
 
-                if (isset($item["Street:"])) {
-                    $who_is_information->regis_street = $item["Street:"];
-                }
+                    if (isset($item["Street:"])) {
+                        $who_is_information->regis_street = $item["Street:"];
+                    }
 
-                if (isset($item["City:"])) {
-                    $who_is_information->regis_city = $item["City:"];
-                }
+                    if (isset($item["City:"])) {
+                        $who_is_information->regis_city = $item["City:"];
+                    }
 
-                if (isset($item["State:"])) {
-                    $who_is_information->regis_state = $item["State:"];
-                }
+                    if (isset($item["State:"])) {
+                        $who_is_information->regis_state = $item["State:"];
+                    }
 
-                if (isset($item["Postal Code:"])) {
-                    $who_is_information->regis_postal_code = $item["Postal Code:"];
-                }
+                    if (isset($item["Postal Code:"])) {
+                        $who_is_information->regis_postal_code = $item["Postal Code:"];
+                    }
 
-                if (isset($item["Country"])) {
-                    $who_is_information->regis_country = $item["Country:"];
-                }
+                    if (isset($item["Country"])) {
+                        $who_is_information->regis_country = $item["Country:"];
+                    }
 
-                if (isset($item["Phone:"])) {
-                    $who_is_information->regis_phone = $item["Phone:"];
-                }
+                    if (isset($item["Phone:"])) {
+                        $who_is_information->regis_phone = $item["Phone:"];
+                    }
 
-                if (isset($item["Fax:"])) {
-                    $who_is_information->regis_fax = $item["Fax:"];
-                }
+                    if (isset($item["Fax:"])) {
+                        $who_is_information->regis_fax = $item["Fax:"];
+                    }
 
-                if (isset($item["Email:"])) {
-                    $who_is_information->regis_email = $item["Email:"];
+                    if (isset($item["Email:"])) {
+                        $who_is_information->regis_email = $item["Email:"];
+                    }
                 }
             }
         }
@@ -1105,55 +1138,56 @@ class HomeController extends Controller
         isset($who_is_information->regis_phone) ?: $who_is_information->regis_phone = "N/A";
         isset($who_is_information->regis_fax) ?: $who_is_information->regis_fax = "N/A";
         isset($who_is_information->regis_email) ?: $who_is_information->regis_email = "N/A";
-
         //ADMINISTRATIVE CONTACT
-        $administrative_whois_contacts = $df_block[2]->find('.df-row');
-        $i = 0;
-        if (isset($administrative_whois_contacts)) {
-            foreach ($administrative_whois_contacts as $item) {
-                $administrative_whois_contact[] = [
-                    $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
-                ];
-            }
-            foreach ($administrative_whois_contact as $item) {
-                if (isset($item["Name:"])) {
-                    $who_is_information->adm_name = $item["Name:"];
+        if (isset($adm_block)) {
+            $administrative_whois_contacts = $adm_block->find('.df-row');
+            $i = 0;
+            if (isset($administrative_whois_contacts)) {
+                foreach ($administrative_whois_contacts as $item) {
+                    $administrative_whois_contact[] = [
+                        $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
+                    ];
                 }
+                foreach ($administrative_whois_contact as $item) {
+                    if (isset($item["Name:"])) {
+                        $who_is_information->adm_name = $item["Name:"];
+                    }
 
-                if (isset($item["Organization:"])) {
-                    $who_is_information->adm_organization = $item["Organization:"];
-                }
+                    if (isset($item["Organization:"])) {
+                        $who_is_information->adm_organization = $item["Organization:"];
+                    }
 
-                if (isset($item["Street:"])) {
-                    $who_is_information->adm_street = $item["Street:"];
-                }
+                    if (isset($item["Street:"])) {
+                        $who_is_information->adm_street = $item["Street:"];
+                    }
 
-                if (isset($item["City:"])) {
-                    $who_is_information->adm_city = $item["City:"];
-                }
+                    if (isset($item["City:"])) {
+                        $who_is_information->adm_city = $item["City:"];
+                    }
 
-                if (isset($item["State:"])) {
-                    $who_is_information->adm_state = $item["State:"];
-                }
+                    if (isset($item["State:"])) {
+                        $who_is_information->adm_state = $item["State:"];
+                    }
 
-                if (isset($item["Postal Code:"])) {
-                    $who_is_information->adm_postal_code = $item["Postal Code:"];
-                }
+                    if (isset($item["Postal Code:"])) {
+                        $who_is_information->adm_postal_code = $item["Postal Code:"];
+                    }
 
-                if (isset($item["Country"])) {
-                    $who_is_information->adm_country = $item["Country:"];
-                }
+                    if (isset($item["Country"])) {
+                        $who_is_information->adm_country = $item["Country:"];
+                    }
 
-                if (isset($item["Phone:"])) {
-                    $who_is_information->adm_phone = $item["Phone:"];
-                }
+                    if (isset($item["Phone:"])) {
+                        $who_is_information->adm_phone = $item["Phone:"];
+                    }
 
-                if (isset($item["Fax:"])) {
-                    $who_is_information->adm_fax = $item["Fax:"];
-                }
+                    if (isset($item["Fax:"])) {
+                        $who_is_information->adm_fax = $item["Fax:"];
+                    }
 
-                if (isset($item["Email:"])) {
-                    $who_is_information->adm_email = $item["Email:"];
+                    if (isset($item["Email:"])) {
+                        $who_is_information->adm_email = $item["Email:"];
+                    }
                 }
             }
         }
@@ -1168,57 +1202,59 @@ class HomeController extends Controller
         isset($who_is_information->adm_fax) ?: $who_is_information->adm_fax = "N/A";
         isset($who_is_information->adm_email) ?: $who_is_information->adm_email = "N/A";
         //TECHNICAL CONTACT
-        $technical_whois_contacts = $df_block[3]->find('.df-row');
-        $i = 0;
-        if (isset($technical_whois_contacts)) {
-            foreach ($technical_whois_contacts as $item) {
-                $technical_whois_contact[] = [
-                    $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
-                ];
+        if (isset($tech_block)) {
+            $technical_whois_contacts = $tech_block->find('.df-row');
+            $i = 0;
+            if (isset($technical_whois_contacts)) {
+                foreach ($technical_whois_contacts as $item) {
+                    $technical_whois_contact[] = [
+                        $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
+                    ];
+                }
+
+                foreach ($technical_whois_contact as $item) {
+                    if (isset($item["Name:"])) {
+                        $who_is_information->tech_name = $item["Name:"];
+                    }
+
+                    if (isset($item["Organization:"])) {
+                        $who_is_information->tech_organization = $item["Organization:"];
+                    }
+
+                    if (isset($item["Street:"])) {
+                        $who_is_information->tech_street = $item["Street:"];
+                    }
+
+                    if (isset($item["City:"])) {
+                        $who_is_information->tech_city = $item["City:"];
+                    }
+
+                    if (isset($item["State:"])) {
+                        $who_is_information->tech_state = $item["State:"];
+                    }
+
+                    if (isset($item["Postal Code:"])) {
+                        $who_is_information->tech_postal_code = $item["Postal Code:"];
+                    }
+
+                    if (isset($item["Country"])) {
+                        $who_is_information->tech_country = $item["Country:"];
+                    }
+
+                    if (isset($item["Phone:"])) {
+                        $who_is_information->tech_phone = $item["Phone:"];
+                    }
+
+                    if (isset($item["Fax:"])) {
+                        $who_is_information->tech_fax = $item["Fax:"];
+                    }
+
+                    if (isset($item["Email:"])) {
+                        $who_is_information->tech_email = $item["Email:"];
+                    }
+                }
+
             }
-
-            foreach ($technical_whois_contact as $item) {
-                if (isset($item["Name:"])) {
-                    $who_is_information->tech_name = $item["Name:"];
-                }
-
-                if (isset($item["Organization:"])) {
-                    $who_is_information->tech_organization = $item["Organization:"];
-                }
-
-                if (isset($item["Street:"])) {
-                    $who_is_information->tech_street = $item["Street:"];
-                }
-
-                if (isset($item["City:"])) {
-                    $who_is_information->tech_city = $item["City:"];
-                }
-
-                if (isset($item["State:"])) {
-                    $who_is_information->tech_state = $item["State:"];
-                }
-
-                if (isset($item["Postal Code:"])) {
-                    $who_is_information->tech_postal_code = $item["Postal Code:"];
-                }
-
-                if (isset($item["Country"])) {
-                    $who_is_information->tech_country = $item["Country:"];
-                }
-
-                if (isset($item["Phone:"])) {
-                    $who_is_information->tech_phone = $item["Phone:"];
-                }
-
-                if (isset($item["Fax:"])) {
-                    $who_is_information->tech_fax = $item["Fax:"];
-                }
-
-                if (isset($item["Email:"])) {
-                    $who_is_information->tech_email = $item["Email:"];
-                }
-            }
-
         }
         isset($who_is_information->tech_name) ?: $who_is_information->tech_name = "$domain";
         isset($who_is_information->tech_organization) ?: $who_is_information->tech_organization = "N/A";
@@ -1230,7 +1266,6 @@ class HomeController extends Controller
         isset($who_is_information->tech_phone) ?: $who_is_information->tech_phone = "N/A";
         isset($who_is_information->tech_fax) ?: $who_is_information->tech_fax = "N/A";
         isset($who_is_information->tech_email) ?: $who_is_information->tech_email = "N/A";
-
         try {
             $who_is_information->save();
 

@@ -20,7 +20,6 @@
                                 <th>Change</th>
                             </tr>
                             </thead>
-
                             @if(count($top_10s) > 0)
                                 <tbody>
                                 @foreach($top_10s as $top_10)
@@ -31,7 +30,7 @@
                                     >
                                         <td>{{$top_10->rank}}</td>
                                         <td>
-                                            <a href="{{route('informationDomain',['domain_name'=>$top_10->root_domain])}}">
+                                            <a class="domain" href="{{route('informationDomain',['domain_name'=>$top_10->root_domain])}}">
                                                 {{$top_10->root_domain}}
                                             </a>
                                         </td>

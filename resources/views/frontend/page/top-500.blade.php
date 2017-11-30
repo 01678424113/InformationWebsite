@@ -38,7 +38,7 @@
                                             >
                                                 <td>{{$top_500->rank}}</td>
                                                 <td>
-                                                    <a href="{{route('informationDomain',['domain_name'=>$top_500->root_domain])}}">
+                                                    <a href="{{route('informationDomain',['domain_name'=>$top_500->root_domain])}}" class="domain">
                                                         {{$top_500->root_domain}}
                                                     </a>
                                                 </td>
