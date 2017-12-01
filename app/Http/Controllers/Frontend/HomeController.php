@@ -185,83 +185,95 @@ class HomeController extends Controller
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------Domain----------------------------------------------//
                 //-----------------------------------------------------------------------------------------//
+                try{
+                    $html_web = HtmlDomParser::file_get_html('http://' . $domain);
+                    $titles = $html_web->find('title');
+                    if (isset($titles)) {
+                        $title_website = $titles[0]->innertext();
+                    } else {
+                        $title_website = strtoupper($domain);
+                    }
+                    $languages = $html_web->find('meta[name=language]');
+                    if (isset($languages[0]->content)) {
+                        $language = $languages[0]->content;
+                    } else {
+                        $language = "N/A";
+                    }
 
-                $html_web = HtmlDomParser::file_get_html('http://' . $domain);
-                $titles = $html_web->find('title');
-                if (isset($titles)) {
-                    $title_website = $titles[0]->innertext();
-                } else {
-                    $title_website = strtoupper($domain);
-                }
-                $languages = $html_web->find('meta[name=language]');
-                if (isset($languages[0]->content)) {
-                    $language = $languages[0]->content;
-                } else {
-                    $language = "N/A";
-                }
+                    $distributions = $html_web->find('meta[name=distribution]');
+                    if (isset($distributions[0]->content)) {
+                        $distribution = $distributions[0]->content;
+                    } else {
+                        $distribution = "N/A";
+                    }
 
-                $distributions = $html_web->find('meta[name=distribution]');
-                if (isset($distributions[0]->content)) {
-                    $distribution = $distributions[0]->content;
-                } else {
-                    $distribution = "N/A";
-                }
+                    $revisit_afters = $html_web->find('meta[name=revisit-after]');
+                    if (isset($revisit_afters[0]->content)) {
+                        $revisit_after = $revisit_afters[0]->content;
+                    } else {
+                        $revisit_after = "N/A";
+                    }
 
-                $revisit_afters = $html_web->find('meta[name=revisit-after]');
-                if (isset($revisit_afters[0]->content)) {
-                    $revisit_after = $revisit_afters[0]->content;
-                } else {
-                    $revisit_after = "N/A";
-                }
+                    $authors = $html_web->find('meta[name=author]');
+                    if (isset($authors[0]->content)) {
+                        $author = $authors[0]->content;
+                    } else {
+                        $author = "N/A";
+                    }
 
-                $authors = $html_web->find('meta[name=author]');
-                if (isset($authors[0]->content)) {
-                    $author = $authors[0]->content;
-                } else {
-                    $author = "N/A";
-                }
+                    $descriptions = $html_web->find('meta[name=description]');
+                    if (isset($descriptions[0]->content)) {
+                        $description_website = $descriptions[0]->content;
+                    } else {
+                        $description_website = "N/A";
+                    }
 
-                $descriptions = $html_web->find('meta[name=description]');
-                if (isset($descriptions[0]->content)) {
-                    $description_website = $descriptions[0]->content;
-                } else {
-                    $description_website = "N/A";
-                }
+                    $website_keywords = $html_web->find('meta[name=keywords]');
+                    if (isset($website_keywords[0]->content)) {
+                        $website_keyword = $website_keywords[0]->content;
+                    } else {
+                        $website_keyword = "N/A";
+                    }
 
-                $website_keywords = $html_web->find('meta[name=keywords]');
-                if (isset($website_keywords[0]->content)) {
-                    $website_keyword = $website_keywords[0]->content;
-                } else {
-                    $website_keyword = "N/A";
-                }
+                    $geo_placenames = $html_web->find('meta[name=geo.placename]');
+                    if (isset($geo_placenames[0]->content)) {
+                        $geo_placename = $geo_placenames[0]->content;
+                    } else {
+                        $geo_placename = "N/A";
+                    }
 
-                $geo_placenames = $html_web->find('meta[name=geo.placename]');
-                if (isset($geo_placenames[0]->content)) {
-                    $geo_placename = $geo_placenames[0]->content;
-                } else {
-                    $geo_placename = "N/A";
-                }
+                    $geo_positions = $html_web->find('meta[name=geo.position]');
+                    if (isset($geo_positions[0]->content)) {
+                        $geo_position = $geo_positions[0]->content;
+                    } else {
+                        $geo_position = "N/A";
+                    }
 
-                $geo_positions = $html_web->find('meta[name=geo.position]');
-                if (isset($geo_positions[0]->content)) {
-                    $geo_position = $geo_positions[0]->content;
-                } else {
-                    $geo_position = "N/A";
-                }
-
-                $icon = $html_web->find('link[rel=icon]');
-                if (isset($icon[0]->href)) {
-                    $icon = $icon[0]->href;
-                } else {
-                    $icon = $html_web->find('link[rel=shortcut icon]');
+                    $icon = $html_web->find('link[rel=icon]');
                     if (isset($icon[0]->href)) {
                         $icon = $icon[0]->href;
                     } else {
-                        $icon = "";
+                        $icon = $html_web->find('link[rel=shortcut icon]');
+                        if (isset($icon[0]->href)) {
+                            $icon = $icon[0]->href;
+                        } else {
+                            $icon = "";
+                        }
                     }
-                }
-                if (strpos($icon, 'http') === false) {
-                    $icon = 'http://' . $domain . $icon;
+                    if (strpos($icon, 'http') === false) {
+                        $icon = 'http://' . $domain . $icon;
+                    }
+                }catch (Exception $e){
+                    $title_website = $domain;
+                    $language = "N/A";
+                    $distribution = "N/A";
+                    $revisit_after = "N/A";
+                    $author = "N/A";
+                    $description_website = "N/A";
+                    $website_keyword = "N/A";
+                    $geo_placename = "N/A";
+                    $geo_position = "N/A";
+                    $icon = "";
                 }
                 //Screen short website
                 $image_path = explode('.', $domain);
@@ -446,20 +458,19 @@ class HomeController extends Controller
                 $website_information->alt_website_auto = $alt;
 
                 $website_information->domain_id = $domain_id;
-                $website_information->title = $title_website;
-                $website_information->language = $language;
-                $website_information->distributions = $distribution;
+                $website_information->title = urlencode($title_website);
+                $website_information->language = urlencode($language);
+                $website_information->distributions = urlencode($distribution);
                 $website_information->revisit_affter = $revisit_after;
-                $website_information->author = $author;
-                $website_information->description = addslashes($description_website);
-                $website_information->keyword = addslashes($website_keyword);
-                $website_information->place_name = $geo_placename;
+                $website_information->author = urlencode($author);
+                $website_information->description = urlencode($description_website);
+                $website_information->keyword = urlencode($website_keyword);
+                $website_information->place_name = urlencode($geo_placename);
                 $website_information->position = $geo_position;
                 $website_information->icon = $icon;
                 $website_information->image_screen_shot = $image_path;
                 $website_information->created_at = microtime(true);
 
-                //dd($website_information);
                 $website_information->save();
 
                 //-----------------------------------------------------------------------------------------//
@@ -478,7 +489,7 @@ class HomeController extends Controller
                 $who_is_information->domain_id = $domain_id;
                 $who_is_information->domain = $domain;
                 foreach ($df_block as $item_block) {
-                    if(isset($item_block->find('.df-heading')[0])){
+                    if (isset($item_block->find('.df-heading')[0])) {
                         switch ($item_block->find('.df-heading')[0]->innertext()) {
                             case 'Domain Information' :
                                 $domain_block = $item_block;
@@ -495,7 +506,6 @@ class HomeController extends Controller
                         }
                     }
                 }
-
                 if (isset($domain_block)) {
                     $domain_whois_informations = $domain_block->find('.df-row');
                     foreach ($domain_whois_informations as $item) {
@@ -1021,11 +1031,11 @@ class HomeController extends Controller
         $html_whois = HtmlDomParser::file_get_html('https://www.whois.com/whois/' . $domain);
         $df_block = $html_whois->find('div.df-block');
         //DOMAIN INFORMATION
-        $who_is_information = WhoisInformation::where('domain_id',$domain_id)->first();
+        $who_is_information = WhoisInformation::where('domain_id', $domain_id)->first();
         $who_is_information->domain_id = $domain_id;
         $who_is_information->domain = $domain;
         foreach ($df_block as $item_block) {
-            if(isset($item_block->find('.df-heading')[0])){
+            if (isset($item_block->find('.df-heading')[0])) {
                 switch ($item_block->find('.df-heading')[0]->innertext()) {
                     case 'Domain Information' :
                         $domain_block = $item_block;
