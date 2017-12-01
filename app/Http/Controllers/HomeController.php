@@ -546,12 +546,92 @@ class HomeController extends Controller
             $geo_position = 'Global';
         }
         //Icon
-        $icon = preg_match('/rel="icon" type="image\/png" href="(.*?)"/',$content,$result_icon);
+        $icon = preg_match('/href="(.*?).ico"/',$content,$result_icon);
         $icon = $result_icon[1];
         if (strpos($icon, 'http') === false) {
             $icon = $url . $icon;
         }
+        dd($icon);
 
+
+
+        $html_web = HtmlDomParser::file_get_html('http://' . $domain);
+        $titles = $html_web->find('title');
+        if (isset($titles)) {
+            $title_website = $titles[0]->innertext();
+        } else {
+            $title_website = strtoupper($domain);
+        }
+        $languages = $html_web->find('meta[name=language]');
+        if (isset($languages[0]->content)) {
+            $language = $languages[0]->content;
+        } else {
+            $language = "N/A";
+        }
+
+        $distributions = $html_web->find('meta[name=distribution]');
+        if (isset($distributions[0]->content)) {
+            $distribution = $distributions[0]->content;
+        } else {
+            $distribution = "N/A";
+        }
+
+        $revisit_afters = $html_web->find('meta[name=revisit-after]');
+        if (isset($revisit_afters[0]->content)) {
+            $revisit_after = $revisit_afters[0]->content;
+        } else {
+            $revisit_after = "N/A";
+        }
+
+        $authors = $html_web->find('meta[name=author]');
+        if (isset($authors[0]->content)) {
+            $author = $authors[0]->content;
+        } else {
+            $author = "N/A";
+        }
+
+        $descriptions = $html_web->find('meta[name=description]');
+        if (isset($descriptions[0]->content)) {
+            $description_website = $descriptions[0]->content;
+        } else {
+            $description_website = "N/A";
+        }
+
+        $website_keywords = $html_web->find('meta[name=keywords]');
+        if (isset($website_keywords[0]->content)) {
+            $website_keyword = $website_keywords[0]->content;
+        } else {
+            $website_keyword = "N/A";
+        }
+
+        $geo_placenames = $html_web->find('meta[name=geo.placename]');
+        if (isset($geo_placenames[0]->content)) {
+            $geo_placename = $geo_placenames[0]->content;
+        } else {
+            $geo_placename = "N/A";
+        }
+
+        $geo_positions = $html_web->find('meta[name=geo.position]');
+        if (isset($geo_positions[0]->content)) {
+            $geo_position = $geo_positions[0]->content;
+        } else {
+            $geo_position = "N/A";
+        }
+
+        $icon = $html_web->find('link[rel=icon]');
+        if (isset($icon[0]->href)) {
+            $icon = $icon[0]->href;
+        } else {
+            $icon = $html_web->find('link[rel=shortcut icon]');
+            if (isset($icon[0]->href)) {
+                $icon = $icon[0]->href;
+            } else {
+                $icon = "";
+            }
+        }
+        if (strpos($icon, 'http') === false) {
+            $icon = 'http://' . $domain . $icon;
+        }
 
 
     }
