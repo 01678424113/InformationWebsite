@@ -52,7 +52,7 @@ class HomeController extends Controller
 
     public function getInformationDomain($domain_name)
     {
-        $domain = trim($domain_name);
+        $domain = trim(strtolower($domain_name));
         $check_domain = Domain::where('domain', $domain)->first();
         if (!isset($check_domain)) {
 
@@ -185,95 +185,136 @@ class HomeController extends Controller
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------Domain----------------------------------------------//
                 //-----------------------------------------------------------------------------------------//
-                try{
-                    $html_web = HtmlDomParser::file_get_html('http://' . $domain);
-                    $titles = $html_web->find('title');
-                    if (isset($titles)) {
-                        $title_website = $titles[0]->innertext();
-                    } else {
-                        $title_website = strtoupper($domain);
-                    }
-                    $languages = $html_web->find('meta[name=language]');
-                    if (isset($languages[0]->content)) {
-                        $language = $languages[0]->content;
-                    } else {
-                        $language = "N/A";
-                    }
+                $url = 'http://' . $domain_name;
+                $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
 
-                    $distributions = $html_web->find('meta[name=distribution]');
-                    if (isset($distributions[0]->content)) {
-                        $distribution = $distributions[0]->content;
-                    } else {
-                        $distribution = "N/A";
-                    }
+                $options = array(
+                    CURLOPT_CUSTOMREQUEST => "GET",        //set request type post or get
+                    CURLOPT_POST => false,        //set to GET
+                    CURLOPT_USERAGENT => $user_agent, //set user agent
+                    CURLOPT_COOKIEFILE => "cookie.txt", //set cookie file
+                    CURLOPT_COOKIEJAR => "cookie.txt", //set cookie jar
+                    CURLOPT_RETURNTRANSFER => true,     // return web page
+                    CURLOPT_HEADER => false,    // don't return headers
+                    CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+                    CURLOPT_ENCODING => "",       // handle all encodings
+                    CURLOPT_AUTOREFERER => true,     // set referer on redirect
+                    CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+                    CURLOPT_TIMEOUT => 120,      // timeout on response
+                    CURLOPT_MAXREDIRS => 10,       // stop after 10 redirects
+                );
 
-                    $revisit_afters = $html_web->find('meta[name=revisit-after]');
-                    if (isset($revisit_afters[0]->content)) {
-                        $revisit_after = $revisit_afters[0]->content;
-                    } else {
-                        $revisit_after = "N/A";
-                    }
+                $ch = curl_init($url);
+                curl_setopt_array($ch, $options);
+                $content = curl_exec($ch);
+                $err = curl_errno($ch);
+                $errmsg = curl_error($ch);
+                $header = curl_getinfo($ch);
+                curl_close($ch);
 
-                    $authors = $html_web->find('meta[name=author]');
-                    if (isset($authors[0]->content)) {
-                        $author = $authors[0]->content;
-                    } else {
-                        $author = "N/A";
+                $header['errno'] = $err;
+                $header['errmsg'] = $errmsg;
+                $header['content'] = $content;
+                //Title
+                $title_website = preg_match('/\<title\>(.+)\<\/title\>/', $content, $result_title);
+                $title_website = $result_title[1];
+                //Language
+                $language = preg_match('/name="Language" content="(.*?)"/', $content, $result_language);
+                if (isset($result_language[1])) {
+                    $language = $result_language[1];
+                } else {
+                    $language = preg_match('/name="language" content="(.*?)"/', $content, $result_language);
+                    if (isset($result_language[1])) {
+                        $language = $result_language[1];
+                    }else{
+                        $language = 'English';
                     }
+                }
+                //Distribution
+                $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
+                if (isset($result_distribution[1])) {
+                    $distribution = $result_distribution[1];
+                } else {
+                    $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
+                    if (isset($result_distribution[1])) {
+                        $distribution = $result_distribution[1];
+                    }else{
+                        $distribution = 'Global';
+                    }
+                }
+                //Revisit after
+                $revisit_after = preg_match('/name="Revisit-after" content="(.*?)"/', $content, $result_revisit_after);
+                if (isset($result_revisit_after[1])) {
+                    $revisit_after = $result_revisit_after[1];
+                } else {
+                    $revisit_after = preg_match('/name="revisit-after" content="(.*?)"/', $content, $result_revisit_after);
+                    if (isset($result_revisit_after[1])) {
+                        $revisit_after = $result_revisit_after[1];
+                    }else{
+                        $revisit_after = 'N/A';
+                    }
+                }
+                //Author
+                $author = preg_match('/name="Author" content="(.*?)"/', $content, $result_author);
+                if (isset($result_author[1])) {
+                    $author = $result_author[1];
+                } else {
+                    $author = preg_match('/name="author" content="(.*?)"/', $content, $result_author);
+                    if (isset($result_author[1])) {
+                        $author = $result_author[1];
+                    }else{
+                        $author = 'N/A';
+                    }
+                }
+                //Description
+                $description_website = preg_match('/name="Description" content="(.*?)"/', $content, $result_description);
+                if (isset($result_description[1])) {
+                    $description_website = $result_description[1];
+                } else {
+                    $description_website = preg_match('/name="description" content="(.*?)"/', $content, $result_description);
+                    if (isset($result_description[1])) {
+                        $description_website = $result_description[1];
+                    }else{
+                        $description_website = 'N/A';
+                    }
+                }
+                //Keyword
+                $website_keyword = preg_match('/name="Keywords" content="(.*?)"/', $content, $result_keyword);
+                if (isset($result_keyword[1])) {
+                    $website_keyword = $result_keyword[1];
+                } else {
+                    $website_keyword = preg_match('/name="keywords" content="(.*?)"/', $content, $result_keyword);
+                    if (isset($result_keyword[1])) {
+                        $website_keyword = $result_keyword[1];
+                    }else{
+                        $website_keyword = 'N/A';
+                    }
+                }
+                //Place name
+                $geo_placename = preg_match('/name="geo.placename" content="(.*?)"/', $content, $result_place_name);
+                if (isset($result_place_name[1])) {
+                    $geo_placename = $result_place_name[1];
 
-                    $descriptions = $html_web->find('meta[name=description]');
-                    if (isset($descriptions[0]->content)) {
-                        $description_website = $descriptions[0]->content;
-                    } else {
-                        $description_website = "N/A";
-                    }
+                } else {
+                    $geo_placename = 'Global';
+                }
+                //Position
+                $geo_position = preg_match('/name="geo.position" content="(.*?)"/', $content, $result_position);
+                if (isset($result_position[1])) {
+                    $geo_position = $result_position[1];
 
-                    $website_keywords = $html_web->find('meta[name=keywords]');
-                    if (isset($website_keywords[0]->content)) {
-                        $website_keyword = $website_keywords[0]->content;
-                    } else {
-                        $website_keyword = "N/A";
-                    }
-
-                    $geo_placenames = $html_web->find('meta[name=geo.placename]');
-                    if (isset($geo_placenames[0]->content)) {
-                        $geo_placename = $geo_placenames[0]->content;
-                    } else {
-                        $geo_placename = "N/A";
-                    }
-
-                    $geo_positions = $html_web->find('meta[name=geo.position]');
-                    if (isset($geo_positions[0]->content)) {
-                        $geo_position = $geo_positions[0]->content;
-                    } else {
-                        $geo_position = "N/A";
-                    }
-
-                    $icon = $html_web->find('link[rel=icon]');
-                    if (isset($icon[0]->href)) {
-                        $icon = $icon[0]->href;
-                    } else {
-                        $icon = $html_web->find('link[rel=shortcut icon]');
-                        if (isset($icon[0]->href)) {
-                            $icon = $icon[0]->href;
-                        } else {
-                            $icon = "";
-                        }
-                    }
-                    if (strpos($icon, 'http') === false) {
-                        $icon = 'http://' . $domain . $icon;
-                    }
-                }catch (Exception $e){
-                    $title_website = $domain;
-                    $language = "N/A";
-                    $distribution = "N/A";
-                    $revisit_after = "N/A";
-                    $author = "N/A";
-                    $description_website = "N/A";
-                    $website_keyword = "N/A";
-                    $geo_placename = "N/A";
-                    $geo_position = "N/A";
-                    $icon = "";
+                } else {
+                    $geo_position = 'Global';
+                }
+                //Icon
+                $icon = preg_match('/rel="icon" type="image\/png" href="(.*?)"/', $content, $result_icon);
+                if(isset($result_icon[1])){
+                    $icon = $result_icon[1];
+                }else{
+                    $icon = '';
+                }
+                if (strpos($icon, 'http') === false) {
+                    $icon = $url . $icon;
                 }
                 //Screen short website
                 $image_path = explode('.', $domain);
@@ -758,7 +799,7 @@ class HomeController extends Controller
 
     public function informationDomain($domain_name)
     {
-        $domain_name = trim($domain_name);
+        $domain_name = trim(strtolower($domain_name));
         $response = [
             'title' => 'Information domain : ' . $domain_name,
         ];
@@ -783,6 +824,7 @@ class HomeController extends Controller
 
     public function updateInformationDomain($domain_name)
     {
+        $domain_name = $domain_name = trim(strtolower($domain_name));
         $response = [
             'title' => 'Update domain : ' . $domain_name
         ];
@@ -913,81 +955,216 @@ class HomeController extends Controller
         //--------------------------------------Domain----------------------------------------------//
         //-----------------------------------------------------------------------------------------//
 
-        $html_web = HtmlDomParser::file_get_html('http://' . $domain);
-        $titles = $html_web->find('title');
-        if (isset($titles)) {
-            $title = $titles[0]->innertext();
-        } else {
-            $title = strtoupper($domain);
-        }
-        $languages = $html_web->find('meta[name=language]');
-        if (isset($languages[0]->content)) {
-            $language = $languages[0]->content;
-        } else {
-            $language = "N/A";
-        }
+        $url = 'http://' . $domain_name;
+        $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
 
-        $distributions = $html_web->find('meta[name=distribution]');
-        if (isset($distributions[0]->content)) {
-            $distribution = $distributions[0]->content;
-        } else {
-            $distribution = "N/A";
-        }
+        $options = array(
+            CURLOPT_CUSTOMREQUEST => "GET",        //set request type post or get
+            CURLOPT_POST => false,        //set to GET
+            CURLOPT_USERAGENT => $user_agent, //set user agent
+            CURLOPT_COOKIEFILE => "cookie.txt", //set cookie file
+            CURLOPT_COOKIEJAR => "cookie.txt", //set cookie jar
+            CURLOPT_RETURNTRANSFER => true,     // return web page
+            CURLOPT_HEADER => false,    // don't return headers
+            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+            CURLOPT_ENCODING => "",       // handle all encodings
+            CURLOPT_AUTOREFERER => true,     // set referer on redirect
+            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+            CURLOPT_TIMEOUT => 120,      // timeout on response
+            CURLOPT_MAXREDIRS => 10,       // stop after 10 redirects
+        );
 
-        $revisit_afters = $html_web->find('meta[name=revisit-after]');
-        if (isset($revisit_afters[0]->content)) {
-            $revisit_after = $revisit_afters[0]->content;
-        } else {
-            $revisit_after = "N/A";
-        }
+        $ch = curl_init($url);
+        curl_setopt_array($ch, $options);
+        $content = curl_exec($ch);
+        $err = curl_errno($ch);
+        $errmsg = curl_error($ch);
+        $header = curl_getinfo($ch);
+        curl_close($ch);
 
-        $authors = $html_web->find('meta[name=author]');
-        if (isset($authors[0]->content)) {
-            $author = $authors[0]->content;
+        $header['errno'] = $err;
+        $header['errmsg'] = $errmsg;
+        $header['content'] = $content;
+        //Title
+        $title = preg_match('/\<title\>(.+)\<\/title\>/', $content, $result_title);
+        $title = $result_title[1];
+        //Language
+        $language = preg_match('/name="Language" content="(.*?)"/', $content, $result_language);
+        if (isset($result_language[1])) {
+            $language = $result_language[1];
         } else {
-            $author = "N/A";
-        }
-
-        $descriptions = $html_web->find('meta[name=description]');
-        if (isset($descriptions[0]->content)) {
-            $description_website = $descriptions[0]->content;
-        } else {
-            $description_website = "N/A";
-        }
-
-        $website_keywords = $html_web->find('meta[name=keywords]');
-        if (isset($website_keywords[0]->content)) {
-            $website_keyword = $website_keywords[0]->content;
-        } else {
-            $website_keyword = "N/A";
-        }
-
-        $geo_placenames = $html_web->find('meta[name=geo.placename]');
-        if (isset($geo_placenames[0]->content)) {
-            $geo_placename = $geo_placenames[0]->content;
-        } else {
-            $geo_placename = "N/A";
-        }
-
-        $geo_positions = $html_web->find('meta[name=geo.position]');
-        if (isset($geo_positions[0]->content)) {
-            $geo_position = $geo_positions[0]->content;
-        } else {
-            $geo_position = "N/A";
-        }
-
-        $icon = $html_web->find('link[rel=icon]');
-        if (isset($icon[0]->href)) {
-            $icon = $icon[0]->href;
-        } else {
-            $icon = $html_web->find('link[rel=shortcut icon]');
-            if (isset($icon[0]->href)) {
-                $icon = $icon[0]->href;
+            $language = preg_match('/name="language" content="(.*?)"/', $content, $result_language);
+            if (isset($result_language[1])) {
+                $language = $result_language[1];
+            }else{
+                $language = 'English';
             }
         }
-        if (strpos($icon, 'http') === false) {
-            $icon = 'http://' . $domain . $icon;
+        //Distribution
+        $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
+        if (isset($result_distribution[1])) {
+            $distribution = $result_distribution[1];
+        } else {
+            $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
+            if (isset($result_distribution[1])) {
+                $distribution = $result_distribution[1];
+            }else{
+                $distribution = 'Global';
+            }
         }
+        //Revisit after
+        $revisit_after = preg_match('/name="Revisit-after" content="(.*?)"/', $content, $result_revisit_after);
+        if (isset($result_revisit_after[1])) {
+            $revisit_after = $result_revisit_after[1];
+        } else {
+            $revisit_after = preg_match('/name="revisit-after" content="(.*?)"/', $content, $result_revisit_after);
+            if (isset($result_revisit_after[1])) {
+                $revisit_after = $result_revisit_after[1];
+            }else{
+                $revisit_after = 'N/A';
+            }
+        }
+        //Author
+        $author = preg_match('/name="Author" content="(.*?)"/', $content, $result_author);
+        if (isset($result_author[1])) {
+            $author = $result_author[1];
+        } else {
+            $author = preg_match('/name="author" content="(.*?)"/', $content, $result_author);
+            if (isset($result_author[1])) {
+                $author = $result_author[1];
+            }else{
+                $author = 'N/A';
+            }
+        }
+        //Description
+        $description_website = preg_match('/name="Description" content="(.*?)"/', $content, $result_description);
+        if (isset($result_description[1])) {
+            $description_website = $result_description[1];
+        } else {
+            $description_website = preg_match('/name="description" content="(.*?)"/', $content, $result_description);
+            if (isset($result_description[1])) {
+                $description_website = $result_description[1];
+            }else{
+                $description_website = 'N/A';
+            }
+        }
+        //Keyword
+        $website_keyword = preg_match('/name="Keywords" content="(.*?)"/', $content, $result_keyword);
+        if (isset($result_keyword[1])) {
+            $website_keyword = $result_keyword[1];
+        } else {
+            $website_keyword = preg_match('/name="keywords" content="(.*?)"/', $content, $result_keyword);
+            if (isset($result_keyword[1])) {
+                $website_keyword = $result_keyword[1];
+            }else{
+                $website_keyword = 'N/A';
+            }
+        }
+        //Place name
+        $geo_placename = preg_match('/name="geo.placename" content="(.*?)"/', $content, $result_place_name);
+        if (isset($result_place_name[1])) {
+            $geo_placename = $result_place_name[1];
+
+        } else {
+            $geo_placename = 'Global';
+        }
+        //Position
+        $geo_position = preg_match('/name="geo.position" content="(.*?)"/', $content, $result_position);
+        if (isset($result_position[1])) {
+            $geo_position = $result_position[1];
+
+        } else {
+            $geo_position = 'Global';
+        }
+        //Icon
+        $icon = preg_match('/rel="icon" type="image\/png" href="(.*?)"/', $content, $result_icon);
+        if(isset($result_icon[1])){
+            $icon = $result_icon[1];
+        }else{
+            $icon = '';
+        }
+        if (strpos($icon, 'http') === false) {
+            $icon = $url . $icon;
+        }
+
+        /* catch (Exception $e) {
+            $html_web = HtmlDomParser::file_get_html('https://' . $domain);
+            $titles = $html_web->find('title');
+            if (isset($titles)) {
+                $title = $titles[0]->innertext();
+            } else {
+                $title = strtoupper($domain);
+            }
+            $languages = $html_web->find('meta[name=language]');
+            if (isset($languages[0]->content)) {
+                $language = $languages[0]->content;
+            } else {
+                $language = "English";
+            }
+
+            $distributions = $html_web->find('meta[name=distribution]');
+            if (isset($distributions[0]->content)) {
+                $distribution = $distributions[0]->content;
+            } else {
+                $distribution = "Global";
+            }
+
+            $revisit_afters = $html_web->find('meta[name=revisit-after]');
+            if (isset($revisit_afters[0]->content)) {
+                $revisit_after = $revisit_afters[0]->content;
+            } else {
+                $revisit_after = "N/A";
+            }
+
+            $authors = $html_web->find('meta[name=author]');
+            if (isset($authors[0]->content)) {
+                $author = $authors[0]->content;
+            } else {
+                $author = "N/A";
+            }
+
+            $descriptions = $html_web->find('meta[name=description]');
+            if (isset($descriptions[0]->content)) {
+                $description_website = $descriptions[0]->content;
+            } else {
+                $description_website = "N/A";
+            }
+
+            $website_keywords = $html_web->find('meta[name=keywords]');
+            if (isset($website_keywords[0]->content)) {
+                $website_keyword = $website_keywords[0]->content;
+            } else {
+                $website_keyword = "N/A";
+            }
+
+            $geo_placenames = $html_web->find('meta[name=geo.placename]');
+            if (isset($geo_placenames[0]->content)) {
+                $geo_placename = $geo_placenames[0]->content;
+            } else {
+                $geo_placename = "Global";
+            }
+
+            $geo_positions = $html_web->find('meta[name=geo.position]');
+            if (isset($geo_positions[0]->content)) {
+                $geo_position = $geo_positions[0]->content;
+            } else {
+                $geo_position = "Global";
+            }
+
+            $icon = $html_web->find('link[rel=icon]');
+            if (isset($icon[0]->href)) {
+                $icon = $icon[0]->href;
+            } else {
+                $icon = $html_web->find('link[rel=shortcut icon]');
+                if (isset($icon[0]->href)) {
+                    $icon = $icon[0]->href;
+                }
+            }
+            if (strpos($icon, 'http') === false) {
+                $icon = 'http://' . $domain . $icon;
+            }
+
+        }*/
         //Screen short website
         $image_path = explode('.', $domain);
         $image_path = $image_path[0] . '.jpg';
@@ -999,9 +1176,7 @@ class HomeController extends Controller
             ->setHeight('768')
             ->save($image_path);
 
-
         $website_information = WebsiteInformation::where('domain_id', $domain_id)->first();
-
         $website_information->domain_id = $domain_id;
         $website_information->title = $title;
         $website_information->language = $language;
@@ -1015,9 +1190,8 @@ class HomeController extends Controller
         $website_information->icon = $icon;
         $website_information->image_screen_shot = $image_path;
         $website_information->created_at = microtime(true);
-
-        //dd($website_information);
         $website_information->save();
+
 
         //-----------------------------------------------------------------------------------------//
         //--------------------------------------End domain-----------------------------------------//

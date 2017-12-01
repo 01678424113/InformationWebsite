@@ -426,4 +426,133 @@ class HomeController extends Controller
         var_dump($top_new);
         die;
     }
+
+    function get_web_page(  )
+    {
+        $url = 'https://laguaz.net';
+        $user_agent='Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
+
+        $options = array(
+
+            CURLOPT_CUSTOMREQUEST  =>"GET",        //set request type post or get
+            CURLOPT_POST           =>false,        //set to GET
+            CURLOPT_USERAGENT      => $user_agent, //set user agent
+            CURLOPT_COOKIEFILE     =>"cookie.txt", //set cookie file
+            CURLOPT_COOKIEJAR      =>"cookie.txt", //set cookie jar
+            CURLOPT_RETURNTRANSFER => true,     // return web page
+            CURLOPT_HEADER         => false,    // don't return headers
+            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+            CURLOPT_ENCODING       => "",       // handle all encodings
+            CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+            CURLOPT_TIMEOUT        => 120,      // timeout on response
+            CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+        );
+
+        $ch      = curl_init( $url );
+        curl_setopt_array( $ch, $options );
+        $content = curl_exec( $ch );
+        $err     = curl_errno( $ch );
+        $errmsg  = curl_error( $ch );
+        $header  = curl_getinfo( $ch );
+        curl_close( $ch );
+
+        $header['errno']   = $err;
+        $header['errmsg']  = $errmsg;
+        $header['content'] = $content;
+        //Title
+        $title = preg_match('/\<title\>(.+)\<\/title\>/',$content,$result_title);
+        $title = $result_title[1];
+        //Language
+        $language = preg_match('/name="Language" content="(.*?)"/',$content,$result_language);
+        if(isset($result_language[1])){
+            $language = $result_language[1];
+        }else{
+            $language = preg_match('/name="language" content="(.*?)"/',$content,$result_language);
+            $language = $result_language[1];
+            if(!isset($result_language[1])){
+                $language = 'English';
+            }
+        }
+        //Distribution
+        $distribution = preg_match('/name="Distribution" content="(.*?)"/',$content,$result_distribution);
+        if(isset($result_distribution[1])){
+            $distribution = $result_distribution[1];
+        }else{
+            $distribution = preg_match('/name="Distribution" content="(.*?)"/',$content,$result_distribution);
+            $distribution = $result_distribution[1];
+            if(!isset($result_distribution[1])){
+                $distribution = 'Global';
+            }
+        }
+        //Revisit after
+        $revisit_after = preg_match('/name="Revisit-after" content="(.*?)"/',$content,$result_revisit_after);
+        if(isset($result_revisit_after[1])){
+            $revisit_after = $result_revisit_after[1];
+        }else{
+            $revisit_after = preg_match('/name="revisit-after" content="(.*?)"/',$content,$result_revisit_after);
+            $revisit_after = $result_revisit_after[1];
+            if(!isset($result_revisit_after[1])){
+                $revisit_after = 'N/A';
+            }
+        }
+        //Author
+        $author = preg_match('/name="Author" content="(.*?)"/',$content,$result_author);
+        if(isset($result_author[1])){
+            $author = $result_author[1];
+        }else{
+            $author = preg_match('/name="author" content="(.*?)"/',$content,$result_author);
+            $author = $result_author[1];
+            if(!isset($result_author[1])){
+                $author = 'N/A';
+            }
+        }
+        //Description
+        $description_website = preg_match('/name="Description" content="(.*?)"/',$content,$result_description);
+        if(isset($result_description[1])){
+            $description_website = $result_description[1];
+        }else{
+            $description_website = preg_match('/name="description" content="(.*?)"/',$content,$result_description);
+            $description_website = $result_description[1];
+            if(!isset($result_description[1])){
+                $description_website = 'N/A';
+            }
+        }
+        //Keyword
+        $website_keyword = preg_match('/name="Keywords" content="(.*?)"/',$content,$result_keyword);
+        if(isset($result_keyword[1])){
+            $website_keyword = $result_keyword[1];
+        }else{
+            $website_keyword = preg_match('/name="keywords" content="(.*?)"/',$content,$result_keyword);
+            $website_keyword = $result_keyword[1];
+            if(!isset($result_keyword[1])){
+                $website_keyword = 'N/A';
+            }
+        }
+        //Place name
+        $geo_placename = preg_match('/name="geo.placename" content="(.*?)"/',$content,$result_place_name);
+        if(isset($result_place_name[1])){
+            $geo_placename = $result_place_name[1];
+
+        }else{
+            $geo_placename = 'Global';
+        }
+        //Position
+        $geo_position = preg_match('/name="geo.position" content="(.*?)"/',$content,$result_position);
+        if(isset($result_position[1])){
+            $geo_position = $result_position[1];
+
+        }else{
+            $geo_position = 'Global';
+        }
+        //Icon
+        $icon = preg_match('/rel="icon" type="image\/png" href="(.*?)"/',$content,$result_icon);
+        $icon = $result_icon[1];
+        if (strpos($icon, 'http') === false) {
+            $icon = $url . $icon;
+        }
+
+
+
+    }
 }

@@ -99,19 +99,19 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Title</td>
-                                                        <td class="td-parameter">{{rawurldecode($website_inf[0]['title'])}}</td>
+                                                        <td class="td-parameter">{{str_replace('+',' ',rawurldecode($website_inf[0]['title']))}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Language</td>
-                                                        <td class="td-parameter">{{rawurldecode($website_inf[0]['language'])}}</td>
+                                                        <td class="td-parameter">{{str_replace('+',' ',rawurldecode($website_inf[0]['language']))}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Description</td>
-                                                        <td class="td-parameter">{{rawurldecode($website_inf[0]['description'])}}</td>
+                                                        <td class="td-parameter">{{str_replace('+',' ',rawurldecode($website_inf[0]['description']))}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Keyword</td>
-                                                        <td class="td-parameter">{{rawurldecode($website_inf[0]['keyword'])}}</td>
+                                                        <td class="td-parameter">{{str_replace('+',' ',rawurldecode($website_inf[0]['keyword']))}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Backlink</td>
@@ -119,7 +119,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Author</td>
-                                                        <td class="td-parameter">{{rawurldecode($website_inf[0]['author'])}}</td>
+                                                        <td class="td-parameter">{{str_replace('+',' ',rawurldecode($website_inf[0]['author']))}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Position</td>
@@ -127,15 +127,15 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Place name</td>
-                                                        <td class="td-parameter">{{rawurldecode($website_inf[0]['place_name'])}}</td>
+                                                        <td class="td-parameter">{{str_replace('+',' ',rawurldecode($website_inf[0]['place_name']))}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Distributions</td>
-                                                        <td class="td-parameter">{{rawurldecode($website_inf[0]['distributions'])}}</td>
+                                                        <td class="td-parameter">{{str_replace('+',' ',rawurldecode($website_inf[0]['distributions']))}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Revisit affter</td>
-                                                        <td class="td-parameter">{{rawurldecode($website_inf[0]['revisit_affter'])}}</td>
+                                                        <td class="td-parameter">{{str_replace('+',' ',rawurldecode($website_inf[0]['revisit_affter']))}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Update at</td>
