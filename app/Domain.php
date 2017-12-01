@@ -12,7 +12,7 @@ class Domain extends Model
 
     public function alexa()
     {
-        return $this->hasOne(AlexaInformation::class);
+        return $this->hasOne(AlexaInformation::class,'domain','domain');
     }
 
 

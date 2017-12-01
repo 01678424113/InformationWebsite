@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\AlexaInformation;
 use App\Domain;
+use App\ObjectTest;
 use App\Setting;
 use App\Top500Domain;
 use App\WebsiteInformation;
@@ -11,6 +12,7 @@ use App\WhoisInformation;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use PhpParser\Node\Expr\Cast\Object_;
 use Spatie\Browsershot\Browsershot;
 use Sunra\PhpSimple\HtmlDomParser;
 
@@ -59,9 +61,6 @@ class HomeController extends Controller
             $new_domain = new Domain();
             $new_domain->domain = $domain;
             $new_domain->created_at = microtime(true);
-            $new_domain->save();
-            $domain_id = $new_domain->id;
-
             try {
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------Alexa----------------------------------------------//
@@ -84,6 +83,7 @@ class HomeController extends Controller
                 foreach ($countryRanks as $item) {
                     $countryRank = trim($item->innertext());
                 }
+
                 //Visitor
                 $visitor = $html_alexa->find('section#engage-panel section#engagement-content span.span4 strong.metrics-data');
                 $bounce_percent = $visitor[0]->innertext();
@@ -153,7 +153,7 @@ class HomeController extends Controller
                 $rate_work = ($rate_left[8] + $rate_right[8]) / 2;
 
                 $alexa_information = new AlexaInformation();
-                $alexa_information->domain_id = $domain_id;
+                $alexa_information->domain = $domain;
                 $alexa_information->global_rank = $globalRank;
                 $alexa_information->country = $country;
                 $alexa_information->country_rank = $countryRank;
@@ -174,8 +174,6 @@ class HomeController extends Controller
                 $alexa_information->rate_school = $rate_school;
                 $alexa_information->created_at = microtime(true);
 
-                //dd($alexa_information);
-                $alexa_information->save();
 
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------End alexa------------------------------------------//
@@ -185,11 +183,13 @@ class HomeController extends Controller
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------Domain----------------------------------------------//
                 //-----------------------------------------------------------------------------------------//
-
-                $html_web = HtmlDomParser::file_get_html('http://' . $domain);
-                $url = 'http://' . $domain_name;
+                try {
+                    $html_web = HtmlDomParser::file_get_html('http://' . $domain);
+                } catch (Exception $e) {
+                    $html_web = new ObjectTest();
+                }
+                $url = 'http://' . $domain;
                 $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
-
                 $options = array(
                     CURLOPT_CUSTOMREQUEST => "GET",        //set request type post or get
                     CURLOPT_POST => false,        //set to GET
@@ -205,7 +205,6 @@ class HomeController extends Controller
                     CURLOPT_TIMEOUT => 120,      // timeout on response
                     CURLOPT_MAXREDIRS => 10,       // stop after 10 redirects
                 );
-
                 $ch = curl_init($url);
                 curl_setopt_array($ch, $options);
                 $content = curl_exec($ch);
@@ -223,9 +222,8 @@ class HomeController extends Controller
                     $title_website = $result_title[1];
                 } elseif ((isset($html_web->find('title')[0]))) {
                     $title_website = $html_web->find('title')[0]->innertext();
-
                 } else {
-                    $title_website = ucwords($domain_name);
+                    $title_website = ucwords($domain);
                 }
                 //Language
                 $language = preg_match('/name="Language" content="(.*?)"/', $content, $result_language);
@@ -352,15 +350,17 @@ class HomeController extends Controller
                                 $icon = $html_web->find('link[rel=icon]')[0]->innertext();
                             } elseif (isset($html_web->find('link[rel=shortcut icon]')[0])) {
                                 $icon = $html_web->find('link[rel=shortcut icon]')[0]->innertext();
-                            }else{
+                            } else {
                                 $icon = '/upload/google.jpg';
                             }
                         }
                     }
                 }
+
                 if (strpos($icon, 'http') === false) {
                     $icon = $url . $icon;
                 }
+
                 //Screen short website
                 $image_path = explode('.', $domain);
                 $image_path = $image_path[0] . '.jpg';
@@ -374,6 +374,7 @@ class HomeController extends Controller
                 //Auto tạo content
                 //Create auto title and content video
                 //Get value form database
+
                 $settings_title = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'title_view')->get();
                 $settings_h1 = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'h1_view')->get();
                 $settings_content_top = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'content_view_top')->get();
@@ -543,7 +544,7 @@ class HomeController extends Controller
                 $website_information->description_website_auto = $description;
                 $website_information->alt_website_auto = $alt;
 
-                $website_information->domain_id = $domain_id;
+                $website_information->domain = $domain;
                 $website_information->title = urlencode($title_website);
                 $website_information->language = urlencode($language);
                 $website_information->distributions = urlencode($distribution);
@@ -556,8 +557,6 @@ class HomeController extends Controller
                 $website_information->icon = $icon;
                 $website_information->image_screen_shot = $image_path;
                 $website_information->created_at = microtime(true);
-
-                $website_information->save();
 
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------End domain-----------------------------------------//
@@ -572,7 +571,6 @@ class HomeController extends Controller
                 $df_block = $html_whois->find('div.df-block');
                 //DOMAIN INFORMATION
                 $who_is_information = new WhoisInformation();
-                $who_is_information->domain_id = $domain_id;
                 $who_is_information->domain = $domain;
                 foreach ($df_block as $item_block) {
                     if (isset($item_block->find('.df-heading')[0])) {
@@ -821,6 +819,9 @@ class HomeController extends Controller
                 isset($who_is_information->tech_fax) ?: $who_is_information->tech_fax = "N/A";
                 isset($who_is_information->tech_email) ?: $who_is_information->tech_email = "N/A";
                 try {
+                    $new_domain->save();
+                    $alexa_information->save();
+                    $website_information->save();
                     $who_is_information->save();
                     return redirect()->route('informationDomain', ['domain_name' => $domain]);
                 } catch (Exception $e) {
@@ -832,11 +833,9 @@ class HomeController extends Controller
                 //--------------------------------------End Who is-----------------------------------------//
                 //-----------------------------------------------------------------------------------------//
             } catch (Exception $e) {
-                $new_domain->delete();
                 dd($e);
                 return redirect()->back()->with('error', 'Error connect database !');
             }
-
         } else {
             return redirect()->route('informationDomain', ['domain_name' => $domain]);
         }
@@ -852,9 +851,9 @@ class HomeController extends Controller
         if (isset($domain)) {
             $domain_id = $domain->id;
 
-            $alexa_inf = AlexaInformation::where('domain_id', $domain_id)->get();
-            $website_inf = WebsiteInformation::where('domain_id', $domain_id)->get();
-            $who_is_inf = WhoisInformation::where('domain_id', $domain_id)->get();
+            $alexa_inf = AlexaInformation::where('domain', $domain_name)->get();
+            $website_inf = WebsiteInformation::where('domain', $domain_name)->get();
+            $who_is_inf = WhoisInformation::where('domain', $domain_name)->get();
 
             $response['alexa_inf'] = $alexa_inf;
             $response['website_inf'] = $website_inf;
@@ -869,583 +868,617 @@ class HomeController extends Controller
 
     public function updateInformationDomain($domain_name)
     {
-        $domain_name = $domain_name = trim(strtolower($domain_name));
+        $domain = trim(strtolower($domain_name));
         $response = [
-            'title' => 'Update domain : ' . $domain_name
+            'title' => 'Update domain : ' . $domain
         ];
-        $new_domain = Domain::where('domain', $domain_name)->first();
+        $new_domain = Domain::where('domain', $domain)->first();
         $new_domain->created_at = microtime(true);
-        $new_domain->save();
-        $domain_id = $new_domain->id;
-        $domain = $new_domain->domain;
-        //-----------------------------------------------------------------------------------------//
-        //--------------------------------------Alexa----------------------------------------------//
-        //-----------------------------------------------------------------------------------------//
-        $html_alexa = HtmlDomParser::file_get_html('https://www.alexa.com/siteinfo/' . $domain);
-        //Global rank
-        $globalRanks = $html_alexa->find('span.globleRank .col-pad div strong.metrics-data');
-        foreach ($globalRanks as $item) {
-            $globalRank_text = trim($item->innertext());
-            $globalRank_text = preg_match('/\>(.+)/', $globalRank_text, $result);
-            $globalRank = trim($result[1]);
-        }
-        //Country
-        $countries = $html_alexa->find('span.countryRank .col-pad h4.metrics-title a');
-        foreach ($countries as $item) {
-            $country = trim($item->innertext());
-        }
-        //Country rank
-        $countryRanks = $html_alexa->find('span.countryRank .col-pad div strong.metrics-data');
-        foreach ($countryRanks as $item) {
-            $countryRank = trim($item->innertext());
-        }
-        //Visitor
-        $visitor = $html_alexa->find('section#engage-panel section#engagement-content span.span4 strong.metrics-data');
-        $bounce_percent = $visitor[0]->innertext();
-        $pageviews_per_visitor = $visitor[1]->innertext();
-        $time_on_site = $visitor[2]->innertext();
-        //Traffic over
-        $traffic_over = $html_alexa->find('table#demographics_div_country_table tbody tr');
-        for ($i = 1; $i < 6; $i++) {
-            $inf_traffic_over[] = [
-                [
-                    'img_country' => 'https://www.alexa.com' . $traffic_over[$i]->find('td a img')[0]->src,
-                    'name_country' => strip_tags($traffic_over[$i]->find('td a')[0]->innertext()),
-                    'percent_visitor' => strip_tags($traffic_over[$i]->find('td.text-right span')[0]->innertext()),
-                    'rank_country' => strip_tags($traffic_over[$i]->find('td.text-right span')[1]->innertext())
-                ]
-            ];
-        }
-        //Image search traffic
-        $image_search_traffic = 'https://traffic.alexa.com/graph?o=lt&y=q&b=ffffff&n=666666&f=999999&p=4e8cff&r=1y&t=2&z=0&c=1&h=150&w=340&u=' . $domain;
-        //Top 5 Keyword search engines
-        $keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
-        $keyword = "";
-        for ($i = 1; $i < 10; $i += 2) {
-            $keyword = $keyword . $keywords[$i]->innertext() . ", ";
-        }
-        //Rate keyword
-        $rate_keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.text-right span');
-        $rate_keyword = "";
-        for ($i = 0; $i < 5; $i++) {
-            $rate_keyword = $rate_keyword . $rate_keywords[$i]->innertext() . ", ";
-        }
-        //Backlink
-        $backlinks = $html_alexa->find('section#linksin-panel-content span.box1-r');
-        foreach ($backlinks as $item) {
-            $backlink = $item->innertext();
-        }
-        //Upstream sites
-        $upstream_sites = $html_alexa->find('section#upstream-content #keywords_upstream_site_table tbody tr');
-        for ($i = 1; $i < 6; $i++) {
-            $upstream_site[] = [
-                ['site' => $upstream_sites[$i]->find('td a')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td span')[1]->innertext()]
-            ];
-        }
-        //Website related
-        $website_related_html = $html_alexa->find('section#related-content table#audience_overlap_table tbody tr td a');
-        foreach ($website_related_html as $item) {
-            $website_related[] = $item->innertext();
-        }
-        //Rate gender, home, school, work
-        $genders_left = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-l span.pybar-bg');
-        foreach ($genders_left as $item) {
-            $gender_left = $item->innertext();
-            preg_match('/width\:(.+)\%/', $gender_left, $result);
-            $rate_left[] = (int)$result[1];
-        }
-        $genders_right = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-r span.pybar-bg');
-        foreach ($genders_right as $item) {
-            $genders_right = $item->innertext();
-            preg_match('/width\:(.+)\%/', $genders_right, $result);
-            $rate_right[] = (int)$result[1];
-        }
-        $rate_male = ($rate_left[0] + $rate_right[0]) / 2;
-        $rate_female = ($rate_left[1] + $rate_right[1]) / 2;
-        $rate_home = ($rate_left[6] + $rate_right[6]) / 2;
-        $rate_school = ($rate_left[7] + $rate_right[7]) / 2;
-        $rate_work = ($rate_left[8] + $rate_right[8]) / 2;
 
-        $alexa_information = AlexaInformation::where('domain_id', $domain_id)->first();
-        $alexa_information->domain_id = $domain_id;
-        $alexa_information->global_rank = $globalRank;
-        $alexa_information->country = $country;
-        $alexa_information->country_rank = $countryRank;
-        $alexa_information->bounce_percent = $bounce_percent;
-        $alexa_information->pageviews_per_visitor = $pageviews_per_visitor;
-        $alexa_information->time_on_site = $time_on_site;
-        $alexa_information->traffic_over = json_encode($inf_traffic_over);
-        $alexa_information->image_search_traffic = $image_search_traffic;
-        $alexa_information->top_5_keyword = json_encode($keyword);
-        $alexa_information->rate_keyword = json_encode($rate_keyword);
-        $alexa_information->upstream_site = json_encode($upstream_site);
-        $alexa_information->website_related = json_encode($website_related);
-        $alexa_information->quantity_backlink = $backlink;
-        $alexa_information->rate_male = $rate_male;
-        $alexa_information->rate_female = $rate_female;
-        $alexa_information->rate_home = $rate_home;
-        $alexa_information->rate_work = $rate_work;
-        $alexa_information->rate_school = $rate_school;
-        $alexa_information->created_at = microtime(true);
+        try {
+            //-----------------------------------------------------------------------------------------//
+            //--------------------------------------Alexa----------------------------------------------//
+            //-----------------------------------------------------------------------------------------//
+            $html_alexa = HtmlDomParser::file_get_html('https://www.alexa.com/siteinfo/' . $domain);
+            //Global rank
+            $globalRanks = $html_alexa->find('span.globleRank .col-pad div strong.metrics-data');
+            foreach ($globalRanks as $item) {
+                $globalRank_text = trim($item->innertext());
+                $globalRank_text = preg_match('/\>(.+)/', $globalRank_text, $result);
+                $globalRank = trim($result[1]);
+            }
+            //Country
+            $countries = $html_alexa->find('span.countryRank span.col-pad h4.metrics-title a');
+            foreach ($countries as $item) {
+                $country = trim($item->innertext());
+            }
+            //Country rank
+            $countryRanks = $html_alexa->find('span.countryRank .col-pad div strong.metrics-data');
+            foreach ($countryRanks as $item) {
+                $countryRank = trim($item->innertext());
+            }
 
-        //dd($alexa_information);
-        $alexa_information->save();
+            //Visitor
+            $visitor = $html_alexa->find('section#engage-panel section#engagement-content span.span4 strong.metrics-data');
+            $bounce_percent = $visitor[0]->innertext();
+            $pageviews_per_visitor = $visitor[1]->innertext();
+            $time_on_site = $visitor[2]->innertext();
+            //Traffic over
+            $traffic_over = $html_alexa->find('table#demographics_div_country_table tbody tr');
+            $traffic_max = count($traffic_over);
+            for ($i = 1; $i < $traffic_max; $i++) {
+                $inf_traffic_over[] = [
+                    [
+                        'img_country' => 'https://www.alexa.com' . $traffic_over[$i]->find('td a img')[0]->src,
+                        'name_country' => strip_tags($traffic_over[$i]->find('td a')[0]->innertext()),
+                        'percent_visitor' => strip_tags($traffic_over[$i]->find('td.text-right span')[0]->innertext()),
+                        'rank_country' => strip_tags($traffic_over[$i]->find('td.text-right span')[1]->innertext())
+                    ]
+                ];
+            }
+            //Image search traffic
+            $image_search_traffic = 'https://traffic.alexa.com/graph?o=lt&y=q&b=ffffff&n=666666&f=999999&p=4e8cff&r=1y&t=2&z=0&c=1&h=150&w=340&u=' . $domain;
+            //Top 5 Keyword search engines
+            $keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
+            $keyword = "";
+            for ($i = 1; $i < 10; $i += 2) {
+                $keyword = $keyword . $keywords[$i]->innertext() . ", ";
+            }
+            //Rate keyword
+            $rate_keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.text-right span');
+            $rate_keyword = "";
+            for ($i = 0; $i < 5; $i++) {
+                $rate_keyword = $rate_keyword . $rate_keywords[$i]->innertext() . ", ";
+            }
+            //Backlink
+            $backlinks = $html_alexa->find('section#linksin-panel-content span.box1-r');
+            foreach ($backlinks as $item) {
+                $backlink = $item->innertext();
+            }
+            //Upstream sites
+            $upstream_sites = $html_alexa->find('section#upstream-content #keywords_upstream_site_table tbody tr');
+            for ($i = 1; $i < 6; $i++) {
+                $upstream_site[] = [
+                    ['site' => $upstream_sites[$i]->find('td a')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td span')[1]->innertext()]
+                ];
+            }
+            //Website related
+            $website_related_html = $html_alexa->find('section#related-content table#audience_overlap_table tbody tr td a');
+            foreach ($website_related_html as $item) {
+                $website_related[] = $item->innertext();
+            }
+            //Rate gender, home, school, work
+            $genders_left = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-l span.pybar-bg');
+            foreach ($genders_left as $item) {
+                $gender_left = $item->innertext();
+                preg_match('/width\:(.+)\%/', $gender_left, $result);
+                $rate_left[] = (int)$result[1];
+            }
+            $genders_right = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-r span.pybar-bg');
+            foreach ($genders_right as $item) {
+                $genders_right = $item->innertext();
+                preg_match('/width\:(.+)\%/', $genders_right, $result);
+                $rate_right[] = (int)$result[1];
+            }
+            $rate_male = ($rate_left[0] + $rate_right[0]) / 2;
+            $rate_female = ($rate_left[1] + $rate_right[1]) / 2;
+            $rate_home = ($rate_left[6] + $rate_right[6]) / 2;
+            $rate_school = ($rate_left[7] + $rate_right[7]) / 2;
+            $rate_work = ($rate_left[8] + $rate_right[8]) / 2;
 
-        //-----------------------------------------------------------------------------------------//
-        //--------------------------------------End alexa------------------------------------------//
-        //-----------------------------------------------------------------------------------------//
+            $alexa_information = AlexaInformation::where('domain',$domain)->first();
+            $alexa_information->domain = $domain;
+            $alexa_information->global_rank = $globalRank;
+            $alexa_information->country = $country;
+            $alexa_information->country_rank = $countryRank;
+            $alexa_information->bounce_percent = $bounce_percent;
+            $alexa_information->pageviews_per_visitor = $pageviews_per_visitor;
+            $alexa_information->time_on_site = $time_on_site;
+            $alexa_information->traffic_over = json_encode($inf_traffic_over);
+            $alexa_information->image_search_traffic = $image_search_traffic;
+            $alexa_information->top_5_keyword = json_encode($keyword);
+            $alexa_information->rate_keyword = json_encode($rate_keyword);
+            $alexa_information->upstream_site = json_encode($upstream_site);
+            $alexa_information->website_related = json_encode($website_related);
+            $alexa_information->quantity_backlink = $backlink;
+            $alexa_information->rate_male = $rate_male;
+            $alexa_information->rate_female = $rate_female;
+            $alexa_information->rate_home = $rate_home;
+            $alexa_information->rate_work = $rate_work;
+            $alexa_information->rate_school = $rate_school;
+            $alexa_information->created_at = microtime(true);
 
 
-        //-----------------------------------------------------------------------------------------//
-        //--------------------------------------Domain----------------------------------------------//
-        //-----------------------------------------------------------------------------------------//
+            //-----------------------------------------------------------------------------------------//
+            //--------------------------------------End alexa------------------------------------------//
+            //-----------------------------------------------------------------------------------------//
 
-        $url = 'http://' . $domain_name;
-        $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
 
-        $options = array(
-            CURLOPT_CUSTOMREQUEST => "GET",        //set request type post or get
-            CURLOPT_POST => false,        //set to GET
-            CURLOPT_USERAGENT => $user_agent, //set user agent
-            CURLOPT_COOKIEFILE => "cookie.txt", //set cookie file
-            CURLOPT_COOKIEJAR => "cookie.txt", //set cookie jar
-            CURLOPT_RETURNTRANSFER => true,     // return web page
-            CURLOPT_HEADER => false,    // don't return headers
-            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-            CURLOPT_ENCODING => "",       // handle all encodings
-            CURLOPT_AUTOREFERER => true,     // set referer on redirect
-            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
-            CURLOPT_TIMEOUT => 120,      // timeout on response
-            CURLOPT_MAXREDIRS => 10,       // stop after 10 redirects
-        );
+            //-----------------------------------------------------------------------------------------//
+            //--------------------------------------Domain----------------------------------------------//
+            //-----------------------------------------------------------------------------------------//
+            try {
+                $html_web = HtmlDomParser::file_get_html('http://' . $domain);
+            } catch (Exception $e) {
+                $html_web = new ObjectTest();
+            }
+            $url = 'http://' . $domain;
+            $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
+            $options = array(
+                CURLOPT_CUSTOMREQUEST => "GET",        //set request type post or get
+                CURLOPT_POST => false,        //set to GET
+                CURLOPT_USERAGENT => $user_agent, //set user agent
+                CURLOPT_COOKIEFILE => "cookie.txt", //set cookie file
+                CURLOPT_COOKIEJAR => "cookie.txt", //set cookie jar
+                CURLOPT_RETURNTRANSFER => true,     // return web page
+                CURLOPT_HEADER => false,    // don't return headers
+                CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+                CURLOPT_ENCODING => "",       // handle all encodings
+                CURLOPT_AUTOREFERER => true,     // set referer on redirect
+                CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+                CURLOPT_TIMEOUT => 120,      // timeout on response
+                CURLOPT_MAXREDIRS => 10,       // stop after 10 redirects
+            );
+            $ch = curl_init($url);
+            curl_setopt_array($ch, $options);
+            $content = curl_exec($ch);
+            $err = curl_errno($ch);
+            $errmsg = curl_error($ch);
+            $header = curl_getinfo($ch);
+            curl_close($ch);
 
-        $ch = curl_init($url);
-        curl_setopt_array($ch, $options);
-        $content = curl_exec($ch);
-        $err = curl_errno($ch);
-        $errmsg = curl_error($ch);
-        $header = curl_getinfo($ch);
-        curl_close($ch);
-
-        $header['errno'] = $err;
-        $header['errmsg'] = $errmsg;
-        $header['content'] = $content;
-        //Title
-        $title = preg_match('/\<title\>(.+)\<\/title\>/', $content, $result_title);
-        $title = $result_title[1];
-        //Language
-        $language = preg_match('/name="Language" content="(.*?)"/', $content, $result_language);
-        if (isset($result_language[1])) {
-            $language = $result_language[1];
-        } else {
-            $language = preg_match('/name="language" content="(.*?)"/', $content, $result_language);
+            $header['errno'] = $err;
+            $header['errmsg'] = $errmsg;
+            $header['content'] = $content;
+            //Title
+            $title_website = preg_match('/\<title\>(.*?)\<\/title\>/', $content, $result_title);
+            if (isset($result_title[1])) {
+                $title_website = $result_title[1];
+            } elseif ((isset($html_web->find('title')[0]))) {
+                $title_website = $html_web->find('title')[0]->innertext();
+            } else {
+                $title_website = ucwords($domain);
+            }
+            //Language
+            $language = preg_match('/name="Language" content="(.*?)"/', $content, $result_language);
             if (isset($result_language[1])) {
                 $language = $result_language[1];
             } else {
-                $language = 'English';
+                $language = preg_match('/name="language" content="(.*?)"/', $content, $result_language);
+                if (isset($result_language[1])) {
+                    $language = $result_language[1];
+                } elseif (isset($html_web->find('meta[name=language]')[0])) {
+                    $language = $html_web->find('meta[name=language]')[0]->innertext();
+                } else {
+                    $language = 'English';
+                }
             }
-        }
-        //Distribution
-        $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
-        if (isset($result_distribution[1])) {
-            $distribution = $result_distribution[1];
-        } else {
+
+            //Distribution
             $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
             if (isset($result_distribution[1])) {
                 $distribution = $result_distribution[1];
             } else {
-                $distribution = 'Global';
+                $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
+                if (isset($result_distribution[1])) {
+                    $distribution = $result_distribution[1];
+                } elseif (isset($html_web->find('meta[name=distribution]')[0])) {
+                    $distribution = $html_web->find('meta[name=distribution]')[0]->innertext();
+                } else {
+                    $distribution = 'Global';
+                }
             }
-        }
-        //Revisit after
-        $revisit_after = preg_match('/name="Revisit-after" content="(.*?)"/', $content, $result_revisit_after);
-        if (isset($result_revisit_after[1])) {
-            $revisit_after = $result_revisit_after[1];
-        } else {
-            $revisit_after = preg_match('/name="revisit-after" content="(.*?)"/', $content, $result_revisit_after);
+            //Revisit after
+            $revisit_after = preg_match('/name="Revisit-after" content="(.*?)"/', $content, $result_revisit_after);
             if (isset($result_revisit_after[1])) {
                 $revisit_after = $result_revisit_after[1];
             } else {
-                $revisit_after = 'N/A';
+                $revisit_after = preg_match('/name="revisit-after" content="(.*?)"/', $content, $result_revisit_after);
+                if (isset($result_revisit_after[1])) {
+                    $revisit_after = $result_revisit_after[1];
+                } elseif (isset($html_web->find('meta[name=revisit-after]')[0])) {
+                    $revisit_after = $html_web->find('meta[name=revisit-after]')[0]->innertext();
+                } else {
+                    $revisit_after = 'N/A';
+                }
             }
-        }
-        //Author
-        $author = preg_match('/name="Author" content="(.*?)"/', $content, $result_author);
-        if (isset($result_author[1])) {
-            $author = $result_author[1];
-        } else {
-            $author = preg_match('/name="author" content="(.*?)"/', $content, $result_author);
+            //Author
+            $author = preg_match('/name="Author" content="(.*?)"/', $content, $result_author);
             if (isset($result_author[1])) {
                 $author = $result_author[1];
             } else {
-                $author = 'N/A';
+                $author = preg_match('/name="author" content="(.*?)"/', $content, $result_author);
+                if (isset($result_author[1])) {
+                    $author = $result_author[1];
+                } elseif (isset($html_web->find('meta[name=author]')[0])) {
+                    $author = $html_web->find('meta[name=author]')[0]->innertext();
+                } else {
+                    $author = 'N/A';
+                }
             }
-        }
-        //Description
-        $description_website = preg_match('/name="Description" content="(.*?)"/', $content, $result_description);
-        if (isset($result_description[1])) {
-            $description_website = $result_description[1];
-        } else {
-            $description_website = preg_match('/name="description" content="(.*?)"/', $content, $result_description);
+            //Description
+            $description_website = preg_match('/name="Description" content="(.*?)"/', $content, $result_description);
             if (isset($result_description[1])) {
                 $description_website = $result_description[1];
             } else {
-                $description_website = 'N/A';
+                $description_website = preg_match('/name="description" content="(.*?)"/', $content, $result_description);
+                if (isset($result_description[1])) {
+                    $description_website = $result_description[1];
+                } elseif (isset($html_web->find('meta[name=description]')[0])) {
+                    $description_website = $html_web->find('meta[name=description]')[0]->innertext();
+                } else {
+                    $description_website = 'N/A';
+                }
             }
-        }
-        //Keyword
-        $website_keyword = preg_match('/name="Keywords" content="(.*?)"/', $content, $result_keyword);
-        if (isset($result_keyword[1])) {
-            $website_keyword = $result_keyword[1];
-        } else {
-            $website_keyword = preg_match('/name="keywords" content="(.*?)"/', $content, $result_keyword);
+            //Keyword
+            $website_keyword = preg_match('/name="Keywords" content="(.*?)"/', $content, $result_keyword);
             if (isset($result_keyword[1])) {
                 $website_keyword = $result_keyword[1];
             } else {
-                $website_keyword = 'N/A';
+                $website_keyword = preg_match('/name="keywords" content="(.*?)"/', $content, $result_keyword);
+                if (isset($result_keyword[1])) {
+                    $website_keyword = $result_keyword[1];
+                } elseif (isset($html_web->find('meta[name=keywords]')[0])) {
+                    $website_keyword = $html_web->find('meta[name=keywords]')[0]->innertext();
+                } else {
+                    $website_keyword = 'N/A';
+                }
             }
-        }
-        //Place name
-        $geo_placename = preg_match('/name="geo.placename" content="(.*?)"/', $content, $result_place_name);
-        if (isset($result_place_name[1])) {
-            $geo_placename = $result_place_name[1];
+            //Place name
+            $geo_placename = preg_match('/name="geo.placename" content="(.*?)"/', $content, $result_place_name);
+            if (isset($result_place_name[1])) {
+                $geo_placename = $result_place_name[1];
 
-        } else {
-            $geo_placename = 'Global';
-        }
-        //Position
-        $geo_position = preg_match('/name="geo.position" content="(.*?)"/', $content, $result_position);
-        if (isset($result_position[1])) {
-            $geo_position = $result_position[1];
+            } elseif (isset($html_web->find('meta[name=geo.placename]')[0])) {
+                $geo_placename = $html_web->find('meta[name=geo.placename]')[0]->innertext();
+            } else {
+                $geo_placename = 'Global';
+            }
+            //Position
+            $geo_position = preg_match('/name="geo.position" content="(.*?)"/', $content, $result_position);
+            if (isset($result_position[1])) {
+                $geo_position = $result_position[1];
 
-        } else {
-            $geo_position = 'Global';
-        }
-        //Icon
-        $icon = preg_match('/rel="icon" type="image\/png" href="(.*?)"/', $content, $result_icon);
-        if (isset($result_icon[1])) {
-            $icon = $result_icon[1];
-        } else {
-            $icon = preg_match('/href="(.*?)" rel="icon"/', $content, $result_icon);
+            } elseif (isset($html_web->find('meta[name=geo.position]')[0])) {
+                $geo_position = $html_web->find('meta[name=geo.position]')[0]->innertext();
+            } else {
+                $geo_position = 'Global';
+            }
+            //Icon
+            $icon = preg_match('/rel="icon" type="image\/png" href="(.*?)"/', $content, $result_icon);
             if (isset($result_icon[1])) {
                 $icon = $result_icon[1];
             } else {
-                $icon = preg_match('/rel="icon" href="(.*?)"/', $content, $result_icon);
+                $icon = preg_match('/href="(.*?)" rel="icon"/', $content, $result_icon);
                 if (isset($result_icon[1])) {
                     $icon = $result_icon[1];
                 } else {
-                    $icon = preg_match('/rel="shortcut icon" href="(.*?)"/', $content, $result_icon);
+                    $icon = preg_match('/rel="icon" href="(.*?)"/', $content, $result_icon);
                     if (isset($result_icon[1])) {
                         $icon = $result_icon[1];
                     } else {
-                        $icon = '';
+                        $icon = preg_match('/rel="shortcut icon" href="(.*?)"/', $content, $result_icon);
+                        if (isset($result_icon[1])) {
+                            $icon = $result_icon[1];
+                        } elseif (isset($html_web->find('link[rel=icon]')[0])) {
+                            $icon = $html_web->find('link[rel=icon]')[0]->innertext();
+                        } elseif (isset($html_web->find('link[rel=shortcut icon]')[0])) {
+                            $icon = $html_web->find('link[rel=shortcut icon]')[0]->innertext();
+                        } else {
+                            $icon = '/upload/google.jpg';
+                        }
                     }
                 }
             }
-        }
-        if (strpos($icon, 'http') === false) {
-            $icon = $url . $icon;
-        }
-        //Screen short website
-        $image_path = explode('.', $domain);
-        $image_path = $image_path[0] . '.jpg';
-        $image_path = "upload/" . $image_path;
-        $screenShort = new Browsershot();
-        $screenShort
-            ->setUrl('http://' . $domain)
-            ->setWidth('1024')
-            ->setHeight('768')
-            ->save($image_path);
 
-        $website_information = WebsiteInformation::where('domain_id', $domain_id)->first();
-        $website_information->domain_id = $domain_id;
-        $website_information->title = $title;
-        $website_information->language = $language;
-        $website_information->distributions = $distribution;
-        $website_information->revisit_affter = $revisit_after;
-        $website_information->author = $author;
-        $website_information->description = addslashes($description_website);
-        $website_information->keyword = addslashes($website_keyword);
-        $website_information->place_name = $geo_placename;
-        $website_information->position = $geo_position;
-        $website_information->icon = $icon;
-        $website_information->image_screen_shot = $image_path;
-        $website_information->created_at = microtime(true);
-        $website_information->save();
+            if (strpos($icon, 'http') === false) {
+                $icon = $url . $icon;
+            }
+
+            //Screen short website
+            $image_path = explode('.', $domain);
+            $image_path = $image_path[0] . '.jpg';
+            $image_path = "upload/" . $image_path;
+            $screenShort = new Browsershot();
+            $screenShort
+                ->setUrl('http://' . $domain)
+                ->setWidth('1024')
+                ->setHeight('768')
+                ->save($image_path);
 
 
-        //-----------------------------------------------------------------------------------------//
-        //--------------------------------------End domain-----------------------------------------//
-        //-----------------------------------------------------------------------------------------//
+            $website_information = WebsiteInformation::where('domain',$domain)->first();
+            $website_information->domain = $domain;
+            $website_information->title = urlencode($title_website);
+            $website_information->language = urlencode($language);
+            $website_information->distributions = urlencode($distribution);
+            $website_information->revisit_affter = $revisit_after;
+            $website_information->author = urlencode($author);
+            $website_information->description = urlencode($description_website);
+            $website_information->keyword = urlencode($website_keyword);
+            $website_information->place_name = urlencode($geo_placename);
+            $website_information->position = $geo_position;
+            $website_information->icon = $icon;
+            $website_information->image_screen_shot = $image_path;
+            $website_information->created_at = microtime(true);
+
+            //-----------------------------------------------------------------------------------------//
+            //--------------------------------------End domain-----------------------------------------//
+            //-----------------------------------------------------------------------------------------//
 
 
-        //-----------------------------------------------------------------------------------------//
-        //--------------------------------------Who is---------------------------------------------//
-        //-----------------------------------------------------------------------------------------//
+            //-----------------------------------------------------------------------------------------//
+            //--------------------------------------Who is---------------------------------------------//
+            //-----------------------------------------------------------------------------------------//
 
-        $html_whois = HtmlDomParser::file_get_html('https://www.whois.com/whois/' . $domain);
-        $df_block = $html_whois->find('div.df-block');
-        //DOMAIN INFORMATION
-        $who_is_information = WhoisInformation::where('domain_id', $domain_id)->first();
-        $who_is_information->domain_id = $domain_id;
-        $who_is_information->domain = $domain;
-        foreach ($df_block as $item_block) {
-            if (isset($item_block->find('.df-heading')[0])) {
-                switch ($item_block->find('.df-heading')[0]->innertext()) {
-                    case 'Domain Information' :
-                        $domain_block = $item_block;
-                        break;
-                    case 'Registrant Contact' :
-                        $regis_block = $item_block;
-                        break;
-                    case 'Administrative Contact' :
-                        $adm_block = $item_block;
-                        break;
-                    case 'Technical Contact' :
-                        $tech_block = $item_block;
-                        break;
+            $html_whois = HtmlDomParser::file_get_html('https://www.whois.com/whois/' . $domain);
+            $df_block = $html_whois->find('div.df-block');
+            //DOMAIN INFORMATION
+            $who_is_information = WhoisInformation::where('domain',$domain)->first();
+            $who_is_information->domain = $domain;
+            foreach ($df_block as $item_block) {
+                if (isset($item_block->find('.df-heading')[0])) {
+                    switch ($item_block->find('.df-heading')[0]->innertext()) {
+                        case 'Domain Information' :
+                            $domain_block = $item_block;
+                            break;
+                        case 'Registrant Contact' :
+                            $regis_block = $item_block;
+                            break;
+                        case 'Administrative Contact' :
+                            $adm_block = $item_block;
+                            break;
+                        case 'Technical Contact' :
+                            $tech_block = $item_block;
+                            break;
+                    }
                 }
             }
-        }
-
-        if (isset($domain_block)) {
-            $domain_whois_informations = $domain_block->find('.df-row');
-            foreach ($domain_whois_informations as $item) {
-                $domain_whois_information[] = [
-                    $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
-                ];
-            }
-            foreach ($domain_whois_information as $item) {
-                if (isset($item["Registrar:"])) {
-                    $who_is_information->domain_registrar = $item["Registrar:"];
-                }
-
-                if (isset($item["Registration Date:"])) {
-                    $who_is_information->domain_registration_date = $item["Registration Date:"];
-                }
-
-                if (isset($item["Expiration Date:"])) {
-                    $who_is_information->domain_expiration_date = $item["Expiration Date:"];
-                }
-
-                if (isset($item["Updated Date:"])) {
-                    $who_is_information->domain_updated_date = $item["Updated Date:"];
-                }
-
-                if (isset($item["Status:"])) {
-                    $who_is_information->domain_status = $item["Status:"];
-                }
-
-                if (isset($item["Name Servers:"])) {
-                    $who_is_information->domain_name_servers = $item["Name Servers:"];
-                }
-            }
-        }
-        isset($who_is_information->domain_registrar) ?: $who_is_information->domain_registrar = "$domain";
-        isset($who_is_information->domain_registration_date) ?: $who_is_information->domain_registration_date = "N/A";
-        isset($who_is_information->domain_expiration_date) ?: $who_is_information->domain_expiration_date = "N/A";
-        isset($who_is_information->domain_updated_date) ?: $who_is_information->domain_updated_date = "N/A";
-        isset($who_is_information->domain_status) ?: $who_is_information->domain_status = "N/A";
-        isset($who_is_information->domain_name_servers) ?: $who_is_information->domain_name_servers = "N/A";
-
-        //REGISTRANT CONTACT
-        if (isset($regis_block)) {
-            $registrant_whois_contacts = $regis_block->find('.df-row');
-            if (isset($registrant_whois_contacts)) {
-                foreach ($registrant_whois_contacts as $item) {
-                    $registrant_whois_contact[] = [
+            if (isset($domain_block)) {
+                $domain_whois_informations = $domain_block->find('.df-row');
+                foreach ($domain_whois_informations as $item) {
+                    $domain_whois_information[] = [
                         $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                     ];
                 }
-                foreach ($registrant_whois_contact as $item) {
-                    if (isset($item["Name:"])) {
-                        $who_is_information->regis_name = $item["Name:"];
+                foreach ($domain_whois_information as $item) {
+                    if (isset($item["Registrar:"])) {
+                        $who_is_information->domain_registrar = $item["Registrar:"];
                     }
 
-                    if (isset($item["Organization:"])) {
-                        $who_is_information->regis_organization = $item["Organization:"];
+                    if (isset($item["Registration Date:"])) {
+                        $who_is_information->domain_registration_date = $item["Registration Date:"];
                     }
 
-                    if (isset($item["Street:"])) {
-                        $who_is_information->regis_street = $item["Street:"];
+                    if (isset($item["Expiration Date:"])) {
+                        $who_is_information->domain_expiration_date = $item["Expiration Date:"];
                     }
 
-                    if (isset($item["City:"])) {
-                        $who_is_information->regis_city = $item["City:"];
+                    if (isset($item["Updated Date:"])) {
+                        $who_is_information->domain_updated_date = $item["Updated Date:"];
                     }
 
-                    if (isset($item["State:"])) {
-                        $who_is_information->regis_state = $item["State:"];
+                    if (isset($item["Status:"])) {
+                        $who_is_information->domain_status = $item["Status:"];
                     }
 
-                    if (isset($item["Postal Code:"])) {
-                        $who_is_information->regis_postal_code = $item["Postal Code:"];
-                    }
-
-                    if (isset($item["Country"])) {
-                        $who_is_information->regis_country = $item["Country:"];
-                    }
-
-                    if (isset($item["Phone:"])) {
-                        $who_is_information->regis_phone = $item["Phone:"];
-                    }
-
-                    if (isset($item["Fax:"])) {
-                        $who_is_information->regis_fax = $item["Fax:"];
-                    }
-
-                    if (isset($item["Email:"])) {
-                        $who_is_information->regis_email = $item["Email:"];
+                    if (isset($item["Name Servers:"])) {
+                        $who_is_information->domain_name_servers = $item["Name Servers:"];
                     }
                 }
             }
-        }
-        isset($who_is_information->regis_name) ?: $who_is_information->regis_name = "$domain";
-        isset($who_is_information->regis_organization) ?: $who_is_information->regis_organization = "N/A";
-        isset($who_is_information->regis_street) ?: $who_is_information->regis_street = "N/A";
-        isset($who_is_information->regis_city) ?: $who_is_information->regis_city = "N/A";
-        isset($who_is_information->regis_state) ?: $who_is_information->regis_state = "N/A";
-        isset($who_is_information->regis_postal_code) ?: $who_is_information->regis_postal_code = "N/A";
-        isset($who_is_information->regis_country) ?: $who_is_information->regis_country = "N/A";
-        isset($who_is_information->regis_phone) ?: $who_is_information->regis_phone = "N/A";
-        isset($who_is_information->regis_fax) ?: $who_is_information->regis_fax = "N/A";
-        isset($who_is_information->regis_email) ?: $who_is_information->regis_email = "N/A";
-        //ADMINISTRATIVE CONTACT
-        if (isset($adm_block)) {
-            $administrative_whois_contacts = $adm_block->find('.df-row');
-            if (isset($administrative_whois_contacts)) {
-                foreach ($administrative_whois_contacts as $item) {
-                    $administrative_whois_contact[] = [
-                        $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
-                    ];
-                }
-                foreach ($administrative_whois_contact as $item) {
-                    if (isset($item["Name:"])) {
-                        $who_is_information->adm_name = $item["Name:"];
-                    }
+            isset($who_is_information->domain_registrar) ?: $who_is_information->domain_registrar = "$domain";
+            isset($who_is_information->domain_registration_date) ?: $who_is_information->domain_registration_date = "N/A";
+            isset($who_is_information->domain_expiration_date) ?: $who_is_information->domain_expiration_date = "N/A";
+            isset($who_is_information->domain_updated_date) ?: $who_is_information->domain_updated_date = "N/A";
+            isset($who_is_information->domain_status) ?: $who_is_information->domain_status = "N/A";
+            isset($who_is_information->domain_name_servers) ?: $who_is_information->domain_name_servers = "N/A";
 
-                    if (isset($item["Organization:"])) {
-                        $who_is_information->adm_organization = $item["Organization:"];
+            //REGISTRANT CONTACT
+            if (isset($regis_block)) {
+                $registrant_whois_contacts = $regis_block->find('.df-row');
+                if (isset($registrant_whois_contacts)) {
+                    foreach ($registrant_whois_contacts as $item) {
+                        $registrant_whois_contact[] = [
+                            $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
+                        ];
                     }
+                    foreach ($registrant_whois_contact as $item) {
+                        if (isset($item["Name:"])) {
+                            $who_is_information->regis_name = $item["Name:"];
+                        }
 
-                    if (isset($item["Street:"])) {
-                        $who_is_information->adm_street = $item["Street:"];
-                    }
+                        if (isset($item["Organization:"])) {
+                            $who_is_information->regis_organization = $item["Organization:"];
+                        }
 
-                    if (isset($item["City:"])) {
-                        $who_is_information->adm_city = $item["City:"];
-                    }
+                        if (isset($item["Street:"])) {
+                            $who_is_information->regis_street = $item["Street:"];
+                        }
 
-                    if (isset($item["State:"])) {
-                        $who_is_information->adm_state = $item["State:"];
-                    }
+                        if (isset($item["City:"])) {
+                            $who_is_information->regis_city = $item["City:"];
+                        }
 
-                    if (isset($item["Postal Code:"])) {
-                        $who_is_information->adm_postal_code = $item["Postal Code:"];
-                    }
+                        if (isset($item["State:"])) {
+                            $who_is_information->regis_state = $item["State:"];
+                        }
 
-                    if (isset($item["Country"])) {
-                        $who_is_information->adm_country = $item["Country:"];
-                    }
+                        if (isset($item["Postal Code:"])) {
+                            $who_is_information->regis_postal_code = $item["Postal Code:"];
+                        }
 
-                    if (isset($item["Phone:"])) {
-                        $who_is_information->adm_phone = $item["Phone:"];
-                    }
+                        if (isset($item["Country"])) {
+                            $who_is_information->regis_country = $item["Country:"];
+                        }
 
-                    if (isset($item["Fax:"])) {
-                        $who_is_information->adm_fax = $item["Fax:"];
-                    }
+                        if (isset($item["Phone:"])) {
+                            $who_is_information->regis_phone = $item["Phone:"];
+                        }
 
-                    if (isset($item["Email:"])) {
-                        $who_is_information->adm_email = $item["Email:"];
+                        if (isset($item["Fax:"])) {
+                            $who_is_information->regis_fax = $item["Fax:"];
+                        }
+
+                        if (isset($item["Email:"])) {
+                            $who_is_information->regis_email = $item["Email:"];
+                        }
                     }
                 }
             }
-        }
-        isset($who_is_information->adm_name) ?: $who_is_information->adm_name = "$domain";
-        isset($who_is_information->adm_organization) ?: $who_is_information->adm_organization = "N/A";
-        isset($who_is_information->adm_street) ?: $who_is_information->adm_street = "N/A";
-        isset($who_is_information->adm_city) ?: $who_is_information->adm_city = "N/A";
-        isset($who_is_information->adm_state) ?: $who_is_information->adm_state = "N/A";
-        isset($who_is_information->adm_postal_code) ?: $who_is_information->adm_postal_code = "N/A";
-        isset($who_is_information->adm_country) ?: $who_is_information->adm_country = "N/A";
-        isset($who_is_information->adm_phone) ?: $who_is_information->adm_phone = "N/A";
-        isset($who_is_information->adm_fax) ?: $who_is_information->adm_fax = "N/A";
-        isset($who_is_information->adm_email) ?: $who_is_information->adm_email = "N/A";
-        //TECHNICAL CONTACT
-        if (isset($tech_block)) {
-            $technical_whois_contacts = $tech_block->find('.df-row');
-            if (isset($technical_whois_contacts)) {
-                foreach ($technical_whois_contacts as $item) {
-                    $technical_whois_contact[] = [
-                        $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
-                    ];
+            isset($who_is_information->regis_name) ?: $who_is_information->regis_name = "$domain";
+            isset($who_is_information->regis_organization) ?: $who_is_information->regis_organization = "N/A";
+            isset($who_is_information->regis_street) ?: $who_is_information->regis_street = "N/A";
+            isset($who_is_information->regis_city) ?: $who_is_information->regis_city = "N/A";
+            isset($who_is_information->regis_state) ?: $who_is_information->regis_state = "N/A";
+            isset($who_is_information->regis_postal_code) ?: $who_is_information->regis_postal_code = "N/A";
+            isset($who_is_information->regis_country) ?: $who_is_information->regis_country = "N/A";
+            isset($who_is_information->regis_phone) ?: $who_is_information->regis_phone = "N/A";
+            isset($who_is_information->regis_fax) ?: $who_is_information->regis_fax = "N/A";
+            isset($who_is_information->regis_email) ?: $who_is_information->regis_email = "N/A";
+            //ADMINISTRATIVE CONTACT
+            if (isset($adm_block)) {
+                $administrative_whois_contacts = $adm_block->find('.df-row');
+                if (isset($administrative_whois_contacts)) {
+                    foreach ($administrative_whois_contacts as $item) {
+                        $administrative_whois_contact[] = [
+                            $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
+                        ];
+                    }
+                    foreach ($administrative_whois_contact as $item) {
+                        if (isset($item["Name:"])) {
+                            $who_is_information->adm_name = $item["Name:"];
+                        }
+
+                        if (isset($item["Organization:"])) {
+                            $who_is_information->adm_organization = $item["Organization:"];
+                        }
+
+                        if (isset($item["Street:"])) {
+                            $who_is_information->adm_street = $item["Street:"];
+                        }
+
+                        if (isset($item["City:"])) {
+                            $who_is_information->adm_city = $item["City:"];
+                        }
+
+                        if (isset($item["State:"])) {
+                            $who_is_information->adm_state = $item["State:"];
+                        }
+
+                        if (isset($item["Postal Code:"])) {
+                            $who_is_information->adm_postal_code = $item["Postal Code:"];
+                        }
+
+                        if (isset($item["Country"])) {
+                            $who_is_information->adm_country = $item["Country:"];
+                        }
+
+                        if (isset($item["Phone:"])) {
+                            $who_is_information->adm_phone = $item["Phone:"];
+                        }
+
+                        if (isset($item["Fax:"])) {
+                            $who_is_information->adm_fax = $item["Fax:"];
+                        }
+
+                        if (isset($item["Email:"])) {
+                            $who_is_information->adm_email = $item["Email:"];
+                        }
+                    }
                 }
-
-                foreach ($technical_whois_contact as $item) {
-                    if (isset($item["Name:"])) {
-                        $who_is_information->tech_name = $item["Name:"];
-                    }
-
-                    if (isset($item["Organization:"])) {
-                        $who_is_information->tech_organization = $item["Organization:"];
-                    }
-
-                    if (isset($item["Street:"])) {
-                        $who_is_information->tech_street = $item["Street:"];
-                    }
-
-                    if (isset($item["City:"])) {
-                        $who_is_information->tech_city = $item["City:"];
-                    }
-
-                    if (isset($item["State:"])) {
-                        $who_is_information->tech_state = $item["State:"];
-                    }
-
-                    if (isset($item["Postal Code:"])) {
-                        $who_is_information->tech_postal_code = $item["Postal Code:"];
-                    }
-
-                    if (isset($item["Country"])) {
-                        $who_is_information->tech_country = $item["Country:"];
-                    }
-
-                    if (isset($item["Phone:"])) {
-                        $who_is_information->tech_phone = $item["Phone:"];
-                    }
-
-                    if (isset($item["Fax:"])) {
-                        $who_is_information->tech_fax = $item["Fax:"];
-                    }
-
-                    if (isset($item["Email:"])) {
-                        $who_is_information->tech_email = $item["Email:"];
-                    }
-                }
-
             }
-        }
-        isset($who_is_information->tech_name) ?: $who_is_information->tech_name = "$domain";
-        isset($who_is_information->tech_organization) ?: $who_is_information->tech_organization = "N/A";
-        isset($who_is_information->tech_street) ?: $who_is_information->tech_street = "N/A";
-        isset($who_is_information->tech_city) ?: $who_is_information->tech_city = "N/A";
-        isset($who_is_information->tech_state) ?: $who_is_information->tech_state = "N/A";
-        isset($who_is_information->tech_postal_code) ?: $who_is_information->tech_postal_code = "N/A";
-        isset($who_is_information->tech_country) ?: $who_is_information->tech_country = "N/A";
-        isset($who_is_information->tech_phone) ?: $who_is_information->tech_phone = "N/A";
-        isset($who_is_information->tech_fax) ?: $who_is_information->tech_fax = "N/A";
-        isset($who_is_information->tech_email) ?: $who_is_information->tech_email = "N/A";
-        try {
-            $who_is_information->save();
-            return redirect()->route('informationDomain', ['domain_name' => $domain]);
+            isset($who_is_information->adm_name) ?: $who_is_information->adm_name = "$domain";
+            isset($who_is_information->adm_organization) ?: $who_is_information->adm_organization = "N/A";
+            isset($who_is_information->adm_street) ?: $who_is_information->adm_street = "N/A";
+            isset($who_is_information->adm_city) ?: $who_is_information->adm_city = "N/A";
+            isset($who_is_information->adm_state) ?: $who_is_information->adm_state = "N/A";
+            isset($who_is_information->adm_postal_code) ?: $who_is_information->adm_postal_code = "N/A";
+            isset($who_is_information->adm_country) ?: $who_is_information->adm_country = "N/A";
+            isset($who_is_information->adm_phone) ?: $who_is_information->adm_phone = "N/A";
+            isset($who_is_information->adm_fax) ?: $who_is_information->adm_fax = "N/A";
+            isset($who_is_information->adm_email) ?: $who_is_information->adm_email = "N/A";
+            //TECHNICAL CONTACT
+            if (isset($tech_block)) {
+                $technical_whois_contacts = $tech_block->find('.df-row');
+                if (isset($technical_whois_contacts)) {
+                    foreach ($technical_whois_contacts as $item) {
+                        $technical_whois_contact[] = [
+                            $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
+                        ];
+                    }
+
+                    foreach ($technical_whois_contact as $item) {
+                        if (isset($item["Name:"])) {
+                            $who_is_information->tech_name = $item["Name:"];
+                        }
+
+                        if (isset($item["Organization:"])) {
+                            $who_is_information->tech_organization = $item["Organization:"];
+                        }
+
+                        if (isset($item["Street:"])) {
+                            $who_is_information->tech_street = $item["Street:"];
+                        }
+
+                        if (isset($item["City:"])) {
+                            $who_is_information->tech_city = $item["City:"];
+                        }
+
+                        if (isset($item["State:"])) {
+                            $who_is_information->tech_state = $item["State:"];
+                        }
+
+                        if (isset($item["Postal Code:"])) {
+                            $who_is_information->tech_postal_code = $item["Postal Code:"];
+                        }
+
+                        if (isset($item["Country"])) {
+                            $who_is_information->tech_country = $item["Country:"];
+                        }
+
+                        if (isset($item["Phone:"])) {
+                            $who_is_information->tech_phone = $item["Phone:"];
+                        }
+
+                        if (isset($item["Fax:"])) {
+                            $who_is_information->tech_fax = $item["Fax:"];
+                        }
+
+                        if (isset($item["Email:"])) {
+                            $who_is_information->tech_email = $item["Email:"];
+                        }
+                    }
+
+                }
+            }
+            isset($who_is_information->tech_name) ?: $who_is_information->tech_name = "$domain";
+            isset($who_is_information->tech_organization) ?: $who_is_information->tech_organization = "N/A";
+            isset($who_is_information->tech_street) ?: $who_is_information->tech_street = "N/A";
+            isset($who_is_information->tech_city) ?: $who_is_information->tech_city = "N/A";
+            isset($who_is_information->tech_state) ?: $who_is_information->tech_state = "N/A";
+            isset($who_is_information->tech_postal_code) ?: $who_is_information->tech_postal_code = "N/A";
+            isset($who_is_information->tech_country) ?: $who_is_information->tech_country = "N/A";
+            isset($who_is_information->tech_phone) ?: $who_is_information->tech_phone = "N/A";
+            isset($who_is_information->tech_fax) ?: $who_is_information->tech_fax = "N/A";
+            isset($who_is_information->tech_email) ?: $who_is_information->tech_email = "N/A";
+            try {
+                $new_domain->save();
+                $alexa_information->save();
+                $website_information->save();
+                $who_is_information->save();
+                return redirect()->route('informationDomain', ['domain_name' => $domain]);
+            } catch (Exception $e) {
+                dd($e);
+                return redirect()->back()->with('error', 'Error connect database !');
+            }
+            //-----------------------------------------------------------------------------------------//
+            //--------------------------------------End Who is-----------------------------------------//
+            //-----------------------------------------------------------------------------------------//
         } catch (Exception $e) {
             dd($e);
             return redirect()->back()->with('error', 'Error connect database !');
         }
-        //-----------------------------------------------------------------------------------------//
-        //--------------------------------------End Who is-----------------------------------------//
-        //-----------------------------------------------------------------------------------------//
     }
 
 }

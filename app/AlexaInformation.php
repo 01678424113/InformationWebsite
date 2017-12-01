@@ -11,6 +11,6 @@ class AlexaInformation extends Model
 
     public function domain()
     {
-        return $this->hasOne(Domain::class);
+        return $this->hasOne(Domain::class,'domain','domain');
     }
 }
