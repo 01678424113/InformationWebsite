@@ -31,7 +31,7 @@ class HomeController extends Controller
             'domain',
             'created_at'
         ]);
-        $response['domain_relatives'] = $domain_relative_query->orderBy('created_at', 'DESC')->take(1)->get();
+        $response['domain_relatives'] = $domain_relative_query->orderBy('created_at', 'DESC')->take(10)->get();
         return view('frontend.page.index', $response);
     }
 
@@ -65,92 +65,113 @@ class HomeController extends Controller
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------Alexa----------------------------------------------//
                 //-----------------------------------------------------------------------------------------//
-                $html_alexa = HtmlDomParser::file_get_html('https://www.alexa.com/siteinfo/' . $domain);
-                //Global rank
-                $globalRanks = $html_alexa->find('span.globleRank .col-pad div strong.metrics-data');
-                foreach ($globalRanks as $item) {
-                    $globalRank_text = trim($item->innertext());
-                    $globalRank_text = preg_match('/\>(.+)/', $globalRank_text, $result);
-                    $globalRank = trim($result[1]);
-                }
-                //Country
-                $countries = $html_alexa->find('span.countryRank span.col-pad h4.metrics-title a');
-                foreach ($countries as $item) {
-                    $country = trim($item->innertext());
-                }
-                //Country rank
-                $countryRanks = $html_alexa->find('span.countryRank .col-pad div strong.metrics-data');
-                foreach ($countryRanks as $item) {
-                    $countryRank = trim($item->innertext());
-                }
+                try {
+                    $html_alexa = HtmlDomParser::file_get_html('https://www.alexa.com/siteinfo/' . $domain);
+                    //Global rank
+                    $globalRanks = $html_alexa->find('span.globleRank .col-pad div strong.metrics-data');
+                    foreach ($globalRanks as $item) {
+                        $globalRank_text = trim($item->innertext());
+                        $globalRank_text = preg_match('/\>(.+)/', $globalRank_text, $result);
+                        $globalRank = trim($result[1]);
+                    }
+                    //Country
+                    $countries = $html_alexa->find('span.countryRank span.col-pad h4.metrics-title a');
+                    foreach ($countries as $item) {
+                        $country = trim($item->innertext());
+                    }
+                    //Country rank
+                    $countryRanks = $html_alexa->find('span.countryRank .col-pad div strong.metrics-data');
+                    foreach ($countryRanks as $item) {
+                        $countryRank = trim($item->innertext());
+                    }
 
-                //Visitor
-                $visitor = $html_alexa->find('section#engage-panel section#engagement-content span.span4 strong.metrics-data');
-                $bounce_percent = $visitor[0]->innertext();
-                $pageviews_per_visitor = $visitor[1]->innertext();
-                $time_on_site = $visitor[2]->innertext();
-                //Traffic over
-                $traffic_over = $html_alexa->find('table#demographics_div_country_table tbody tr');
-                $traffic_max = count($traffic_over);
-                for ($i = 1; $i < $traffic_max; $i++) {
-                    $inf_traffic_over[] = [
-                        [
-                            'img_country' => 'https://www.alexa.com' . $traffic_over[$i]->find('td a img')[0]->src,
-                            'name_country' => strip_tags($traffic_over[$i]->find('td a')[0]->innertext()),
-                            'percent_visitor' => strip_tags($traffic_over[$i]->find('td.text-right span')[0]->innertext()),
-                            'rank_country' => strip_tags($traffic_over[$i]->find('td.text-right span')[1]->innertext())
-                        ]
-                    ];
+                    //Visitor
+                    $visitor = $html_alexa->find('section#engage-panel section#engagement-content span.span4 strong.metrics-data');
+                    $bounce_percent = $visitor[0]->innertext();
+                    $pageviews_per_visitor = $visitor[1]->innertext();
+                    $time_on_site = $visitor[2]->innertext();
+                    //Traffic over
+                    $traffic_over = $html_alexa->find('table#demographics_div_country_table tbody tr');
+                    $traffic_max = count($traffic_over);
+                    for ($i = 1; $i < $traffic_max; $i++) {
+                        $inf_traffic_over[] = [
+                            [
+                                'img_country' => 'https://www.alexa.com' . $traffic_over[$i]->find('td a img')[0]->src,
+                                'name_country' => strip_tags($traffic_over[$i]->find('td a')[0]->innertext()),
+                                'percent_visitor' => strip_tags($traffic_over[$i]->find('td.text-right span')[0]->innertext()),
+                                'rank_country' => strip_tags($traffic_over[$i]->find('td.text-right span')[1]->innertext())
+                            ]
+                        ];
+                    }
+                    //Image search traffic
+                    $image_search_traffic = 'https://traffic.alexa.com/graph?o=lt&y=q&b=ffffff&n=666666&f=999999&p=4e8cff&r=1y&t=2&z=0&c=1&h=150&w=340&u=' . $domain;
+                    //Top 5 Keyword search engines
+                    $keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
+                    $keyword = "";
+                    for ($i = 1; $i < 10; $i += 2) {
+                        $keyword = $keyword . urlencode($keywords[$i]->innertext()) . ", ";
+                    }
+                    //Rate keyword
+                    $rate_keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.text-right span');
+                    $rate_keyword = "";
+                    for ($i = 0; $i < 5; $i++) {
+                        $rate_keyword = $rate_keyword . $rate_keywords[$i]->innertext() . ", ";
+                    }
+                    //Backlink
+                    $backlinks = $html_alexa->find('section#linksin-panel-content span.box1-r');
+                    foreach ($backlinks as $item) {
+                        $backlink = $item->innertext();
+                    }
+                    //Upstream sites
+                    $upstream_sites = $html_alexa->find('section#upstream-content #keywords_upstream_site_table tbody tr');
+                    for ($i = 1; $i < 6; $i++) {
+                        $upstream_site[] = [
+                            ['site' => $upstream_sites[$i]->find('td a')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td span')[1]->innertext()]
+                        ];
+                    }
+                    //Website related
+                    $website_related_html = $html_alexa->find('section#related-content table#audience_overlap_table tbody tr td a');
+                    foreach ($website_related_html as $item) {
+                        $website_related[] = $item->innertext();
+                    }
+                    //Rate gender, home, school, work
+                    $genders_left = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-l span.pybar-bg');
+                    foreach ($genders_left as $item) {
+                        $gender_left = $item->innertext();
+                        preg_match('/width\:(.+)\%/', $gender_left, $result);
+                        $rate_left[] = (int)$result[1];
+                    }
+                    $genders_right = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-r span.pybar-bg');
+                    foreach ($genders_right as $item) {
+                        $genders_right = $item->innertext();
+                        preg_match('/width\:(.+)\%/', $genders_right, $result);
+                        $rate_right[] = (int)$result[1];
+                    }
+                    $rate_male = ($rate_left[0] + $rate_right[0]) / 2;
+                    $rate_female = ($rate_left[1] + $rate_right[1]) / 2;
+                    $rate_home = ($rate_left[6] + $rate_right[6]) / 2;
+                    $rate_school = ($rate_left[7] + $rate_right[7]) / 2;
+                    $rate_work = ($rate_left[8] + $rate_right[8]) / 2;
+                } catch (Exception $e) {
+                    $globalRank = 'N/A';
+                    $country = 'N/A';
+                    $countryRank = 'N/A';
+                    $bounce_percent = 'N/A';
+                    $pageviews_per_visitor = 'N/A';
+                    $time_on_site = 'N/A';
+                    $inf_traffic_over = [];
+                    $image_search_traffic = 'http://traffic.alexa.com/graph/error';
+                    $keyword = [];
+                    $rate_keyword = [];
+                    $upstream_site = [];
+                    $website_related = [];
+                    $backlink = 'N/A';
+                    $rate_male = 'N/A';
+                    $rate_female = 'N/A';
+                    $rate_home = 'N/A';
+                    $rate_work = 'N/A';
+                    $rate_school = 'N/A';
                 }
-                //Image search traffic
-                $image_search_traffic = 'https://traffic.alexa.com/graph?o=lt&y=q&b=ffffff&n=666666&f=999999&p=4e8cff&r=1y&t=2&z=0&c=1&h=150&w=340&u=' . $domain;
-                //Top 5 Keyword search engines
-                $keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
-                $keyword = "";
-                for ($i = 1; $i < 10; $i += 2) {
-                    $keyword = $keyword . $keywords[$i]->innertext() . ", ";
-                }
-                //Rate keyword
-                $rate_keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.text-right span');
-                $rate_keyword = "";
-                for ($i = 0; $i < 5; $i++) {
-                    $rate_keyword = $rate_keyword . $rate_keywords[$i]->innertext() . ", ";
-                }
-                //Backlink
-                $backlinks = $html_alexa->find('section#linksin-panel-content span.box1-r');
-                foreach ($backlinks as $item) {
-                    $backlink = $item->innertext();
-                }
-                //Upstream sites
-                $upstream_sites = $html_alexa->find('section#upstream-content #keywords_upstream_site_table tbody tr');
-                for ($i = 1; $i < 6; $i++) {
-                    $upstream_site[] = [
-                        ['site' => $upstream_sites[$i]->find('td a')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td span')[1]->innertext()]
-                    ];
-                }
-                //Website related
-                $website_related_html = $html_alexa->find('section#related-content table#audience_overlap_table tbody tr td a');
-                foreach ($website_related_html as $item) {
-                    $website_related[] = $item->innertext();
-                }
-                //Rate gender, home, school, work
-                $genders_left = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-l span.pybar-bg');
-                foreach ($genders_left as $item) {
-                    $gender_left = $item->innertext();
-                    preg_match('/width\:(.+)\%/', $gender_left, $result);
-                    $rate_left[] = (int)$result[1];
-                }
-                $genders_right = $html_alexa->find('div#demographics-content span.pybar-bars span.pybar-r span.pybar-bg');
-                foreach ($genders_right as $item) {
-                    $genders_right = $item->innertext();
-                    preg_match('/width\:(.+)\%/', $genders_right, $result);
-                    $rate_right[] = (int)$result[1];
-                }
-                $rate_male = ($rate_left[0] + $rate_right[0]) / 2;
-                $rate_female = ($rate_left[1] + $rate_right[1]) / 2;
-                $rate_home = ($rate_left[6] + $rate_right[6]) / 2;
-                $rate_school = ($rate_left[7] + $rate_right[7]) / 2;
-                $rate_work = ($rate_left[8] + $rate_right[8]) / 2;
 
                 $alexa_information = new AlexaInformation();
                 $alexa_information->domain = $domain;
@@ -173,7 +194,6 @@ class HomeController extends Controller
                 $alexa_information->rate_work = $rate_work;
                 $alexa_information->rate_school = $rate_school;
                 $alexa_information->created_at = microtime(true);
-
 
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------End alexa------------------------------------------//
@@ -332,35 +352,7 @@ class HomeController extends Controller
                         $geo_position = 'Global';
                     }
                     //Icon
-                    $icon = preg_match('/rel="icon" type="image\/png" href="(.*?)"/', $content, $result_icon);
-                    if (isset($result_icon[1])) {
-                        $icon = $result_icon[1];
-                    } else {
-                        $icon = preg_match('/href="(.*?)" rel="icon"/', $content, $result_icon);
-                        if (isset($result_icon[1])) {
-                            $icon = $result_icon[1];
-                        } else {
-                            $icon = preg_match('/rel="icon" href="(.*?)"/', $content, $result_icon);
-                            if (isset($result_icon[1])) {
-                                $icon = $result_icon[1];
-                            } else {
-                                $icon = preg_match('/rel="shortcut icon" href="(.*?)"/', $content, $result_icon);
-                                if (isset($result_icon[1])) {
-                                    $icon = $result_icon[1];
-                                } elseif (isset($html_web->find('link[rel=icon]')[0])) {
-                                    $icon = $html_web->find('link[rel=icon]')[0]->href;
-                                } elseif (isset($html_web->find('link[rel=shortcut icon]')[0])) {
-                                    $icon = $html_web->find('link[rel=shortcut icon]')[0]->href;
-                                } else {
-                                    $icon = '/upload/google.jpg';
-                                }
-                            }
-                        }
-                    }
-
-                    if (filter_var($icon, FILTER_VALIDATE_URL) && $icon != '/upload/google.jpg') {
-                        $icon = $url . $icon;
-                    }
+                    $icon = 'https://www.google.com/s2/favicons?domain=http://' . $domain;
                 } else {
                     //Title
                     $title_website = preg_match('/\<title\>(.*?)\<\/title\>/', $content, $result_title);
@@ -458,7 +450,7 @@ class HomeController extends Controller
                     } else {
                         $geo_position = 'Global';
                     }
-                    $icon = 'https://www.google.com/s2/favicons?domain=http://'.$domain;
+                    $icon = 'https://www.google.com/s2/favicons?domain=http://' . $domain;
                 }
 
 
@@ -1021,7 +1013,7 @@ class HomeController extends Controller
             $keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
             $keyword = "";
             for ($i = 1; $i < 10; $i += 2) {
-                $keyword = $keyword . $keywords[$i]->innertext() . ", ";
+                $keyword = $keyword . urlencode($keywords[$i]->innertext()) . ", ";
             }
             //Rate keyword
             $rate_keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.text-right span');
@@ -1245,35 +1237,7 @@ class HomeController extends Controller
                     $geo_position = 'Global';
                 }
                 //Icon
-                $icon = preg_match('/rel="icon" type="image\/png" href="(.*?)"/', $content, $result_icon);
-                if (isset($result_icon[1])) {
-                    $icon = $result_icon[1];
-                } else {
-                    $icon = preg_match('/href="(.*?)" rel="icon"/', $content, $result_icon);
-                    if (isset($result_icon[1])) {
-                        $icon = $result_icon[1];
-                    } else {
-                        $icon = preg_match('/rel="icon" href="(.*?)"/', $content, $result_icon);
-                        if (isset($result_icon[1])) {
-                            $icon = $result_icon[1];
-                        } else {
-                            $icon = preg_match('/rel="shortcut icon" href="(.*?)"/', $content, $result_icon);
-                            if (isset($result_icon[1])) {
-                                $icon = $result_icon[1];
-                            } elseif (isset($html_web->find('link[rel=icon]')[0])) {
-                                $icon = $html_web->find('link[rel=icon]')[0]->href;
-                            } elseif (isset($html_web->find('link[rel=shortcut icon]')[0])) {
-                                $icon = $html_web->find('link[rel=shortcut icon]')[0]->href;
-                            } else {
-                                $icon = '/upload/google.jpg';
-                            }
-                        }
-                    }
-                }
-
-                if (filter_var($icon, FILTER_VALIDATE_URL) && $icon != '/upload/google.jpg') {
-                    $icon = $url . $icon;
-                }
+                $icon = 'https://www.google.com/s2/favicons?domain=http://' . $domain;
             } else {
                 //Title
                 $title_website = preg_match('/\<title\>(.*?)\<\/title\>/', $content, $result_title);
@@ -1372,7 +1336,7 @@ class HomeController extends Controller
                     $geo_position = 'Global';
                 }
                 //Icon
-                $icon = 'https://www.google.com/s2/favicons?domain=http://'.$domain;
+                $icon = 'https://www.google.com/s2/favicons?domain=http://' . $domain;
             }
 
             //Screen short website
