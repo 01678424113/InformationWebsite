@@ -96,7 +96,7 @@
                                         </tr>
                                         <tr>
                                             <td>Update at</td>
-                                            <td>{{$alexa_inf[0]->created_at}}</td>
+                                            <td>{{date('d-m-Y',$alexa_inf[0]['created_at'])}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -229,7 +229,7 @@
                                         </tr>
                                         <tr>
                                             <td>Update at</td>
-                                            <td>{{$website_inf[0]->created_at}}</td>
+                                            <td>{{date('d-m-Y',$website_inf[0]['created_at'])}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -321,7 +321,7 @@
                                         </tr>
                                         <tr>
                                             <td>Created at</td>
-                                            <td>{{$who_is_inf[0]->created_at}}</td>
+                                            <td>{{date('d-m-Y',$who_is_inf[0]['created_at'])}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -406,7 +406,7 @@
                                         </tr>
                                         <tr>
                                             <td>Created at</td>
-                                            <td>{{$who_is_inf[0]->created_at}}</td>
+                                            <td>{{date('d-m-Y',$who_is_inf[0]['created_at'])}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -489,7 +489,7 @@
                                         </tr>
                                         <tr>
                                             <td>Created at</td>
-                                            <td>{{$who_is_inf[0]->created_at}}</td>
+                                            <td>{{date('d-m-Y',$who_is_inf[0]['created_at'])}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -572,7 +572,7 @@
                                         </tr>
                                         <tr>
                                             <td>Created at</td>
-                                            <td>{{$who_is_inf[0]->created_at}}</td>
+                                            <td>{{date('d-m-Y',$who_is_inf[0]['created_at'])}}</td>
                                         </tr>
                                         </tbody>
                                     </table>

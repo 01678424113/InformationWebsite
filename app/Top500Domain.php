@@ -8,4 +8,5 @@ class Top500Domain extends Model
 {
     //
     protected $table = 'top_500_domains';
+    public $timestamps = false;
 }

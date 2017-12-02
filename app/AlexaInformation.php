@@ -8,9 +8,10 @@ class AlexaInformation extends Model
 {
     //
     protected $table = 'alexa_informations';
+    public $timestamps = false;
 
     public function domain()
     {
-        return $this->hasOne(Domain::class,'domain','domain');
+        return $this->hasOne(Domain::class, 'domain', 'domain');
     }
 }

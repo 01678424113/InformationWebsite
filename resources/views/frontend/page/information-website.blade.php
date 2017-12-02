@@ -4,6 +4,7 @@
         <!-- Portfolio Section -->
         <section class="page-section" style="background: #FAFAFA">
             <div class="container relative">
+                <h1>{!! $website_inf[0]->h1_website_auto !!}</h1>
                 <div class="information-website">
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -31,7 +32,9 @@
                                                             <div class="col-md-12">
                                                                 <div class="rank"
                                                                      style="margin-top: 10px;margin-bottom: 10px;text-align: center">
-                                                                    <p>Update : {{$alexa_inf[0]['created_at']}}</p>
+                                                                    <p>{!! $website_inf[0]->content_top_website_auto !!}</p>
+                                                                    <p>{!! $website_inf[0]->content_bot_website_auto !!}</p>
+                                                                    <p>Update : {{date('d-m-Y',$alexa_inf[0]['created_at'])}}</p>
                                                                     <a href="{{route('updateInformationDomain',['domain_name'=>$who_is_inf[0]['domain']])}}"
                                                                        class="btn btn-info" style="color:white">Click
                                                                         update new</a>

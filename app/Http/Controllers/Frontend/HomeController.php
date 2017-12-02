@@ -41,7 +41,7 @@ class HomeController extends Controller
             'domain',
             'created_at'
         ]);
-        $response['domain_relatives'] = $domain_relative_query->orderBy('created_at', 'DESC')->take(10)->get();
+        $response['domain_relatives'] = $domain_relative_query->orderBy('created_at', 'DESC')->take(1)->get();
         return view('frontend.page.index', $response);
     }
 
@@ -72,7 +72,7 @@ class HomeController extends Controller
 
             $new_domain = new Domain();
             $new_domain->domain = $domain;
-            $new_domain->created_at = microtime(true);
+            $new_domain->created_at = round(microtime(true));
             try {
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------Alexa----------------------------------------------//
@@ -205,7 +205,7 @@ class HomeController extends Controller
                 $alexa_information->rate_home = $rate_home;
                 $alexa_information->rate_work = $rate_work;
                 $alexa_information->rate_school = $rate_school;
-                $alexa_information->created_at = microtime(true);
+                $alexa_information->created_at = round(microtime(true));
 
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------End alexa------------------------------------------//
@@ -659,7 +659,7 @@ class HomeController extends Controller
                 $website_information->position = $geo_position;
                 $website_information->icon = $icon;
                 $website_information->image_screen_shot = $image_path;
-                $website_information->created_at = microtime(true);
+                $website_information->created_at = round(microtime(true));
 
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------End domain-----------------------------------------//
@@ -977,7 +977,7 @@ class HomeController extends Controller
             'title' => 'Update domain : ' . $domain
         ];
         $new_domain = Domain::where('domain', $domain)->first();
-        $new_domain->created_at = microtime(true);
+        $new_domain->created_at = round(microtime(true));
         try {
             //-----------------------------------------------------------------------------------------//
             //--------------------------------------Alexa----------------------------------------------//
@@ -1094,7 +1094,7 @@ class HomeController extends Controller
             $alexa_information->rate_home = $rate_home;
             $alexa_information->rate_work = $rate_work;
             $alexa_information->rate_school = $rate_school;
-            $alexa_information->created_at = microtime(true);
+            $alexa_information->created_at = round(microtime(true));
 
 
             //-----------------------------------------------------------------------------------------//
@@ -1381,7 +1381,7 @@ class HomeController extends Controller
             $website_information->position = $geo_position;
             $website_information->icon = $icon;
             $website_information->image_screen_shot = $image_path;
-            $website_information->created_at = microtime(true);
+            $website_information->created_at = round(microtime(true));
 
             //-----------------------------------------------------------------------------------------//
             //--------------------------------------End domain-----------------------------------------//
