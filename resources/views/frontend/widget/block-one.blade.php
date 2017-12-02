@@ -1,94 +1,97 @@
 <!-- About Section -->
 <section class="page-section" id="about">
-    <div class="container relative">
-        <div class="section-text mb-50 mb-sm-20">
-            <div class="row">
-                <div class="col-md-8">
-                    <h2 class="section-title font-alt align-left mb-20 mb-sm-40">
-                        Top 10 domain
-                    </h2>
-                    <div class="table-top-500">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Root domain</th>
-                                <th>Linking Root Domains</th>
-                                <th>External Links</th>
-                                <th>Domain mozRank</th>
-                                <th>Domain mozTrust</th>
-                                <th>Change</th>
-                            </tr>
-                            </thead>
-                            @if(count($top_10s) > 0)
-                                <tbody>
-                                @foreach($top_10s as $top_10)
-                                    <tr class="
+  <div class="table-domain-index" style="max-width: 1500px;margin: auto;">
+      <div class="section-text mb-50 mb-sm-20">
+          <div class="row">
+              <div class="col-md-8">
+                  <h2 class="section-title font-alt align-left mb-20 mb-sm-40">
+                      Top 10 domain
+                  </h2>
+                  <div class="table-top-500">
+                      <table class="table">
+                          <thead>
+                          <tr>
+                              <th>Rank</th>
+                              <th>Root domain</th>
+                              <th>Linking Root Domains</th>
+                              <th>External Links</th>
+                              <th>Domain mozRank</th>
+                              <th>Domain mozTrust</th>
+                              <th>Change</th>
+                          </tr>
+                          </thead>
+                          @if(count($top_10s) > 0)
+                              <tbody>
+                              @foreach($top_10s as $top_10)
+                                  <tr class="
                                     @if((int)$top_10->rank % 2 == 0)
-                                    {{"active"}}
-                                    @endif"
-                                    >
-                                        <td>{{$top_10->rank}}</td>
-                                        <td>
-                                            <a class="domain" href="{{route('informationDomain',['domain_name'=>$top_10->root_domain])}}">
-                                                {{$top_10->root_domain}}
-                                            </a>
-                                        </td>
-                                        <td>{{$top_10->linking_root_domain}}</td>
-                                        <td>{{$top_10->external_link}}</td>
-                                        <td style="color: #24ABE2">{{$top_10->domain_mozrank}}</td>
-                                        <td style="color: red">{{$top_10->domain_moztrust}}</td>
-                                        <td>{{$top_10->change_rank}}</td>
-                                    </tr>
-                                @endforeach
-                                <tr>
-                                    <td colspan="7" style="text-align: center">
-                                        <a href="{{route('top500')}}">View more ...</a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            @endif
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <h2 class="section-title font-alt align-left mb-20 mb-sm-40">
-                        New checklist
-                    </h2>
-                    <div class="table-top-500">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Domain</th>
-                                <th>Rank</th>
-                            </tr>
-                            </thead>
-                        @if(count($domain_relatives) > 0)
-                                <tbody>
-                                <?php $i = 1; ?>
-                                @foreach($domain_relatives as $domain_relative)
-                                    <tr class="
+                                  {{"active"}}
+                                  @endif"
+                                  >
+                                      <td>{{$top_10->rank}}</td>
+                                      <td>
+                                          <img src="https://www.google.com/s2/favicons?domain=http://{{$top_10->root_domain}}" alt="">
+                                          <a class="domain" href="{{route('informationDomain',['domain_name'=>$top_10->root_domain])}}">
+                                              {{$top_10->root_domain}}
+                                          </a>
+                                      </td>
+                                      <td>{{$top_10->linking_root_domain}}</td>
+                                      <td>{{$top_10->external_link}}</td>
+                                      <td style="color: #24ABE2">{{$top_10->domain_mozrank}}</td>
+                                      <td style="color: red">{{$top_10->domain_moztrust}}</td>
+                                      <td>{{$top_10->change_rank}}</td>
+                                  </tr>
+                              @endforeach
+                              <tr>
+                                  <td colspan="7" style="text-align: center">
+                                      <a href="{{route('top500')}}">View more ...</a>
+                                  </td>
+                              </tr>
+                              </tbody>
+                          @endif
+                      </table>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <h2 class="section-title font-alt align-left mb-20 mb-sm-40">
+                      New checklist
+                  </h2>
+                  <div class="table-top-500">
+                      <table class="table">
+                          <thead>
+                          <tr>
+                              <th>#</th>
+                              <th>Domain</th>
+                              <th>Rank</th>
+                          </tr>
+                          </thead>
+                          @if(count($domain_relatives) > 0)
+                              <tbody>
+                              <?php $i = 1; ?>
+                              @foreach($domain_relatives as $domain_relative)
+                                  <tr class="
                                     @if($i % 2 == 0)
-                                    {{"active"}}
-                                    @endif"
-                                    >
-                                        <td>{{$i}}</td>
-                                        <td>
-                                            <a href="{{route('informationDomain',['domain_name'=>$domain_relative->domain])}}">{{$domain_relative->domain}}</a>
-                                        </td>
-                                        <td>{{$domain_relative->alexa->global_rank}}</td>
-                                    </tr>
-                                    <?php $i++; ?>
-                                @endforeach
-                                </tbody>
-                            @endif
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+                                  {{"active"}}
+                                  @endif"
+                                  >
+                                      <td>{{$i}}</td>
+                                      <td>
+                                          <img src="https://www.google.com/s2/favicons?domain=http://{{$domain_relative->domain}}" alt="">
+                                          <a href="{{route('informationDomain',['domain_name'=>$domain_relative->domain])}}">{{$domain_relative->domain}}</a>
+                                      </td>
+                                      <td>{{$domain_relative->alexa->global_rank}}</td>
+                                  </tr>
+                                  <?php $i++; ?>
+                              @endforeach
+                              </tbody>
+                          @endif
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+    <div class="container relative">
         <div class="row">
             <!-- Team item -->
             <div class="col-sm-4 mb-xs-30 wow fadeInUp">

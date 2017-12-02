@@ -3,19 +3,16 @@
     <!-- Home Section -->
     <section class="home-section bg-dark-alfa-70 parallax-2 fixed-height-small"
              data-background="image/technology.jpg" id="home">
-        <div class="js-height-parent container">
-
+        <div class="container" style="display: flex;justify-content: center;align-items: center;height: 600px;text-align: center;">
             <!-- Hero Content -->
-            <div class="home-content">
-                <div class="home-text">
-
-                    <h1 class="hs-line-8 no-transp font-alt mb-50 mb-xs-30">
+                <div class="form-search">
+                    <h2 class="hs-line-8 no-transp font-alt mb-50 mb-xs-30">
                         Alexa / Whois / Google / Information website
-                    </h1>
-
-                    <h2 class="hs-line-14 font-alt mb-50 mb-xs-30">
-                        Information website
                     </h2>
+
+                    <h1 class="hs-line-14 font-alt mb-50 mb-xs-30">
+                        Checking Website
+                    </h1>
 
                     <div class="local-scroll">
                         {{-- <a href="#about" class="btn btn-mod btn-border-w btn-medium btn-round hidden-xs">See More</a>
@@ -35,9 +32,7 @@
                     </div>
 
                 </div>
-            </div>
             <!-- End Hero Content -->
-
         </div>
     </section>
     <!-- End Home Section -->

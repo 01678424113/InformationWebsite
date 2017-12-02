@@ -452,8 +452,6 @@ class HomeController extends Controller
                     }
                     $icon = 'https://www.google.com/s2/favicons?domain=http://' . $domain;
                 }
-
-
                 //Screen short website
                 $image_path = explode('.', $domain);
                 $image_path = $image_path[0] . '.jpg';
@@ -464,10 +462,10 @@ class HomeController extends Controller
                     ->setWidth('1024')
                     ->setHeight('768')
                     ->save($image_path);
+
                 //Auto tạo content
                 //Create auto title and content video
                 //Get value form database
-
                 $settings_title = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'title_view')->get();
                 $settings_h1 = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'h1_view')->get();
                 $settings_content_top = Setting::select(['value_setting'])->where('setting_page', 'view')->where('key_setting', 'content_view_top')->get();
@@ -988,7 +986,11 @@ class HomeController extends Controller
             foreach ($countryRanks as $item) {
                 $countryRank = trim($item->innertext());
             }
-
+            //Flag country
+            $flagCountryRank = $html_alexa->find('span.countryRank .col-pad div img.img-inline');
+            foreach ($flagCountryRank as $item) {
+                $flagCountry = trim($item->src);
+            }
             //Visitor
             $visitor = $html_alexa->find('section#engage-panel section#engagement-content span.span4 strong.metrics-data');
             $bounce_percent = $visitor[0]->innertext();
@@ -1062,6 +1064,7 @@ class HomeController extends Controller
             $alexa_information->global_rank = $globalRank;
             $alexa_information->country = $country;
             $alexa_information->country_rank = $countryRank;
+            $alexa_information->flag_country = 'https://www.alexa.com'.$flagCountry;
             $alexa_information->bounce_percent = $bounce_percent;
             $alexa_information->pageviews_per_visitor = $pageviews_per_visitor;
             $alexa_information->time_on_site = $time_on_site;

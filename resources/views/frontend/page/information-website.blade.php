@@ -39,8 +39,10 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="rank">
-                                                                    <i class="fa fa-globe" aria-hidden="true"></i>
-                                                                    <span>Global rank</span><br>
+                                                                    <img src="https://www.alexa.com/images/icons/globe-sm.jpg" alt="">
+                                                                    <span>
+                                                                        Global rank
+                                                                    </span><br>
                                                                     <a href="">Wordwire</a>
                                                                     <div class='numscroller numscroller-big-bottom'
                                                                          data-slno='1'
@@ -52,9 +54,9 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="rank">
-                                                                    <i class="fa fa-flag" aria-hidden="true"></i>
-                                                                    <span>Country rank</span><br>
-                                                                    <a href="">{{$alexa_inf[0]['country']}}</a>
+                                                                    <img src="{{$alexa_inf[0]['flag_country']}}" alt="">
+                                                                    <span>{{$alexa_inf[0]['country']}} Rank</span><br>
+                                                                    <a href="">Wordwire</a>
                                                                     <div class='numscroller numscroller-big-bottom'
                                                                          data-slno='1'
                                                                          data-min='0'
@@ -76,6 +78,121 @@
                                         </table>
                                     </div>
                                 </div>
+                                {{--Traffic Over--}}
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <h3 class="title-inf">Traffic over</h3>
+                                        <hr class="hr-inf">
+                                        <div class="traffic-over">
+                                            <div class="row">
+                                                <?php
+                                                $inf_traffic_over = json_decode($alexa_inf[0]['traffic_over']);
+                                                ?>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                        <tr>
+                                                            <td>Country</td>
+                                                            <td>Percent of Visitors</td>
+                                                            <td>Rank in Country</td>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($inf_traffic_over as $item)
+                                                            <tr>
+                                                                <td class="td-parameter">
+                                                                    <img src="{{$item[0]->img_country}}"
+                                                                         alt="">
+                                                                    {{$item[0]->name_country}}
+                                                                </td>
+                                                                <td class="td-parameter">{{$item[0]->percent_visitor}}</td>
+                                                                <td class="td-parameter">{{$item[0]->rank_country}}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <h3 class="title-inf">Visitor</h3>
+                                                <hr class="hr-inf">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <table class="table table-hover">
+                                                        <tr>
+                                                            <td  class="td-attribute">Bounce rate</td>
+                                                            <td  class="td-attribute">Page views per visitor</td>
+                                                            <td  class="td-attribute">Time on site</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-parameter">{{$alexa_inf[0]['bounce_percent']}}</td>
+                                                            <td class="td-parameter">{{$alexa_inf[0]['pageviews_per_visitor']}} %</td>
+                                                            <td class="td-parameter">{{$alexa_inf[0]['time_on_site']}}</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <table class="table table-hover">
+                                                        <tr>
+                                                            <td class="td-attribute">Male rate</td>
+                                                            <td class="td-attribute">Female rate</td>
+                                                            <td class="td-attribute">Home</td>
+                                                            <td class="td-attribute">School</td>
+                                                            <td class="td-attribute">Work</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_male']}}</td>
+                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_female']}}</td>
+                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_home']}}</td>
+                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_school']}}</td>
+                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_work']}}</td>
+
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{--Keyword search traffic--}}
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <h3 class="title-inf">Top keyword search engine</h3>
+                                        <hr class="hr-inf">
+                                        <br>
+                                        <div class="keyword-top-search">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <td>Top keyword</td>
+                                                        <td>Percent of search traffic</td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php
+                                                    $keywords = explode(',', $alexa_inf[0]['top_5_keyword']);
+                                                    $rate_keywords = explode(',', $alexa_inf[0]['rate_keyword']);
+                                                    $count = count($keywords);
+                                                    ?>
+                                                    @for($i = 0 ; $i < $count - 1; $i++)
+                                                        <tr>
+                                                            <td>{{str_replace('+',' ',rawurldecode(trim($keywords[$i],'"')))}}</td>
+                                                            <td>{{trim($rate_keywords[$i],'"')}}</td>
+                                                        </tr>
+                                                    @endfor
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12"
+                                                 style="text-align: center;margin-top: 40px;">
+                                                <img src="{{$alexa_inf[0]['image_search_traffic']}}"
+                                                     alt="">
+                                                <h4 style="text-align: center">Search traffic</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
                                 {{--Information website--}}
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -145,136 +262,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{--Traffic Over--}}
+                                {{--Upstream sites--}}
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <h3 class="title-inf">Traffic over</h3>
+                                        <h3 class="title-inf">Which sites did people visit immediately before this site?</h3>
                                         <hr class="hr-inf">
-                                        <div class="traffic-over">
-                                            <div class="row">
-                                                <?php
-                                                $inf_traffic_over = json_decode($alexa_inf[0]['traffic_over']);
-                                                ?>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <table class="table table-hover">
-                                                        <thead>
-                                                        <tr>
-                                                            <td>Country</td>
-                                                            <td>Percent of Visitors</td>
-                                                            <td>Rank in Country</td>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @foreach($inf_traffic_over as $item)
-                                                            <tr>
-                                                                <td class="td-parameter">
-                                                                    <img src="{{$item[0]->img_country}}"
-                                                                         alt="">
-                                                                    {{$item[0]->name_country}}
-                                                                </td>
-                                                                <td class="td-parameter">{{$item[0]->percent_visitor}}</td>
-                                                                <td class="td-parameter">{{$item[0]->rank_country}}</td>
-                                                            </tr>
-                                                        @endforeach
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <h3 class="title-inf">Visitor</h3>
-                                                <hr class="hr-inf">
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <table class="table table-hover">
-                                                        <tr>
-                                                            <td style="width: 65%;" class="td-attribute">Bounce rate
-                                                            </td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['bounce_percent']}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 65%;" class="td-attribute">Page views per
-                                                                visitor
-                                                            </td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['pageviews_per_visitor']}}
-                                                                %
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="width: 65%;" class="td-attribute">Time on site
-                                                            </td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['time_on_site']}}</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <table class="table table-hover">
-                                                        <tr>
-                                                            <td class="td-attribute">Male rate</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_male']}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="td-attribute">Female rate</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_female']}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="td-attribute">Home</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_home']}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="td-attribute">School</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_school']}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="td-attribute">Work</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_work']}}</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{--Keyword search traffic--}}
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <h3 class="title-inf">Where do facebook.com's visitors come from?</h3>
-                                        <hr class="hr-inf">
-                                        <br>
-                                        <div class="keyword-top-search">
-                                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                        <td>Top keyword</td>
-                                                        <td>Percent of search traffic</td>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <?php
-                                                    $keywords = explode(',', $alexa_inf[0]['top_5_keyword']);
-                                                    $rate_keywords = explode(',', $alexa_inf[0]['rate_keyword']);
-                                                    $count = count($keywords);
-                                                    ?>
-                                                    @for($i = 0 ; $i < $count; $i++)
-                                                        <tr>
-                                                            <td>{{str_replace('+',' ',rawurldecode(trim($keywords[$i],'"')))}}</td>
-                                                            <td>{{trim($rate_keywords[$i],'"')}}</td>
-                                                        </tr>
-                                                    @endfor
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-md-6 col-sm-6 col-xs-12"
-                                                 style="text-align: center;margin-top: 40px;">
-                                                <img src="{{$alexa_inf[0]['image_search_traffic']}}"
-                                                     alt="">
-                                                <h4 style="text-align: center">Search traffic</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="chart">
                                             <?php
                                             $upstream_sites = json_decode($alexa_inf[0]['upstream_site']);
@@ -594,7 +586,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                {{--Website relative--}}
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="website_related">
@@ -614,6 +606,7 @@
                                                             <td>{{$i}}</td>
                                                             <td>
                                                                 <a href="{{route('informationDomain',['domain_name'=>$item])}}">
+                                                                    <img src="https://www.google.com/s2/favicons?domain=http://{{$item}}" alt="">
                                                                     {{$item}}
                                                                 </a>
                                                             </td>
@@ -623,11 +616,6 @@
                                                 </table>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-
                                     </div>
                                 </div>
                             </div>
