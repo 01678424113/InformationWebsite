@@ -18,10 +18,20 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 class HomeController extends Controller
 {
+    public function __construct()
+    {
+        $meta_keyword = Setting::where('setting_page','index')->where('key_setting','keyword')->first();
+        $meta_keyword = $meta_keyword->value_setting;
+        view()->share('meta_keyword',$meta_keyword);
+    }
+
     public function home()
     {
+        $meta_title = Setting::where('setting_page','index')->where('key_setting','title')->first();
+        $meta_description = Setting::where('setting_page','index')->where('key_setting','description')->first();
         $response = [
-            'title' => 'Home'
+            'meta_title' => $meta_title->value_setting,
+            'meta_description' => $meta_description->value_setting
         ];
         $top_10s = Top500Domain::where('id', '<', 11)->get();
         $response['top_10s'] = $top_10s;
@@ -37,8 +47,10 @@ class HomeController extends Controller
 
     public function top500()
     {
+        $meta_description = Setting::where('setting_page','index')->where('key_setting','description')->first();
         $response = [
-            'title' => 'Top 500 domain'
+            'meta_title' => 'Checking Top 500 domain - Website analysis',
+            'meta_description' => $meta_description->value_setting
         ];
         $top_500s = Top500Domain::all();
         $response['top_500s'] = $top_500s;
@@ -537,7 +549,7 @@ class HomeController extends Controller
                 $title_rp_domain = str_replace('%domainname%', $rd_domain, $title_rp_name);
                 $title_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $title_rp_domain);
                 $title_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $title_rp_keyword_1);
-                $title = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $title_rp_keyword_2);
+                $title = str_replace('%link%', "<a href='' target='_blank'>" . $rd_keyword_link . "</a>", $title_rp_keyword_2);
 
                 //Auto create h1
                 $rd_number_domain = random_int(0, count($domains) - 1);
@@ -554,7 +566,7 @@ class HomeController extends Controller
                 $h1_rp_domain = str_replace('%domainname%', $rd_domain, $h1_rp_name);
                 $h1_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $h1_rp_domain);
                 $h1_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $h1_rp_keyword_1);
-                $h1 = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $h1_rp_keyword_2);
+                $h1 = str_replace('%link%', "<a href='' target='_blank'>" . $rd_keyword_link . "</a>", $h1_rp_keyword_2);
 
                 //Auto create content top
                 $rd_number_domain = random_int(0, count($domains) - 1);
@@ -573,7 +585,7 @@ class HomeController extends Controller
                 $content_top_rp_domain = str_replace('%domainname%', $rd_domain, $content_top_rp_name);
                 $content_top_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $content_top_rp_domain);
                 $content_top_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $content_top_rp_keyword_1);
-                $content_top = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $content_top_rp_keyword_2);
+                $content_top = str_replace('%link%', "<a href='' target='_blank'>" . $rd_keyword_link . "</a>", $content_top_rp_keyword_2);
 
                 //Auto create content bot
                 $rd_number_domain = random_int(0, count($domains) - 1);
@@ -590,7 +602,7 @@ class HomeController extends Controller
                 $content_bot_rp_domain = str_replace('%domainname%', $rd_domain, $content_bot_rp_name);
                 $content_bot_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $content_bot_rp_domain);
                 $content_bot_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $content_bot_rp_keyword_1);
-                $content_bot = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $content_bot_rp_keyword_2);
+                $content_bot = str_replace('%link%', "<a href='' target='_blank'>" . $rd_keyword_link . "</a>", $content_bot_rp_keyword_2);
 
                 //Auto create description
                 $rd_number_domain = random_int(0, count($domains) - 1);
@@ -607,7 +619,7 @@ class HomeController extends Controller
                 $description_rp_domain = str_replace('%domainname%', $rd_domain, $description_rp_name);
                 $description_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $description_rp_domain);
                 $description_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $description_rp_keyword_1);
-                $description = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $description_rp_keyword_2);
+                $description = str_replace('%link%', "<a href='' target='_blank'>" . $rd_keyword_link . "</a>", $description_rp_keyword_2);
 
                 //Auto create description
                 $rd_number_domain = random_int(0, count($domains) - 1);
@@ -936,7 +948,7 @@ class HomeController extends Controller
     {
         $domain_name = trim(strtolower($domain_name));
         $response = [
-            'title' => 'Information domain : ' . $domain_name,
+            'meta_title' => 'Website analysis : ' . $domain_name . ' - Check Website Traffic',
         ];
         $domain = Domain::where('domain', $domain_name)->first();
         if (isset($domain)) {
@@ -945,6 +957,8 @@ class HomeController extends Controller
             $alexa_inf = AlexaInformation::where('domain', $domain_name)->get();
             $website_inf = WebsiteInformation::where('domain', $domain_name)->get();
             $who_is_inf = WhoisInformation::where('domain', $domain_name)->get();
+
+            $response['meta_description'] = strip_tags(rawurldecode($website_inf[0]->description_website_auto));
 
             $response['alexa_inf'] = $alexa_inf;
             $response['website_inf'] = $website_inf;

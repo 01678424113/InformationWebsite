@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rhythm &mdash; One & Multi Page Creative Theme</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <title>{{$meta_title}}</title>
+    <meta name="description" content="{{$meta_description}}">
+    <meta name="keywords" content="{{$meta_keyword}}">
     <meta charset="utf-8">
     <meta name="author" content="Roman Kirichik">
     <!--[if IE]>
@@ -13,6 +13,20 @@
     <!-- Favicons -->
     <link rel="shortcut icon" href="images/favicon.png">
     <base href="{{asset('')}}">
+    {{--Seo--}}
+    <meta itemprop="url" content="{{route('home')}}"/>
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="1 days">
+    <link rel="canonical" href="{{route('home')}}" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:image" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:url" content="{{route('home')}}" />
+    <meta property="og:site_name" content="Check website traffic free 2018" />
+    <meta name="DC.title" content="" />
+    <meta name="author" content="" />
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="frontend/css/bootstrap.min.css">
@@ -23,7 +37,6 @@
     <link rel="stylesheet" href="frontend/css/owl.carousel.css">
     <link rel="stylesheet" href="frontend/css/magnific-popup.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    @yield('style')
     <link rel="stylesheet" href="css/style-information-website.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/loadding.css">
