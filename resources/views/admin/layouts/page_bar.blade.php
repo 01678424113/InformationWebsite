@@ -1,4 +1,4 @@
-<div class="page-bar">
+<div class="page-bar" style="margin-bottom: 10px;">
     <ul class="page-breadcrumb">
         <li>
             <a href="{{route('home_admin')}}">Home</a>

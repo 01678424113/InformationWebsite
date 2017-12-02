@@ -30,15 +30,14 @@ class DomainController extends Controller
 
     public function informationDomain(Request $request)
     {
-        $domain_id = $request->domain_id;
+        $domain_name = $request->domain_name;
         $response = [
             'title'=>'Information domain',
             'page'=>'domain'
         ];
-        $alexa_inf = AlexaInformation::where('domain_id',$domain_id)->get();
-        $website_inf = WebsiteInformation::where('domain_id',$domain_id)->get();
-        $whois_inf = WhoisInformation::where('domain_id',$domain_id)->get();
-
+        $alexa_inf = AlexaInformation::where('domain',$domain_name)->get();
+        $website_inf = WebsiteInformation::where('domain',$domain_name)->get();
+        $whois_inf = WhoisInformation::where('domain',$domain_name)->get();
 
         $response['alexa_inf'] = $alexa_inf;
         $response['website_inf'] = $website_inf;

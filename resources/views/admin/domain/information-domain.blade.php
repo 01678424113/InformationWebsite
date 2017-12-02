@@ -2,6 +2,12 @@
 @section('content')
     <div class="content">
         <div class="row">
+            <h2 style="margin-left: 15px">Domain :
+                <a href="" style="font-size: 25px">
+                    <img src="{{$website_inf[0]->icon}}" alt="">
+                    {{$alexa_inf[0]->domain}}
+                </a>
+            </h2>
             <div class="col-md-7">
                 <div class="row">
                     <div class="col-md-12">
@@ -44,7 +50,9 @@
                                         </tr>
                                         <tr>
                                             <td>Country rank</td>
-                                            <td>{{$alexa_inf[0]->country_rank}}</td>
+                                            <td>
+                                                <img src="{{$alexa_inf[0]->flag_country}}" alt="">
+                                                {{$alexa_inf[0]->country_rank}}</td>
                                         </tr>
                                         <tr>
                                             <td>Bounce percent</td>
@@ -52,7 +60,7 @@
                                         </tr>
                                         <tr>
                                             <td>Time on site</td>
-                                            <td>{{$alexa_inf[0]->time_on_site}}</td>
+                                            <td>{{$alexa_inf[0]->time_on_site}} min</td>
                                         </tr>
                                         <tr>
                                             <td>Image search traffic</td>
@@ -64,7 +72,7 @@
                                         </tr>
                                         <tr>
                                             <td>Keyword</td>
-                                            <td>{{str_replace('"','',$alexa_inf[0]->top_5_keyword)}}</td>
+                                            <td>{{trim(str_replace('+','',$alexa_inf[0]->top_5_keyword),'"')}}</td>
                                         </tr>
                                         <tr>
                                             <td>Backlink</td>
@@ -153,7 +161,9 @@
                                         <tbody>
                                         <tr>
                                             <td>Title</td>
-                                            <td>{{$website_inf[0]->title}}</td>
+                                            <td>
+                                                <img src="{{$website_inf[0]->icon}}" alt="">
+                                                {{str_replace('+',' ',rawurldecode($website_inf[0]->title))}}</td>
                                         </tr>
                                         <tr>
                                             <td>Screen shot</td>
@@ -165,11 +175,11 @@
                                         </tr>
                                         <tr>
                                             <td>Language</td>
-                                            <td>{{$website_inf[0]->language}}</td>
+                                            <td>{{str_replace('+',' ',$website_inf[0]->language)}}</td>
                                         </tr>
                                         <tr>
                                             <td>Distributions</td>
-                                            <td>{{$website_inf[0]->distributions}}</td>
+                                            <td>{{str_replace('+',' ',$website_inf[0]->distributions)}}</td>
                                         </tr>
                                         <tr>
                                             <td>Revisit affter</td>
@@ -181,21 +191,41 @@
                                         </tr>
                                         <tr>
                                             <td>Description</td>
-                                            <td>{{$website_inf[0]->description}}</td>
+                                            <td>{{str_replace('+',' ',rawurldecode($website_inf[0]->description))}}</td>
                                         </tr>
                                         <tr>
                                             <td>Keyword</td>
                                             <td>
-                                                {{$website_inf[0]->keyword}}
+                                                {{str_replace('+',' ',rawurldecode($website_inf[0]->keyword))}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Place name</td>
-                                            <td>{{$website_inf[0]->palce_name}}</td>
+                                            <td>{{str_replace('+',' ',rawurldecode($website_inf[0]->place_name))}}</td>
                                         </tr>
                                         <tr>
                                             <td>Position</td>
                                             <td>{{$website_inf[0]->position}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Title auto</td>
+                                            <td>{!! $website_inf[0]->title_website_auto !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>H1 auto</td>
+                                            <td>{!! $website_inf[0]->h1_website_auto !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Content top auto</td>
+                                            <td>{!! $website_inf[0]->content_top_website_auto !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Content bot auto</td>
+                                            <td>{!! $website_inf[0]->content_bot_website_auto !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Alt auto</td>
+                                            <td>{!! $website_inf[0]->alt_website_auto !!}</td>
                                         </tr>
                                         <tr>
                                             <td>Update at</td>
