@@ -20,15 +20,15 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $meta_keyword = Setting::where('setting_page','index')->where('key_setting','keyword')->first();
+        $meta_keyword = Setting::where('setting_page', 'index')->where('key_setting', 'keyword')->first();
         $meta_keyword = $meta_keyword->value_setting;
-        view()->share('meta_keyword',$meta_keyword);
+        view()->share('meta_keyword', $meta_keyword);
     }
 
     public function home()
     {
-        $meta_title = Setting::where('setting_page','index')->where('key_setting','title')->first();
-        $meta_description = Setting::where('setting_page','index')->where('key_setting','description')->first();
+        $meta_title = Setting::where('setting_page', 'index')->where('key_setting', 'title')->first();
+        $meta_description = Setting::where('setting_page', 'index')->where('key_setting', 'description')->first();
         $response = [
             'meta_title' => $meta_title->value_setting,
             'meta_description' => $meta_description->value_setting
@@ -47,7 +47,7 @@ class HomeController extends Controller
 
     public function top500()
     {
-        $meta_description = Setting::where('setting_page','index')->where('key_setting','description')->first();
+        $meta_description = Setting::where('setting_page', 'index')->where('key_setting', 'description')->first();
         $response = [
             'meta_title' => 'Checking Top 500 domain - Website analysis',
             'meta_description' => $meta_description->value_setting
@@ -96,7 +96,11 @@ class HomeController extends Controller
                     foreach ($countryRanks as $item) {
                         $countryRank = trim($item->innertext());
                     }
-
+                    //Flag country
+                    $flagCountryRank = $html_alexa->find('span.countryRank .col-pad div img.img-inline');
+                    foreach ($flagCountryRank as $item) {
+                        $flagCountry = trim($item->src);
+                    }
                     //Visitor
                     $visitor = $html_alexa->find('section#engage-panel section#engagement-content span.span4 strong.metrics-data');
                     $bounce_percent = $visitor[0]->innertext();
@@ -190,6 +194,7 @@ class HomeController extends Controller
                 $alexa_information->global_rank = $globalRank;
                 $alexa_information->country = $country;
                 $alexa_information->country_rank = $countryRank;
+                $alexa_information->flag_country = 'https://www.alexa.com' . $flagCountry;
                 $alexa_information->bounce_percent = $bounce_percent;
                 $alexa_information->pageviews_per_visitor = $pageviews_per_visitor;
                 $alexa_information->time_on_site = $time_on_site;
@@ -206,6 +211,7 @@ class HomeController extends Controller
                 $alexa_information->rate_work = $rate_work;
                 $alexa_information->rate_school = $rate_school;
                 $alexa_information->created_at = round(microtime(true));
+
 
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------End alexa------------------------------------------//
@@ -465,15 +471,17 @@ class HomeController extends Controller
                     $icon = 'https://www.google.com/s2/favicons?domain=http://' . $domain;
                 }
                 //Screen short website
-                $image_path = explode('.', $domain);
-                $image_path = $image_path[0] . '.jpg';
-                $image_path = "upload/" . $image_path;
-                $screenShort = new Browsershot();
-                $screenShort
-                    ->setUrl('http://' . $domain)
-                    ->setWidth('1024')
-                    ->setHeight('768')
-                    ->save($image_path);
+                /*  $image_path = explode('.', $domain);
+                  $image_path = $image_path[0] . '.jpg';
+                  $image_path = "upload/" . $image_path;
+                  $screenShort = new Browsershot();
+                  $screenShort
+                      ->setUrl('http://' . $domain)
+                      ->setWidth('1024')
+                      ->setHeight('768')
+                      ->save($image_path);*/
+                $image_path = 'http://free.pagepeeker.com/v2/thumbs.php?size=x&url=' . $domain;
+
 
                 //Auto tạo content
                 //Create auto title and content video
@@ -1078,7 +1086,7 @@ class HomeController extends Controller
             $alexa_information->global_rank = $globalRank;
             $alexa_information->country = $country;
             $alexa_information->country_rank = $countryRank;
-            $alexa_information->flag_country = 'https://www.alexa.com'.$flagCountry;
+            $alexa_information->flag_country = 'https://www.alexa.com' . $flagCountry;
             $alexa_information->bounce_percent = $bounce_percent;
             $alexa_information->pageviews_per_visitor = $pageviews_per_visitor;
             $alexa_information->time_on_site = $time_on_site;
@@ -1357,15 +1365,7 @@ class HomeController extends Controller
             }
 
             //Screen short website
-            $image_path = explode('.', $domain);
-            $image_path = $image_path[0] . '.jpg';
-            $image_path = "upload/" . $image_path;
-            $screenShort = new Browsershot();
-            $screenShort
-                ->setUrl('http://' . $domain)
-                ->setWidth('1024')
-                ->setHeight('768')
-                ->save($image_path);
+            $image_path = 'http://free.pagepeeker.com/v2/thumbs.php?size=x&url=' . $domain;
 
 
             $website_information = WebsiteInformation::where('domain', $domain)->first();

@@ -32,8 +32,8 @@
                                                             <div class="col-md-12">
                                                                 <div class="rank"
                                                                      style="margin-top: 10px;margin-bottom: 10px;text-align: center">
-                                                                    <p>{!! $website_inf[0]->content_top_website_auto !!}</p>
-                                                                    <p>{!! $website_inf[0]->content_bot_website_auto !!}</p>
+                                                                    <p style="text-align: left">{!! $website_inf[0]->content_top_website_auto !!}</p>
+                                                                    <p style="text-align: left">{!! $website_inf[0]->content_bot_website_auto !!}</p>
                                                                     <p>Update : {{date('d-m-Y',$alexa_inf[0]['created_at'])}}</p>
                                                                     <a href="{{route('updateInformationDomain',['domain_name'=>$who_is_inf[0]['domain']])}}"
                                                                        class="btn btn-info" style="color:white">Click
@@ -42,7 +42,7 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="rank">
-                                                                    <img src="https://www.alexa.com/images/icons/globe-sm.jpg" alt="">
+                                                                    <img src="https://www.alexa.com/images/icons/globe-sm.jpg" alt="" style="margin-bottom: 4px;">
                                                                     <span>
                                                                         Global rank
                                                                     </span><br>
@@ -57,7 +57,7 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="rank">
-                                                                    <img src="{{$alexa_inf[0]['flag_country']}}" alt="">
+                                                                    <img src="{{$alexa_inf[0]['flag_country']}}" alt=""  style="margin-bottom: 4px;">
                                                                     <span>{{$alexa_inf[0]['country']}} Rank</span><br>
                                                                     <a href="">Wordwire</a>
                                                                     <div class='numscroller numscroller-big-bottom'
@@ -75,7 +75,7 @@
                                                     class="title text-center stickyHeader-screenshotContainer col-md-5 hidden-xs ">
                                                 <span class="stickyHeader-screenshotBg"
                                                       style="background-image: url({{$website_inf[0]['image_screen_shot']}})"></span>
-                                                    <img src="{{$website_inf[0]['image_screen_shot']}}" alt="">
+                                                    <img src="{{$website_inf[0]['image_screen_shot']}}" class="image_scree_shot" alt="">
                                                 </th>
                                             </tr>
                                         </table>
@@ -591,7 +591,7 @@
                                 </div>
                                 {{--Website relative--}}
                                 <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-6 col-md-offset-3">
                                         <div class="website_related">
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <h3>Website related</h3>
