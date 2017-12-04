@@ -20,12 +20,12 @@
                                     <thead>
                                     <tr>
                                         <th>Rank</th>
-                                        <th>Root domain</th>
-                                        <th>Linking Root Domains</th>
-                                        <th>External Links</th>
+                                        <th style="max-width: 150px">Root domain</th>
+                                        <th class="hidden-xs">Linking Root Domains</th>
+                                        <th class="hidden-xs">External Links</th>
                                         <th>Domain mozRank</th>
                                         <th>Domain mozTrust</th>
-                                        <th>Change</th>
+                                        <th class="hidden-xs">Change</th>
                                     </tr>
                                     </thead>
                                     @if(count($top_500s) > 0)
@@ -37,16 +37,17 @@
                                             @endif"
                                             >
                                                 <td>{{$top_500->rank}}</td>
-                                                <td>
+                                                <td  style="max-width: 150px">
+                                                    <img src="https://www.google.com/s2/favicons?domain=http://{{$top_500->root_domain}}" alt="">
                                                     <a href="{{route('informationDomain',['domain_name'=>$top_500->root_domain])}}" class="domain">
                                                         {{$top_500->root_domain}}
                                                     </a>
                                                 </td>
-                                                <td>{{$top_500->linking_root_domain}}</td>
-                                                <td>{{$top_500->external_link}}</td>
+                                                <td class="hidden-xs">{{$top_500->linking_root_domain}}</td>
+                                                <td class="hidden-xs">{{$top_500->external_link}}</td>
                                                 <td style="color: #24ABE2">{{$top_500->domain_mozrank}}</td>
                                                 <td style="color: red">{{$top_500->domain_moztrust}}</td>
-                                                <td>{{$top_500->change_rank}}</td>
+                                                <td class="hidden-xs">{{$top_500->change_rank}}</td>
                                             </tr>
                                         @endforeach
                                         <tr>

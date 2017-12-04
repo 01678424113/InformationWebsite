@@ -67,7 +67,7 @@
         <span></span>
         <span></span>
     </div>
-    <h1>Wait a few second. Thank you :) </h1>
+    <h4>Wait a few second. Thank you :) </h4>
 </div>
 <!-- End Page Loader -->
 

@@ -4,7 +4,7 @@
 
         <!-- Footer Logo -->
         <div class="local-scroll mb-30 wow fadeInUp" data-wow-duration="1.2s">
-            <a href="#top"><img src="frontend/images/logo-footer.png" width="78" height="36" alt="" /></a>
+            <img src="frontend/images/logo-footer.png" width="78" height="36" alt="" />
         </div>
         <!-- End Footer Logo -->
 
@@ -23,12 +23,12 @@
 
             <!-- Copyright -->
             <div class="footer-copy font-alt">
-                <a href="http://themeforest.net/user/theme-guru/portfolio" target="_blank">&copy; Rhythm 2017</a>.
+                <a href="{{route('home')}}" target="_blank">Infomerweb.com</a>.
             </div>
             <!-- End Copyright -->
 
             <div class="footer-made">
-                Made with love for great people.
+                Home | About | Site.map
             </div>
 
         </div>
@@ -39,7 +39,7 @@
 
     <!-- Top Link -->
     <div class="local-scroll">
-        <a href="#top" class="link-to-top"><i class="fa fa-caret-up"></i></a>
+        <a href="" class="link-to-top"><i class="fa fa-caret-up"></i></a>
     </div>
     <!-- End Top Link -->
 
