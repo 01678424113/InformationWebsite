@@ -28,7 +28,9 @@
             <!-- End Copyright -->
 
             <div class="footer-made">
-                Home | About | Site.map
+                <span>
+                    <a href="{{route('home')}}">Home </a>|<a href=""> About </a>|<a href=""> Site.map</a>
+                </span>
             </div>
 
         </div>

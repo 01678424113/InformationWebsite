@@ -46,7 +46,7 @@
 
         @include('frontend.widget.block-one')
 
-        @include('frontend.widget.block-seven')
+     {{--   @include('frontend.widget.block-seven')--}}
 
         {{--   @include('frontend.widget.block-last-new')--}}
 

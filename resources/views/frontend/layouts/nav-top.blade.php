@@ -75,6 +75,10 @@
                     <a href="{{route('top500')}}" class="mn-has-sub">Top 500 domain</a>
 
                 </li>
+                <li>
+                    <a href="{{route('top500')}}" class="mn-has-sub">Top alexa</a>
+
+                </li>
                 <!-- End Item With Sub -->
                 <!-- Languages -->
                 <li>
