@@ -94,6 +94,11 @@
                             <span class="title">List domain</span>
                         </a>
                     </li>
+                    <li class="nav-item  ">
+                        <a href="{{route('autoGetInfoWeb')}}" class="nav-link ">
+                            <span class="title">Auto get infomation</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             {{-------------------------Setting------------------------------------------}}

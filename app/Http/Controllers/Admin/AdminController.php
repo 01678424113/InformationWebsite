@@ -54,10 +54,6 @@ class AdminController extends Controller
             );
             $j++;
         }
-        var_dump($top_new);
-        die;
+        return redirect()->back()->with('success','Get info top 500 moz successfully');
     }
-
-
-
 }

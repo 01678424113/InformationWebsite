@@ -34,6 +34,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     //Domain
     Route::get('/list-domain', 'Admin\DomainController@listDomain')->name('listDomain');
     Route::get('/information-domain', 'Admin\DomainController@informationDomain')->name('informationDomainAdmin');
+    Route::get('/auto-get-info-web','Admin\DomainController@autoGetInfoWeb')->name('autoGetInfoWeb');
+    Route::post('/auto-get-info-web','Admin\DomainController@doAutoGetInfoWeb')->name('doAutoGetInfoWeb');
     //Setting
     Route::get('/list-setting-domain', 'Admin\SettingController@listSettingDomain')->name('listSettingDomain');
     Route::get('/add-setting-domain', 'Admin\SettingController@getAddSettingDomain')->name('getAddSettingDomain');

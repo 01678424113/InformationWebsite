@@ -64,6 +64,32 @@ class HomeController extends Controller
         return view('frontend.page.top-500', $response);
     }
 
+    public function informationDomain($domain_name)
+    {
+        $domain_name = trim(strtolower($domain_name));
+        $response = [
+            'meta_title' => 'Website analysis : ' . $domain_name . ' - Check Website Traffic',
+        ];
+        $domain = Domain::where('domain', $domain_name)->first();
+        if (isset($domain)) {
+            $domain_id = $domain->id;
+
+            $alexa_inf = AlexaInformation::where('domain', $domain_name)->get();
+            $website_inf = WebsiteInformation::where('domain', $domain_name)->get();
+            $who_is_inf = WhoisInformation::where('domain', $domain_name)->get();
+
+            $response['meta_description'] = strip_tags(rawurldecode($website_inf[0]->description_website_auto));
+
+            $response['alexa_inf'] = $alexa_inf;
+            $response['website_inf'] = $website_inf;
+            $response['who_is_inf'] = $who_is_inf;
+
+            return view('frontend.page.information-website', $response);
+        } else {
+            return redirect()->route('getInformationDomain', ['domain_name' => $domain_name]);
+        }
+    }
+
     public function getInformationDomain($domain_name)
     {
         $domain = trim(strtolower($domain_name));
@@ -938,6 +964,9 @@ class HomeController extends Controller
                     return redirect()->route('informationDomain', ['domain_name' => $domain]);
                 } catch (Exception $e) {
                     $new_domain->delete();
+                    $alexa_information->delete();
+                    $website_information->delete();
+                    $who_is_information->delete();
                     dd($e);
                     return redirect()->back()->with('error', 'Error connect database !');
                 }
@@ -950,32 +979,6 @@ class HomeController extends Controller
             }
         } else {
             return redirect()->route('informationDomain', ['domain_name' => $domain]);
-        }
-    }
-
-    public function informationDomain($domain_name)
-    {
-        $domain_name = trim(strtolower($domain_name));
-        $response = [
-            'meta_title' => 'Website analysis : ' . $domain_name . ' - Check Website Traffic',
-        ];
-        $domain = Domain::where('domain', $domain_name)->first();
-        if (isset($domain)) {
-            $domain_id = $domain->id;
-
-            $alexa_inf = AlexaInformation::where('domain', $domain_name)->get();
-            $website_inf = WebsiteInformation::where('domain', $domain_name)->get();
-            $who_is_inf = WhoisInformation::where('domain', $domain_name)->get();
-
-            $response['meta_description'] = strip_tags(rawurldecode($website_inf[0]->description_website_auto));
-
-            $response['alexa_inf'] = $alexa_inf;
-            $response['website_inf'] = $website_inf;
-            $response['who_is_inf'] = $who_is_inf;
-
-            return view('frontend.page.information-website', $response);
-        } else {
-            return redirect()->route('getInformationDomain', ['domain_name' => $domain_name]);
         }
     }
 
@@ -1168,7 +1171,7 @@ class HomeController extends Controller
                     } elseif (isset($html_web->find('meta[name=language]')[0])) {
                         $language = $html_web->find('meta[name=language]')[0]->innertext();
                     } else {
-                        $language = 'English';
+                        $language = 'N/A';
                     }
                 }
 
@@ -1281,7 +1284,7 @@ class HomeController extends Controller
                     if (isset($result_language[1])) {
                         $language = $result_language[1];
                     } else {
-                        $language = 'English';
+                        $language = 'N/A';
                     }
                 }
 
@@ -1663,8 +1666,4 @@ class HomeController extends Controller
         }
     }
 
-    public function autoGetInfo()
-    {
-
-    }
 }
