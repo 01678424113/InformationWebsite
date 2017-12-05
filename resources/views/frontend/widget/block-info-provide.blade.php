@@ -29,7 +29,9 @@
                         <div class="alt-features-icon">
                             <span class="icon-clock"></span>
                         </div>
-                        <h3 class="alt-features-title font-alt">Visitor stats</h3>
+                        <h3 class="alt-features-title font-alt">
+                            <i class="fa fa-user-o" aria-hidden="true"></i>
+                            Visitor stats</h3>
                         <div class="alt-features-descr align-left">
                             Percent of visitors, Bounce rate, Time on site, Male rate, Female rate, ...
                         </div>
@@ -43,7 +45,9 @@
                         <div class="alt-features-icon">
                             <span class="icon-hotairballoon"></span>
                         </div>
-                        <h3 class="alt-features-title font-alt">Top keyword search</h3>
+                        <h3 class="alt-features-title font-alt">
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                            Top keyword search</h3>
                         <div class="alt-features-descr align-left">
                             Top keyword search google form alexa and similar web.
                         </div>
@@ -57,7 +61,9 @@
                         <div class="alt-features-icon">
                             <span class="icon-heart"></span>
                         </div>
-                        <h3 class="alt-features-title font-alt">Website Information</h3>
+                        <h3 class="alt-features-title font-alt">
+                            <i class="fa fa-info" aria-hidden="true"></i>
+                            Website Information</h3>
                         <div class="alt-features-descr align-left">
                             Title, Language, Description, Author, Position, Place name, Distribution, ...
                         </div>
@@ -71,7 +77,9 @@
                         <div class="alt-features-icon">
                             <span class="icon-linegraph"></span>
                         </div>
-                        <h3 class="alt-features-title font-alt">Upstream sites</h3>
+                        <h3 class="alt-features-title font-alt">
+                            <i class="fa fa-globe" aria-hidden="true"></i>
+                            Upstream sites</h3>
                         <div class="alt-features-descr align-left">
                             Which sites did people visit immediately before this site?
                         </div>
@@ -85,7 +93,9 @@
                         <div class="alt-features-icon">
                             <span class="icon-chat"></span>
                         </div>
-                        <h3 class="alt-features-title font-alt">Whois information</h3>
+                        <h3 class="alt-features-title font-alt">
+                            <i class="fa fa-question-circle" aria-hidden="true"></i>
+                            Whois information</h3>
                         <div class="alt-features-descr align-left">
                             Domain information, Admin contact, Registration contact, Technology contact, ..
                         </div>
