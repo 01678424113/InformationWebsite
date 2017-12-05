@@ -257,7 +257,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="td-attribute">Update at</td>
-                                                        <td class="td-parameter">{{$website_inf[0]['created_at']}}</td>
+                                                        <td class="td-parameter">{{date('d-m-Y',$website_inf[0]['created_at'])}}</td>
                                                     </tr>
                                                     </tbody>
                                                 </table>

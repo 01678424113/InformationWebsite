@@ -62,132 +62,134 @@
                         </div>
                     </div>
                 </div>
+                <hr>
+                <div class="container relative">
+                    <div class="row">
+                        <!-- Team item -->
+                        <div class="col-sm-4 mb-xs-30 wow fadeInUp">
+                            <div class="team-item">
 
-                <div class="row">
-                    <!-- Team item -->
-                    <div class="col-sm-4 mb-xs-30 wow fadeInUp">
-                        <div class="team-item">
+                                <div class="team-item-image">
 
-                            <div class="team-item-image">
+                                    <img src="image/alexa.jpg" alt="" style="min-height: 360px;"/>
 
-                                <img src="frontend/images/team/team-1.jpg" alt=""/>
+                                    <div class="team-item-detail">
 
-                                <div class="team-item-detail">
+                                        <h4 class="font-alt normal">Alexa</h4>
 
-                                    <h4 class="font-alt normal">Hello & Welcome!</h4>
+                                        <p>
+                                            Boost traffic and revenue with a full suite of SEO and competitor analysis tools. Discover new opportunities to find, reach, and convert your audience.
+                                        </p>
 
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit lacus, a&nbsp;iaculis diam.
-                                    </p>
+                                        <div class="team-social-links">
+                                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                                            <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
+                                        </div>
 
-                                    <div class="team-social-links">
-                                        <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                                        <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                                        <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
+                                    </div>
+                                </div>
+
+                                <div class="team-item-descr font-alt">
+
+                                    <div class="team-item-name">
+                                        Alexa
                                     </div>
 
-                                </div>
-                            </div>
+                                    {{-- <div class="team-item-role">
+                                         Art Director
+                                     </div>--}}
 
-                            <div class="team-item-descr font-alt">
-
-                                <div class="team-item-name">
-                                    Thomas Rhythm
-                                </div>
-
-                                <div class="team-item-role">
-                                    Art Director
                                 </div>
 
                             </div>
-
                         </div>
-                    </div>
-                    <!-- End Team item -->
+                        <!-- End Team item -->
 
-                    <!-- Team item -->
-                    <div class="col-sm-4 mb-xs-30 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item">
+                        <!-- Team item -->
+                        <div class="col-sm-4 mb-xs-30 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="team-item">
 
-                            <div class="team-item-image">
+                                <div class="team-item-image">
 
-                                <img src="frontend/images/team/team-2.jpg" alt=""/>
+                                    <img src="image/similarweb.png" alt=""/>
 
-                                <div class="team-item-detail">
+                                    <div class="team-item-detail">
 
-                                    <h4 class="font-alt normal">Nice to meet!</h4>
+                                        <h4 class="font-alt normal">Similarweb</h4>
 
-                                    <p>
-                                        Curabitur augue, nec finibus mauris pretium eu. Duis placerat ex gravida nibh tristique
-                                        porta.
-                                    </p>
+                                        <p>
+                                            Grow your market share with SimilarWeb's digital market intelligence platform. Compare website traffic statistics & analytics.
+                                        </p>
 
-                                    <div class="team-social-links">
-                                        <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                                        <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                                        <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
+                                        <div class="team-social-links">
+                                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                                            <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="team-item-descr font-alt">
+
+                                    <div class="team-item-name">
+                                        Similarweb
                                     </div>
 
-                                </div>
-                            </div>
+                                    {{--  <div class="team-item-role">
+                                          Web engineer
+                                      </div>--}}
 
-                            <div class="team-item-descr font-alt">
-
-                                <div class="team-item-name">
-                                    Marta Laning
-                                </div>
-
-                                <div class="team-item-role">
-                                    Web engineer
                                 </div>
 
                             </div>
-
                         </div>
-                    </div>
-                    <!-- End Team item -->
+                        <!-- End Team item -->
 
-                    <!-- Team item -->
-                    <div class="col-sm-4 mb-xs-30 wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="team-item">
+                        <!-- Team item -->
+                        <div class="col-sm-4 mb-xs-30 wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="team-item">
 
-                            <div class="team-item-image">
+                                <div class="team-item-image">
 
-                                <img src="frontend/images/team/team-3.jpg" alt=""/>
+                                    <img src="image/Google.jpg" alt=""/>
 
-                                <div class="team-item-detail">
+                                    <div class="team-item-detail">
 
-                                    <h4 class="font-alt normal">Whats Up!</h4>
+                                        <h4 class="font-alt normal">Google</h4>
 
-                                    <p>
-                                        Adipiscing elit curabitur eu&nbsp;adipiscing lacus eu&nbsp;adipiscing lacus, a&nbsp;iaculis
-                                        diam.
-                                    </p>
+                                        <p>
+                                            Search the world's information, including webpages, images, videos and more.
+                                        </p>
 
-                                    <div class="team-social-links">
-                                        <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                                        <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                                        <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
+                                        <div class="team-social-links">
+                                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                                            <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="team-item-descr font-alt">
+
+                                    <div class="team-item-name">
+                                        Google
                                     </div>
 
-                                </div>
-                            </div>
+                                    {{-- <div class="team-item-role">
+                                         Developer
+                                     </div>--}}
 
-                            <div class="team-item-descr font-alt">
-
-                                <div class="team-item-name">
-                                    Steve ANDERS
-                                </div>
-
-                                <div class="team-item-role">
-                                    Developer
                                 </div>
 
                             </div>
-
                         </div>
+                        <!-- End Team item -->
+
                     </div>
-                    <!-- End Team item -->
+
 
                 </div>
 

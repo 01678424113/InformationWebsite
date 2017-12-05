@@ -172,6 +172,7 @@ class HomeController extends Controller
                     $globalRank = 'N/A';
                     $country = 'N/A';
                     $countryRank = 'N/A';
+                    $flagCountry = '/images/icons/globe-sm.jpg';
                     $bounce_percent = 'N/A';
                     $pageviews_per_visitor = 'N/A';
                     $time_on_site = 'N/A';
@@ -1662,4 +1663,8 @@ class HomeController extends Controller
         }
     }
 
+    public function autoGetInfo()
+    {
+
+    }
 }
