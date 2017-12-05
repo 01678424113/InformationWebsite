@@ -18,7 +18,7 @@ body {
     border: 1px solid gray;
     border-radius: 4px;
     padding: 20px;
-
+    box-shadow: 10px 10px 5px #888888;
   }
 }
 
@@ -79,6 +79,8 @@ body {
   .information-website {
     display: flex;
     justify-content: center;
+    box-shadow: 7px 7px 5px #888888;
+    border-radius: 5px;
     .sidebar-inf{
       margin: 0;
       border: #c7c7c7 1px solid;

@@ -3108,7 +3108,7 @@ a.logo:hover{
     margin-top: -70px;
 }
 .alt-features-item{
-    margin-top: 70px;
+    margin-top: 55px;
 }
 .alt-features-icon{
     padding-top: 10px;
@@ -3121,14 +3121,14 @@ a.logo:hover{
 }
 .alt-features-title{
     margin-bottom: 21px;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.4em;
 }
 .alt-features-descr {
     color: #777;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 300;
     line-height: 1.86
 }

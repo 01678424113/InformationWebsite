@@ -1,9 +1,9 @@
 <!-- About Section -->
-<section class="page-section" id="about">
+<section class="page-section" id="about" style="background: #FAFAFA;">
   <div class="table-domain-index" style="max-width: 1500px;margin: auto;">
       <div class="section-text mb-50 mb-sm-20" style="margin-left: 20px;margin-right: 20px;">
           <div class="row">
-              <div class="col-md-9 col-sm-12">
+              <div class="col-md-12">
                   <h2 class="section-title font-alt align-left mb-20 mb-sm-40">
                       Top 10 domain moz
                   </h2>
@@ -47,42 +47,6 @@
                                       <a href="{{route('top500')}}">View more ...</a>
                                   </td>
                               </tr>
-                              </tbody>
-                          @endif
-                      </table>
-                  </div>
-              </div>
-              <div class="col-md-3 col-sm-12">
-                  <h2 class="section-title font-alt align-left mb-20 mb-sm-40">
-                      New search
-                  </h2>
-                  <div class="table-top-500">
-                      <table class="table">
-                          <thead>
-                          <tr>
-                          {{--    <th>#</th>--}}
-                              <th style="min-width: 150px;">Domain</th>
-                              <th>Rank alexa</th>
-                          </tr>
-                          </thead>
-                          @if(count($domain_relatives) > 0)
-                              <tbody>
-                              <?php $i = 1; ?>
-                              @foreach($domain_relatives as $domain_relative)
-                                  <tr class="
-                                    @if($i % 2 == 0)
-                                  {{"active"}}
-                                  @endif"
-                                  >
-                                    {{--  <td>{{$i}}</td>--}}
-                                      <td style="min-width: 150px;">
-                                          <img src="https://www.google.com/s2/favicons?domain=http://{{$domain_relative->domain}}" alt="">
-                                          <a href="{{route('informationDomain',['domain_name'=>$domain_relative->domain])}}">{{$domain_relative->domain}}</a>
-                                      </td>
-                                      <td>{{$domain_relative->alexa->global_rank}}</td>
-                                  </tr>
-                                  <?php $i++; ?>
-                              @endforeach
                               </tbody>
                           @endif
                       </table>

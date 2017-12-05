@@ -41,7 +41,7 @@ class HomeController extends Controller
             'domain',
             'created_at'
         ]);
-        $response['domain_relatives'] = $domain_relative_query->orderBy('created_at', 'DESC')->take(1)->get();
+        $response['domain_relatives'] = $domain_relative_query->orderBy('created_at', 'DESC')->take(10)->get();
         return view('frontend.page.index', $response);
     }
 
@@ -557,7 +557,7 @@ class HomeController extends Controller
                 $title_rp_domain = str_replace('%domainname%', $rd_domain, $title_rp_name);
                 $title_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $title_rp_domain);
                 $title_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $title_rp_keyword_1);
-                $title = str_replace('%link%', "<a href='' target='_blank'>" . $rd_keyword_link . "</a>", $title_rp_keyword_2);
+                $title = str_replace('%link%', "<a href='http://infomerweb.com/' target='_blank'>" . $rd_keyword_link . "</a>", $title_rp_keyword_2);
 
                 //Auto create h1
                 $rd_number_domain = random_int(0, count($domains) - 1);
@@ -574,7 +574,7 @@ class HomeController extends Controller
                 $h1_rp_domain = str_replace('%domainname%', $rd_domain, $h1_rp_name);
                 $h1_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $h1_rp_domain);
                 $h1_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $h1_rp_keyword_1);
-                $h1 = str_replace('%link%', "<a href='' target='_blank'>" . $rd_keyword_link . "</a>", $h1_rp_keyword_2);
+                $h1 = str_replace('%link%', "<a href='http://infomerweb.com/' target='_blank'>" . $rd_keyword_link . "</a>", $h1_rp_keyword_2);
 
                 //Auto create content top
                 $rd_number_domain = random_int(0, count($domains) - 1);
@@ -593,7 +593,7 @@ class HomeController extends Controller
                 $content_top_rp_domain = str_replace('%domainname%', $rd_domain, $content_top_rp_name);
                 $content_top_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $content_top_rp_domain);
                 $content_top_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $content_top_rp_keyword_1);
-                $content_top = str_replace('%link%', "<a href='' target='_blank'>" . $rd_keyword_link . "</a>", $content_top_rp_keyword_2);
+                $content_top = str_replace('%link%', "<a href='http://infomerweb.com/' target='_blank'>" . $rd_keyword_link . "</a>", $content_top_rp_keyword_2);
 
                 //Auto create content bot
                 $rd_number_domain = random_int(0, count($domains) - 1);
@@ -610,7 +610,7 @@ class HomeController extends Controller
                 $content_bot_rp_domain = str_replace('%domainname%', $rd_domain, $content_bot_rp_name);
                 $content_bot_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $content_bot_rp_domain);
                 $content_bot_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $content_bot_rp_keyword_1);
-                $content_bot = str_replace('%link%', "<a href='' target='_blank'>" . $rd_keyword_link . "</a>", $content_bot_rp_keyword_2);
+                $content_bot = str_replace('%link%', "<a href='http://infomerweb.com/' target='_blank'>" . $rd_keyword_link . "</a>", $content_bot_rp_keyword_2);
 
                 //Auto create description
                 $rd_number_domain = random_int(0, count($domains) - 1);
@@ -627,7 +627,7 @@ class HomeController extends Controller
                 $description_rp_domain = str_replace('%domainname%', $rd_domain, $description_rp_name);
                 $description_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $description_rp_domain);
                 $description_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $description_rp_keyword_1);
-                $description = str_replace('%link%', "<a href='' target='_blank'>" . $rd_keyword_link . "</a>", $description_rp_keyword_2);
+                $description = str_replace('%link%', "<a href='http://infomerweb.com/' target='_blank'>" . $rd_keyword_link . "</a>", $description_rp_keyword_2);
 
                 //Auto create description
                 $rd_number_domain = random_int(0, count($domains) - 1);
