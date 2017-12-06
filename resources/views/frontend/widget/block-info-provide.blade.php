@@ -1,7 +1,7 @@
 <section class="page-section">
-    <div class="container relative">
+    <div class="block-info-provide relative" style="max-width: 1500px;margin: auto;">
         <div class="col-md-8">
-            <h2 class="section-title font-alt mb-70 mb-sm-40">
+            <h2 class="section-title font-alt mb-70 mb-sm-40" style="padding-bottom: 20px">
                 Stats Provided by Infomerweb.com
             </h2>
             <!-- Features Grid -->
