@@ -42,10 +42,6 @@
         <!-- Divider -->
         <hr class="mt-0 mb-0 "/>
         <!-- End Divider -->
-        <form action="{{route('get_web_page',['url'=>'dantri.com'])}}" method="get">
-            {{csrf_field()}}
-            <input type="submit" value="Check">
-        </form>
         @include('frontend.widget.block-info-provide')
 
         @include('frontend.widget.block-one')

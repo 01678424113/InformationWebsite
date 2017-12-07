@@ -19,7 +19,8 @@ Route::get('/get-information-web/{domain_name}', 'Frontend\HomeController@getInf
 Route::get('/inf/{domain_name}', 'Frontend\HomeController@informationDomain')->name('informationDomain');
 Route::get('/update/{domain_name}', 'Frontend\HomeController@updateInformationDomain')->name('updateInformationDomain');
 
-Route::get('/spider-get-domain/{url}','Admin\SpiderGetDomain@spiderGetDomain')->name('spiderGetDomain');
+Route::get('/spider-get-domain','Admin\SpiderGetDomain@spiderGetDomain')->name('spiderGetDomain');
+Route::get('/spider-get-domain/{url}','Admin\SpiderGetDomain@doSpiderGetDomain')->name('doSpiderGetDomain');
 
 Auth::routes();
 

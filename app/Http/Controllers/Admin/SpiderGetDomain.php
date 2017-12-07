@@ -41,7 +41,7 @@ class SpiderGetDomain extends Controller
         return $content;
     }
 
-    function spiderGetDomain($url)
+    public function doSpiderGetDomain($url)
     {
         $content_url = $this->cUrl($url);
         $content_txt = file_get_contents('../domain.txt');
@@ -63,16 +63,28 @@ class SpiderGetDomain extends Controller
         foreach ($list_http as $item) {
             $content_txt = file_get_contents('../domain.txt');
             $content_txt = explode(';', $content_txt);
-            if (count($content_txt) > 500) {
-                dd('Complete');
+            if (count($content_txt) > 10) {
+               return $content_txt;
             }
             if (in_array($item, $content_txt) === false) {
                 $item = $item . ';';
                 file_put_contents('../domain.txt', $item, FILE_APPEND);
                 $item = trim($item, ';');
-                $this->spiderGetDomain($item);
+                $this->doSpiderGetDomain($item);
             }
         }
+    }
+
+    public function spiderGetDomain(Request $request)
+    {
+        $url = $request->domain_use_auto;
+        $spider_get_domain = $this->doSpiderGetDomain($url);
+        $response = [
+            'title'=>'Auto get information website',
+            'page'=>'domain',
+            'spider_get_domain'=>$spider_get_domain
+        ];
+        return view('admin.page.auto-get-info-web',$response);
     }
 
 }
