@@ -19,8 +19,6 @@ Route::get('/get-information-web/{domain_name}', 'Frontend\HomeController@getInf
 Route::get('/inf/{domain_name}', 'Frontend\HomeController@informationDomain')->name('informationDomain');
 Route::get('/update/{domain_name}', 'Frontend\HomeController@updateInformationDomain')->name('updateInformationDomain');
 
-Route::get('/spider-get-domain','Admin\SpiderGetDomain@spiderGetDomain')->name('spiderGetDomain');
-Route::get('/spider-get-domain/{url}','Admin\SpiderGetDomain@doSpiderGetDomain')->name('doSpiderGetDomain');
 
 Auth::routes();
 
@@ -36,6 +34,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/information-domain', 'Admin\DomainController@informationDomain')->name('informationDomainAdmin');
     Route::get('/auto-get-info-web','Admin\DomainController@autoGetInfoWeb')->name('autoGetInfoWeb');
     Route::post('/auto-get-info-web','Admin\DomainController@doAutoGetInfoWeb')->name('doAutoGetInfoWeb');
+
+    Route::get('/spider-get-domain','Admin\SpiderGetDomain@spiderGetDomain')->name('spiderGetDomain');
+    Route::get('/spider-get-domain/{url}','Admin\SpiderGetDomain@doSpiderGetDomain')->name('doSpiderGetDomain');
     //Setting
     Route::get('/list-setting-domain', 'Admin\SettingController@listSettingDomain')->name('listSettingDomain');
     Route::get('/add-setting-domain', 'Admin\SettingController@getAddSettingDomain')->name('getAddSettingDomain');

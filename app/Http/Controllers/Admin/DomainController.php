@@ -26,7 +26,7 @@ class DomainController extends Controller
             'created_at',
             'updated_at'
         ]);
-        $domains = $domain_query->orderBy('created_at','DESC')->get();
+        $domains = $domain_query->orderBy('created_at','DESC')->paginate(20);
         $response['domains'] = $domains;
         return view('admin.domain.list-domain',$response);
     }
@@ -66,7 +66,7 @@ class DomainController extends Controller
                 $this->getInfoWeb($domain_name);
             }
         }
-        return redirect()->back()->with('error','Auto get infomation website successfully');
+        return redirect()->back()->with('success','Auto get infomation website successfully');
     }
 
     public function getInfoWeb($domain_name)
@@ -182,7 +182,7 @@ class DomainController extends Controller
                     $pageviews_per_visitor = 'N/A';
                     $time_on_site = 'N/A';
                     $inf_traffic_over = [];
-                    $image_search_traffic = 'http://traffic.alexa.com/graph/error';
+                    $image_search_traffic = 'http://traffic.alexa.com/graph?o=lt&y=t&b=ffffff&n=666666&f=999999&r=1y&t=2&z=30&c=1&h=300&w=500&u='.$domain;
                     $keyword = [];
                     $rate_keyword = [];
                     $upstream_site = [];
@@ -647,7 +647,7 @@ class DomainController extends Controller
                 $rd_keyword_link = trim($keyword_links[$rd_number_keyword_link]);
 
                 $alt_rp_name = str_replace('%name%', $domain, $rd_alt);
-                //$alt_rp_domain = str_replace('%domainname%', $rd_domain, $alt_rp_name);
+                $alt_rp_domain = str_replace('%domainname%', $rd_domain, $alt_rp_name);
                 $alt_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $alt_rp_name);
                 $alt_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $alt_rp_keyword_1);
                 //$alt = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $alt_rp_keyword_2);

@@ -27,6 +27,7 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Domain</th>
                                     <th>Information</th>
                                     <th>Created at</th>
@@ -37,6 +38,7 @@
                                 <tbody>
                                 @foreach($domains as $domain)
                                     <tr>
+                                        <td>{{$domain->id}}</td>
                                         <td>{{$domain->domain}}</td>
                                         <td>
                                             <form action="{{route('informationDomainAdmin')}}" method="get">
@@ -45,8 +47,8 @@
                                                 <button type="submit" class="btn btn-info">Watch now</button>
                                             </form>
                                         </td>
-                                        <td>{{$domain->created_at}}</td>
-                                        <td>{{$domain->created_at}}</td>
+                                        <td>{{date('d-m-Y',$domain->created_at)}}</td>
+                                        <td>{{date('d-m-Y',$domain->created_at)}}</td>
                                         <td>
                                             <button type="button" class="btn btn-info">Update</button>
                                         </td>
@@ -54,6 +56,7 @@
                                 @endforeach
                                 </tbody>
                             </table>
+                            {{$domains->links()}}
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@
     <div class="content">
         <div class="row">
             <h2 style="margin-left: 15px">Domain :
-                <a href="" style="font-size: 25px">
+                <a href="{{route('informationDomain',['domain_name'=>$alexa_inf[0]->domain])}}" style="font-size: 25px">
                     <img src="{{$website_inf[0]->icon}}" alt="">
                     {{$alexa_inf[0]->domain}}
                 </a>
@@ -66,7 +66,7 @@
                                             <td>Image search traffic</td>
                                             <td>
                                                 <button type="button" class="btn btn-info" data-toggle="modal"
-                                                        data-target="#image_search_traffic">Vỉew
+                                                        data-target="#image_search_traffic">View
                                                 </button>
                                             </td>
                                         </tr>
