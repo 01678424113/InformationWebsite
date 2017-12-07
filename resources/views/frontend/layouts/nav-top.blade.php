@@ -48,7 +48,7 @@
 
                 <!-- Item With Sub -->
                 <li>
-                    <a href="#" class="mn-has-sub">Home</a>
+                    <a href="{{route('home')}}" class="mn-has-sub">Home</a>
                     {{--
                                         <!-- Sub Multilevel -->
                                         <ul class="mn-sub mn-has-multi">
@@ -72,23 +72,23 @@
 
                 <!-- Item With Sub -->
                 <li>
-                    <a href="{{route('top500')}}" class="mn-has-sub">Top 500 domain</a>
+                    <a href="{{route('top500')}}" class="mn-has-sub">Top 500 domain MOZ</a>
 
                 </li>
-                <li>
+              {{--  <li>
                     <a href="{{route('top500')}}" class="mn-has-sub">Top alexa</a>
 
-                </li>
+                </li>--}}
                 <!-- End Item With Sub -->
                 <!-- Languages -->
                 <li>
-                    <a href="#" class="mn-has-sub">Eng <i class="fa fa-angle-down"></i></a>
+                    <a class="mn-has-sub">Eng <i class="fa fa-angle-down"></i></a>
 
                     <ul class="mn-sub">
 
                         <li><a href="">English</a></li>
-                        <li><a href="">France</a></li>
-                        <li><a href="">Germany</a></li>
+                     {{--   <li><a href="">France</a></li>
+                        <li><a href="">Germany</a></li>--}}
 
                     </ul>
 

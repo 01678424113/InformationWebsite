@@ -143,6 +143,10 @@ body .information-website {
     padding: 15px; }
     body .information-website .right .traffic-over .table thead tr td {
       font-size: 22px; }
+  body .information-website .right #chartdiv {
+    width: 80%;
+    height: 500px;
+    margin: auto; }
   body .information-website .right #chartUpstream {
     width: 100%;
     height: 400px; }

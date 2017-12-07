@@ -71,8 +71,8 @@ body {
     }
   }
 }
-.domain{
-  color: #337ab7!important;
+.domain {
+  color: #337ab7 !important;
 }
 /*----------------------------------------------Information website-----------------------------------------------------*/
 body {
@@ -81,7 +81,7 @@ body {
     justify-content: center;
     box-shadow: 7px 7px 5px #888888;
     border-radius: 5px;
-    .sidebar-inf{
+    .sidebar-inf {
       margin: 0;
       border: #c7c7c7 1px solid;
       margin-bottom: -1px;
@@ -99,18 +99,18 @@ body {
         }
       }
       .icon-sidebar-inf-web {
-        span{
+        span {
           display: inline-block;
           i {
             font-size: 35px;
             padding: 10px;
             color: grey;
           }
-          small{
+          small {
             font-size: 15px;
           }
-          &:hover i,small{
-            color: #1F76A3!important ;
+          &:hover i, small {
+            color: #1F76A3 !important;
           }
         }
       }
@@ -200,6 +200,11 @@ body {
             }
           }
         }
+      }
+      #chartdiv {
+        width: 80%;
+        height: 500px;
+        margin: auto;
       }
       #chartUpstream {
         width: 100%;

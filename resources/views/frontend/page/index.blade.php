@@ -8,7 +8,7 @@
             <!-- Hero Content -->
             <div class="form-search">
                 <h2 class="hs-line-8 no-transp font-alt mb-50 mb-xs-30">
-                    Alexa / Whois / Google / Information website
+                    Alexa / Whois / Similar / Information website
                 </h2>
 
                 <h1 class="hs-line-14 font-alt mb-50 mb-xs-30">

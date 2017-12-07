@@ -14,7 +14,7 @@
                                     <div class="col-md-4 col-sm-5 col-xs-5" style="padding: 0">
                                         <div class="domain-website">
                                             <img src="{{$website_inf[0]['icon']}}" alt=""
-                                                style="margin-top: 6px;" >
+                                                 style="margin-top: 6px;">
                                             <h1>{{$who_is_inf[0]['domain']}}</h1>
                                         </div>
                                     </div>
@@ -24,7 +24,8 @@
                                 {{--Rank website--}}
                                 <div class="row">
                                     <div class="col-xs-12 hidden-lg hidden-md" style="text-align: center">
-                                        <img src="{{$website_inf[0]['image_screen_shot']}}" style="width: 95%;margin-top: 10px;" class="" alt="">
+                                        <img src="{{$website_inf[0]['image_screen_shot']}}"
+                                             style="width: 95%;margin-top: 10px;" class="" alt="">
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <table class="table" style="border-bottom: #c7c7c7 1px solid;">
@@ -37,7 +38,8 @@
                                                                      style="margin-top: 10px;margin-bottom: 10px;text-align: center">
                                                                     <p style="text-align: left">{!! $website_inf[0]->content_top_website_auto !!}</p>
                                                                     <p style="text-align: left">{!! $website_inf[0]->content_bot_website_auto !!}</p>
-                                                                    <p>Update : {{date('d-m-Y',$alexa_inf[0]['created_at'])}}</p>
+                                                                    <p>Update
+                                                                        : {{date('d-m-Y',$alexa_inf[0]['created_at'])}}</p>
                                                                     <a href="{{route('updateInformationDomain',['domain_name'=>$who_is_inf[0]['domain']])}}"
                                                                        class="btn btn-info" style="color:white">Click
                                                                         update new</a>
@@ -45,7 +47,8 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="rank">
-                                                                    <img src="https://www.alexa.com/images/icons/globe-sm.jpg" alt="" style="margin-bottom: 4px;">
+                                                                    <img src="https://www.alexa.com/images/icons/globe-sm.jpg"
+                                                                         alt="" style="margin-bottom: 4px;">
                                                                     <span>
                                                                         Global rank
                                                                     </span><br>
@@ -60,7 +63,8 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="rank">
-                                                                    <img src="{{$alexa_inf[0]['flag_country']}}" alt=""  style="margin-bottom: 4px;">
+                                                                    <img src="{{$alexa_inf[0]['flag_country']}}" alt=""
+                                                                         style="margin-bottom: 4px;">
                                                                     <span>{{$alexa_inf[0]['country']}} Rank</span><br>
                                                                     <a href="">Wordwire</a>
                                                                     <div class='numscroller numscroller-big-bottom'
@@ -75,8 +79,9 @@
                                                     </div>
                                                 </td>
                                                 <td valign="middle" colspan="2" style="margin-top: 10px;"
-                                                    class="title text-center col-md-5 hidden-sm hidden-xs"  >
-                                                    <img src="{{$website_inf[0]['image_screen_shot']}}" class="image_scree_shot" alt="">
+                                                    class="title text-center col-md-5 hidden-sm hidden-xs">
+                                                    <img src="{{$website_inf[0]['image_screen_shot']}}"
+                                                         class="image_scree_shot" alt="">
                                                 </td>
                                             </tr>
                                         </table>
@@ -116,21 +121,31 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
+                                                <div class="col-md-12">
+                                                    <div id="chartdiv"></div>
+                                                    <p style="text-align: center;font-size: 18px;font-weight: 600;">You can see chart map <span><a
+                                                                    href="" style="color: #85C5E3;text-decoration: underline">Send feedback</a></span></p>
+                                                </div>
                                                 <h3 class="title-inf">Visitor</h3>
                                                 <hr class="hr-inf">
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <table class="table table-hover">
                                                         <tr>
-                                                            <td  class="td-attribute">Bounce rate</td>
-                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['bounce_percent']}}</td>
+                                                            <td class="td-attribute">Bounce rate</td>
+                                                            <td style="text-align: center"
+                                                                class="td-parameter">{{$alexa_inf[0]['bounce_percent']}}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td  class="td-attribute">Page views per visitor</td>
-                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['pageviews_per_visitor']}} %</td>
+                                                            <td class="td-attribute">Page views per visitor</td>
+                                                            <td style="text-align: center"
+                                                                class="td-parameter">{{$alexa_inf[0]['pageviews_per_visitor']}}
+                                                                %
+                                                            </td>
                                                         </tr>
                                                         <tr>
-                                                            <td  class="td-attribute">Time on site</td>
-                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['time_on_site']}}</td>
+                                                            <td class="td-attribute">Time on site</td>
+                                                            <td style="text-align: center"
+                                                                class="td-parameter">{{$alexa_inf[0]['time_on_site']}}</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -139,23 +154,28 @@
                                                     <table class="table table-hover">
                                                         <tr>
                                                             <td class="td-attribute">Male rate</td>
-                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['rate_male']}}</td>
+                                                            <td style="text-align: center"
+                                                                class="td-parameter">{{$alexa_inf[0]['rate_male']}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td class="td-attribute">Female rate</td>
-                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['rate_female']}}</td>
+                                                            <td style="text-align: center"
+                                                                class="td-parameter">{{$alexa_inf[0]['rate_female']}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td class="td-attribute">Home</td>
-                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['rate_home']}}</td>
+                                                            <td style="text-align: center"
+                                                                class="td-parameter">{{$alexa_inf[0]['rate_home']}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td class="td-attribute">School</td>
-                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['rate_school']}}</td>
+                                                            <td style="text-align: center"
+                                                                class="td-parameter">{{$alexa_inf[0]['rate_school']}}</td>
                                                         </tr>
                                                         <tr>
                                                             <td class="td-attribute">Work</td>
-                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['rate_work']}}</td>
+                                                            <td style="text-align: center"
+                                                                class="td-parameter">{{$alexa_inf[0]['rate_work']}}</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -276,7 +296,8 @@
                                 {{--Upstream sites--}}
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <h3 class="title-inf">Which sites did people visit immediately before this site?</h3>
+                                        <h3 class="title-inf">Which sites did people visit immediately before this
+                                            site?</h3>
                                         <hr class="hr-inf">
                                         <div class="chart">
                                             <?php
@@ -617,7 +638,8 @@
                                                             <td>{{$i}}</td>
                                                             <td>
                                                                 <a href="{{route('informationDomain',['domain_name'=>$item])}}">
-                                                                    <img src="https://www.google.com/s2/favicons?domain=http://{{$item}}" alt="">
+                                                                    <img src="https://www.google.com/s2/favicons?domain=http://{{$item}}"
+                                                                         alt="">
                                                                     {{$item}}
                                                                 </a>
                                                             </td>

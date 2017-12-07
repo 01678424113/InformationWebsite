@@ -43,6 +43,12 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=vietnamese"
           rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    {{--Chart map JS--}}
+    <script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+    <script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 </head>
 <body class="appear-animate" {{--onload="myFunction()" style="background-color: #5BC0DE;"--}}>
 
@@ -120,6 +126,31 @@
 <script type="text/javascript" src="js/loadding.js"></script>
 
 <script>
+    var map = AmCharts.makeChart( "chartdiv", {
+
+        "type": "map",
+        "theme": "light",
+        "projection": "miller",
+
+        "dataProvider": {
+            "map": "worldLow",
+            "getAreasFromMap": true,
+            "areas":[
+                { "id": "VN", "color": "#CC0000" },
+                { "id": "EL", "color": "#00CC00" },
+                { "id": "FR", "color": "#0000CC" }
+            ]
+        },
+        "areasSettings": {
+            "autoZoom": true,
+            "selectedColor": "#CC0000"
+        },
+        "smallMap": {},
+        "export": {
+            "enabled": true,
+            "position": "bottom-right"
+        }
+    } );
     $('.input-search').change(function () {
         var domain = $('.input-search').val();
         $('.btn-search').attr('href', '/InformationWebsite/public/inf/' + domain);
