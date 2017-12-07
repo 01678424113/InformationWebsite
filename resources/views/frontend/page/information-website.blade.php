@@ -23,6 +23,9 @@
                             <div class="right">
                                 {{--Rank website--}}
                                 <div class="row">
+                                    <div class="col-xs-12 hidden-lg hidden-md" style="text-align: center">
+                                        <img src="{{$website_inf[0]['image_screen_shot']}}" style="width: 95%;margin-top: 10px;" class="" alt="">
+                                    </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <table class="table" style="border-bottom: #c7c7c7 1px solid;">
                                             <tr>
@@ -71,12 +74,10 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <th valign="middle" colspan="2" style="margin-top: 10px"
-                                                    class="title text-center stickyHeader-screenshotContainer col-md-5 hidden-xs ">
-                                                <span class="stickyHeader-screenshotBg"
-                                                      style="background-image: url({{$website_inf[0]['image_screen_shot']}})"></span>
+                                                <td valign="middle" colspan="2" style="margin-top: 10px;"
+                                                    class="title text-center col-md-5 hidden-sm hidden-xs"  >
                                                     <img src="{{$website_inf[0]['image_screen_shot']}}" class="image_scree_shot" alt="">
-                                                </th>
+                                                </td>
                                             </tr>
                                         </table>
                                     </div>
@@ -117,37 +118,44 @@
                                                 </div>
                                                 <h3 class="title-inf">Visitor</h3>
                                                 <hr class="hr-inf">
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <table class="table table-hover">
                                                         <tr>
                                                             <td  class="td-attribute">Bounce rate</td>
-                                                            <td  class="td-attribute">Page views per visitor</td>
-                                                            <td  class="td-attribute">Time on site</td>
+                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['bounce_percent']}}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['bounce_percent']}}</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['pageviews_per_visitor']}} %</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['time_on_site']}}</td>
+                                                            <td  class="td-attribute">Page views per visitor</td>
+                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['pageviews_per_visitor']}} %</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td  class="td-attribute">Time on site</td>
+                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['time_on_site']}}</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <table class="table table-hover">
                                                         <tr>
                                                             <td class="td-attribute">Male rate</td>
-                                                            <td class="td-attribute">Female rate</td>
-                                                            <td class="td-attribute">Home</td>
-                                                            <td class="td-attribute">School</td>
-                                                            <td class="td-attribute">Work</td>
+                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['rate_male']}}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_male']}}</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_female']}}</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_home']}}</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_school']}}</td>
-                                                            <td class="td-parameter">{{$alexa_inf[0]['rate_work']}}</td>
-
+                                                            <td class="td-attribute">Female rate</td>
+                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['rate_female']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-attribute">Home</td>
+                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['rate_home']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-attribute">School</td>
+                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['rate_school']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-attribute">Work</td>
+                                                            <td style="text-align: center" class="td-parameter">{{$alexa_inf[0]['rate_work']}}</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
