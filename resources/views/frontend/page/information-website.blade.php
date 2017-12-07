@@ -14,7 +14,7 @@
                                     <div class="col-md-4 col-sm-5 col-xs-5" style="padding: 0">
                                         <div class="domain-website">
                                             <img src="{{$website_inf[0]['icon']}}" alt=""
-                                                 style="width: 25px;height: 25px;">
+                                                style="margin-top: 6px;" >
                                             <h1>{{$who_is_inf[0]['domain']}}</h1>
                                         </div>
                                     </div>

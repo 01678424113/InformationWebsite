@@ -61,14 +61,14 @@ body .information-website {
     margin: 0;
     border: #c7c7c7 1px solid;
     margin-bottom: -1px;
-    height: 64px; }
+    height: 60px; }
     body .information-website .sidebar-inf .domain-website {
       display: flex;
       justify-content: center;
       align-items: center; }
       body .information-website .sidebar-inf .domain-website h1 {
         margin: 0;
-        font-size: 30px;
+        font-size: 25px;
         color: #1F76A3;
         padding: 10px;
         position: inherit; }

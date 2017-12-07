@@ -47,6 +47,8 @@ class DomainController extends Controller
         $response['who_is_inf'] = $whois_inf;
         return view('admin.domain.information-domain',$response);
     }
+
+
     public function autoGetInfoWeb()
     {
         $response = [
@@ -55,6 +57,7 @@ class DomainController extends Controller
         ];
         return view('admin.page.auto-get-info-web',$response);
     }
+
     public function doAutoGetInfoWeb(Request $request){
         $list_domain = $request->list_domain;
         $list_domain = explode(';',$list_domain);

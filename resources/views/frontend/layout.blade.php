@@ -42,7 +42,6 @@
     <link rel="stylesheet" href="css/loadding.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=vietnamese"
           rel="stylesheet">
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 </head>
 <body class="appear-animate" {{--onload="myFunction()" style="background-color: #5BC0DE;"--}}>

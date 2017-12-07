@@ -1,35 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-
-use App\AlexaInformation;
-use App\Domain;
-use App\Top500Domain;
-use App\WebsiteInformation;
-use App\WhoisInformation;
 use Illuminate\Http\Request;
-use Sunra\PhpSimple\HtmlDomParser;
-use Spatie\Browsershot\Browsershot;
+use App\Http\Controllers\Controller;
 
-class HomeController extends Controller
+class SpiderGetDomain extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    /*     public function __construct()
-         {
-             $this->middleware('auth');
-         }*/
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
     public function cUrl($url)
     {
         $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
@@ -97,4 +74,5 @@ class HomeController extends Controller
             }
         }
     }
+
 }
