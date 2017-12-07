@@ -45,10 +45,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 </head>
-<body class="appear-animate" onload="myFunction()" style="background-color: #5BC0DE;">
+<body class="appear-animate" {{--onload="myFunction()" style="background-color: #5BC0DE;"--}}>
 
 <!-- Page Loader -->
-<div id="loader">
+{{--<div id="loader">
     <div class='body'>
   <span>
     <span></span>
@@ -68,12 +68,12 @@
         <span></span>
     </div>
     <h4>Wait a few second. Thank you :) </h4>
-</div>
+</div>--}}
 <!-- End Page Loader -->
 
 <!-- Page Wrap -->
 <div class="page" id="top">
-    <div id="myDiv" style="display: none">
+    <div id="myDiv" {{--style="display: none"--}}>
         @include('frontend.layouts.nav-top')
 
 
@@ -125,11 +125,11 @@
         var domain = $('.input-search').val();
         $('.btn-search').attr('href', '/InformationWebsite/public/inf/' + domain);
     });
-    $('a').click(function () {
+   /* $('a').click(function () {
         $('#loader').show('slow');
         $('#myDiv').hide('slow');
         $('body').attr('style','background-color: #5BC0DE;');
-    })
+    })*/
 </script>
 @yield('script')
 </body>
