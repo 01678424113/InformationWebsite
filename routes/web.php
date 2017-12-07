@@ -19,6 +19,7 @@ Route::get('/get-information-web/{domain_name}', 'Frontend\HomeController@getInf
 Route::get('/inf/{domain_name}', 'Frontend\HomeController@informationDomain')->name('informationDomain');
 Route::get('/update/{domain_name}', 'Frontend\HomeController@updateInformationDomain')->name('updateInformationDomain');
 
+Route::get('/test','HomeController@cUrl');
 
 Auth::routes();
 

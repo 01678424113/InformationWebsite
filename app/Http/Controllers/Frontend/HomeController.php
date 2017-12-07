@@ -25,6 +25,40 @@ class HomeController extends Controller
         view()->share('meta_keyword', $meta_keyword);
     }
 
+    public function cUrl($url)
+    {
+        $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
+
+        $options = array(
+
+            CURLOPT_CUSTOMREQUEST => "GET",        //set request type post or get
+            CURLOPT_POST => false,        //set to GET
+            CURLOPT_USERAGENT => $user_agent, //set user agent
+            CURLOPT_COOKIEFILE => "cookie.txt", //set cookie file
+            CURLOPT_COOKIEJAR => "cookie.txt", //set cookie jar
+            CURLOPT_RETURNTRANSFER => true,     // return web page
+            CURLOPT_HEADER => false,    // don't return headers
+            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+            CURLOPT_ENCODING => "",       // handle all encodings
+            CURLOPT_AUTOREFERER => true,     // set referer on redirect
+            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+            CURLOPT_TIMEOUT => 120,      // timeout on response
+            CURLOPT_MAXREDIRS => 10,       // stop after 10 redirects
+        );
+
+        $ch = curl_init($url);
+        curl_setopt_array($ch, $options);
+        $content = curl_exec($ch);
+        $err = curl_errno($ch);
+        $errmsg = curl_error($ch);
+        $header = curl_getinfo($ch);
+        curl_close($ch);
+        $header['errno'] = $err;
+        $header['errmsg'] = $errmsg;
+        $header['content'] = $content;
+        return $content;
+    }
+
     public function home()
     {
         $meta_title = Setting::where('setting_page', 'index')->where('key_setting', 'title')->first();
@@ -100,6 +134,22 @@ class HomeController extends Controller
             $new_domain->domain = $domain;
             $new_domain->created_at = round(microtime(true));
             try {
+                //-----------------------------------------------------------------------------------------//
+                //--------------------------------------Similar----------------------------------------------//
+                //-----------------------------------------------------------------------------------------//
+                $url_similar = 'https://www.similarweb.com/website/'.$domain;
+                $content_similar = $this->cUrl($url_similar);
+                //Total visitor
+                preg_match('/\<span class=\"engagementInfo-valueNumber js-countValue\"\>(.*?)\<\/span\>/',$content_similar,$result);
+                $total_visitor = $result[1];
+
+
+
+
+                //-----------------------------------------------------------------------------------------//
+                //--------------------------------------Similar----------------------------------------------//
+                //-----------------------------------------------------------------------------------------//
+
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------Alexa----------------------------------------------//
                 //-----------------------------------------------------------------------------------------//
@@ -254,33 +304,7 @@ class HomeController extends Controller
                     $html_web = '';
                 }
                 $url = 'http://' . $domain;
-                $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
-                $options = array(
-                    CURLOPT_CUSTOMREQUEST => "GET",        //set request type post or get
-                    CURLOPT_POST => false,        //set to GET
-                    CURLOPT_USERAGENT => $user_agent, //set user agent
-                    CURLOPT_COOKIEFILE => "cookie.txt", //set cookie file
-                    CURLOPT_COOKIEJAR => "cookie.txt", //set cookie jar
-                    CURLOPT_RETURNTRANSFER => true,     // return web page
-                    CURLOPT_HEADER => false,    // don't return headers
-                    CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-                    CURLOPT_ENCODING => "",       // handle all encodings
-                    CURLOPT_AUTOREFERER => true,     // set referer on redirect
-                    CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
-                    CURLOPT_TIMEOUT => 120,      // timeout on response
-                    CURLOPT_MAXREDIRS => 10,       // stop after 10 redirects
-                );
-                $ch = curl_init($url);
-                curl_setopt_array($ch, $options);
-                $content = curl_exec($ch);
-                $err = curl_errno($ch);
-                $errmsg = curl_error($ch);
-                $header = curl_getinfo($ch);
-                curl_close($ch);
-
-                $header['errno'] = $err;
-                $header['errmsg'] = $errmsg;
-                $header['content'] = $content;
+                $content = $this->cUrl($url);
                 if ($html_web != '') {
                     //Title
                     $title_website = preg_match('/\<title\>(.*?)\<\/title\>/', $content, $result_title);

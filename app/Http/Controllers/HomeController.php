@@ -30,7 +30,7 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function cUrl($url)
+    public function cUrl()
     {
         $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
 
@@ -51,7 +51,7 @@ class HomeController extends Controller
             CURLOPT_MAXREDIRS => 10,       // stop after 10 redirects
         );
 
-        $ch = curl_init($url);
+        $ch = curl_init('https://www.similarweb.com/website/www.facebook.com');
         curl_setopt_array($ch, $options);
         $content = curl_exec($ch);
         $err = curl_errno($ch);
@@ -61,7 +61,8 @@ class HomeController extends Controller
         $header['errno'] = $err;
         $header['errmsg'] = $errmsg;
         $header['content'] = $content;
-        return $content;
+        preg_match('/\<span class=\"engagementInfo-valueNumber js-countValue\"\>(.*?)\<\/span\>/',$content,$result);
+        dd($content);
     }
 
     function spiderGetDomain($url)
