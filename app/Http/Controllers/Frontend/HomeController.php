@@ -63,9 +63,13 @@ class HomeController extends Controller
     {
         $meta_title = Setting::where('setting_page', 'index')->where('key_setting', 'title')->first();
         $meta_description = Setting::where('setting_page', 'index')->where('key_setting', 'description')->first();
+        $h1_index = Setting::where('setting_page', 'index')->where('key_setting', 'h1_index')->first();
+        $content_index = Setting::where('setting_page', 'index')->where('key_setting', 'content_index')->first();
         $response = [
             'meta_title' => $meta_title->value_setting,
-            'meta_description' => $meta_description->value_setting
+            'meta_description' => $meta_description->value_setting,
+            'h1_index' => $h1_index,
+            'content_index' => $content_index
         ];
         $top_10s = Top500Domain::where('id', '<', 11)->get();
         $response['top_10s'] = $top_10s;

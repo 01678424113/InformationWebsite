@@ -143,5 +143,10 @@
                 </table>
             </div>
         </div>
+        <div class="col-md-12">
+            <div class="row" style="margin-top: 20px;text-align: center;">
+                <h4>{{$content_index->value_setting}}</h4>
+            </div>
+        </div>
     </div>
 </section>
