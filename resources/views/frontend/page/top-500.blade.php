@@ -66,12 +66,53 @@
                 <div class="container relative">
                     <div class="row">
                         <!-- Team item -->
+                        <div class="col-sm-4 mb-xs-30 wow fadeInUp" data-wow-delay="0.2s">
+                            <div class="team-item">
+
+                                <div class="team-item-image">
+
+                                    <img src="image/Google.jpg" alt=""/>
+
+                                    <div class="team-item-detail">
+
+                                        <h4 class="font-alt normal">Google</h4>
+
+                                        <p>
+                                            Search the world's information, including webpages, images, videos and more.
+                                        </p>
+
+                                        <div class="team-social-links">
+                                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+                                            <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="team-item-descr font-alt">
+
+                                    <div class="team-item-name">
+                                        Google
+                                    </div>
+
+                                    {{-- <div class="team-item-role">
+                                         Developer
+                                     </div>--}}
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- End Team item -->
+
+                        <!-- Team item -->
                         <div class="col-sm-4 mb-xs-30 wow fadeInUp">
                             <div class="team-item">
 
                                 <div class="team-item-image">
 
-                                    <img src="image/alexa.jpg" alt="" style="min-height: 360px;"/>
+                                    <img src="image/alexa.jpg" alt="" style=""/>
 
                                     <div class="team-item-detail">
 
@@ -140,47 +181,6 @@
                                     {{--  <div class="team-item-role">
                                           Web engineer
                                       </div>--}}
-
-                                </div>
-
-                            </div>
-                        </div>
-                        <!-- End Team item -->
-
-                        <!-- Team item -->
-                        <div class="col-sm-4 mb-xs-30 wow fadeInUp" data-wow-delay="0.2s">
-                            <div class="team-item">
-
-                                <div class="team-item-image">
-
-                                    <img src="image/Google.jpg" alt=""/>
-
-                                    <div class="team-item-detail">
-
-                                        <h4 class="font-alt normal">Google</h4>
-
-                                        <p>
-                                            Search the world's information, including webpages, images, videos and more.
-                                        </p>
-
-                                        <div class="team-social-links">
-                                            <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                                            <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                                            <a href="#" target="_blank"><i class="fa fa-pinterest"></i></a>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="team-item-descr font-alt">
-
-                                    <div class="team-item-name">
-                                        Google
-                                    </div>
-
-                                    {{-- <div class="team-item-role">
-                                         Developer
-                                     </div>--}}
 
                                 </div>
 

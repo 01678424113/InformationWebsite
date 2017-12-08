@@ -102,8 +102,8 @@
                                                         <thead>
                                                         <tr>
                                                             <td>Country</td>
-                                                            <td>Percent of Visitors</td>
-                                                            <td>Rank in Country</td>
+                                                            <td style="text-align: center">Percent of Visitors</td>
+                                                            <td >Rank in Country</td>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -114,8 +114,8 @@
                                                                          alt="">
                                                                     {{$item[0]->name_country}}
                                                                 </td>
-                                                                <td class="td-parameter">{{$item[0]->percent_visitor}}</td>
-                                                                <td class="td-parameter">{{$item[0]->rank_country}}</td>
+                                                                <td style="text-align: center" class="td-parameter">{{$item[0]->percent_visitor}}</td>
+                                                                <td style="text-align: center" class="td-parameter">{{$item[0]->rank_country}}</td>
                                                             </tr>
                                                         @endforeach
                                                         </tbody>
@@ -134,15 +134,14 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <table class="table table-hover">
                                                         <tr>
-                                                            <td class="td-attribute">Bounce rate</td>
+                                                            <td class="td-attribute">Bounce rate (%)</td>
                                                             <td style="text-align: center"
                                                                 class="td-parameter">{{$alexa_inf[0]['bounce_percent']}}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="td-attribute">Page views per visitor</td>
+                                                            <td class="td-attribute">Page views per visitor (%)</td>
                                                             <td style="text-align: center"
                                                                 class="td-parameter">{{$alexa_inf[0]['pageviews_per_visitor']}}
-                                                                %
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -156,27 +155,27 @@
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                     <table class="table table-hover">
                                                         <tr>
-                                                            <td class="td-attribute">Male rate</td>
+                                                            <td class="td-attribute">Male rate (%)</td>
                                                             <td style="text-align: center"
                                                                 class="td-parameter">{{$alexa_inf[0]['rate_male']}}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="td-attribute">Female rate</td>
+                                                            <td class="td-attribute">Female rate (%)</td>
                                                             <td style="text-align: center"
                                                                 class="td-parameter">{{$alexa_inf[0]['rate_female']}}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="td-attribute">Home</td>
+                                                            <td class="td-attribute">Home (%)</td>
                                                             <td style="text-align: center"
                                                                 class="td-parameter">{{$alexa_inf[0]['rate_home']}}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="td-attribute">School</td>
+                                                            <td class="td-attribute">School (%)</td>
                                                             <td style="text-align: center"
                                                                 class="td-parameter">{{$alexa_inf[0]['rate_school']}}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td class="td-attribute">Work</td>
+                                                            <td class="td-attribute">Work (%)</td>
                                                             <td style="text-align: center"
                                                                 class="td-parameter">{{$alexa_inf[0]['rate_work']}}</td>
                                                         </tr>
@@ -199,7 +198,7 @@
                                                     <thead>
                                                     <tr>
                                                         <td>Top keyword</td>
-                                                        <td>Percent of search traffic</td>
+                                                        <td style="text-align: center">Percent of search traffic</td>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -211,7 +210,7 @@
                                                     @for($i = 0 ; $i < $count - 1; $i++)
                                                         <tr>
                                                             <td>{{str_replace('+',' ',rawurldecode(trim($keywords[$i],'"')))}}</td>
-                                                            <td>{{trim($rate_keywords[$i],'"')}}</td>
+                                                            <td style="text-align: center">{{trim($rate_keywords[$i],'"')}}</td>
                                                         </tr>
                                                     @endfor
                                                     </tbody>
