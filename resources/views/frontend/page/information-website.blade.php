@@ -123,8 +123,11 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div id="chartdiv"></div>
-                                                    <p style="text-align: center;font-size: 18px;font-weight: 600;">You can see chart map <span><a
-                                                                    href="" style="color: #85C5E3;text-decoration: underline">Send feedback</a></span></p>
+                                                    <p style="text-align: center;font-size: 18px;font-weight: 600;">You
+                                                        can see chart map <span><a
+                                                                    href=""
+                                                                    style="color: #85C5E3;text-decoration: underline">Send feedback</a></span>
+                                                    </p>
                                                 </div>
                                                 <h3 class="title-inf">Visitor</h3>
                                                 <hr class="hr-inf">
@@ -659,10 +662,49 @@
         </section>
         <!-- End Portfolio Section -->
     </div>
+    <?php
+    $inf_traffic_over = json_decode($alexa_inf[0]['traffic_over']);
+    $code_country = [];
+    foreach ($inf_traffic_over as $item) {
+        $name_country = substr($item[0]->name_country,7);
+        if (isset($array_code_country[$name_country])) {
+            $code_country[] = $array_code_country[$name_country];
+        } else {
+            $code_country[] = $name_country;
+        }
+    }
+    ?>
 
 @endsection
 @section('script')
     <script>
+        var map = AmCharts.makeChart("chartdiv", {
+
+            "type": "map",
+            "theme": "light",
+            "projection": "miller",
+
+            "dataProvider": {
+                "map": "worldLow",
+                "getAreasFromMap": true,
+                "areas": [
+                    {"id": "{{$code_country[0]}}", "color": "#CC0000"},
+                    {"id": "{{$code_country[1]}}", "color": "#0000CC"},
+                    {"id": "{{$code_country[2]}}", "color": "#00CC00"},
+                    {"id": "{{$code_country[3]}}", "color": "#cca020"},
+                    {"id": "{{$code_country[4]}}", "color": "#ccc604"}
+                ]
+            },
+            "areasSettings": {
+                "autoZoom": true,
+                "selectedColor": "#CC0000"
+            },
+            "smallMap": {},
+            "export": {
+                "enabled": true,
+                "position": "bottom-right"
+            }
+        });
         $('#loader').hide('slow');
         $('#myDiv').show('slow');
         $('body').attr('style', '');

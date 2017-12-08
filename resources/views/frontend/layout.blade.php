@@ -126,31 +126,6 @@
 <script type="text/javascript" src="js/loadding.js"></script>
 
 <script>
-    var map = AmCharts.makeChart( "chartdiv", {
-
-        "type": "map",
-        "theme": "light",
-        "projection": "miller",
-
-        "dataProvider": {
-            "map": "worldLow",
-            "getAreasFromMap": true,
-            "areas":[
-                { "id": "VN", "color": "#CC0000" },
-                { "id": "EL", "color": "#00CC00" },
-                { "id": "FR", "color": "#0000CC" }
-            ]
-        },
-        "areasSettings": {
-            "autoZoom": true,
-            "selectedColor": "#CC0000"
-        },
-        "smallMap": {},
-        "export": {
-            "enabled": true,
-            "position": "bottom-right"
-        }
-    } );
     $('.input-search').change(function () {
         var domain = $('.input-search').val();
         $('.btn-search').attr('href', '/InformationWebsite/public/inf/' + domain);
