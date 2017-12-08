@@ -24,7 +24,6 @@ class HomeController extends Controller
         $meta_keyword = $meta_keyword->value_setting;
         view()->share('meta_keyword', $meta_keyword);
     }
-
     public function cUrl($url)
     {
         $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
@@ -57,6 +56,29 @@ class HomeController extends Controller
         $header['errmsg'] = $errmsg;
         $header['content'] = $content;
         return $content;
+    }
+
+    public function error404()
+    {
+        $meta_title = Setting::where('setting_page', 'index')->where('key_setting', 'title')->first();
+        $meta_description = Setting::where('setting_page', 'index')->where('key_setting', 'description')->first();
+        $h1_index = Setting::where('setting_page', 'index')->where('key_setting', 'h1_index')->first();
+        $content_index = Setting::where('setting_page', 'index')->where('key_setting', 'content_index')->first();
+        $response = [
+            'meta_title' => $meta_title->value_setting,
+            'meta_description' => $meta_description->value_setting,
+            'h1_index' => $h1_index,
+            'content_index' => $content_index
+        ];
+        $top_10s = Top500Domain::where('id', '<', 11)->get();
+        $response['top_10s'] = $top_10s;
+        $domain_relative_query = Domain::select([
+            'id',
+            'domain',
+            'created_at'
+        ]);
+        $response['domain_relatives'] = $domain_relative_query->orderBy('created_at', 'DESC')->take(10)->get();
+        return view('frontend.page.404', $response);
     }
 
     public function home()
@@ -389,19 +411,6 @@ class HomeController extends Controller
             $new_domain->domain = $domain;
             $new_domain->created_at = round(microtime(true));
             try {
-                //-----------------------------------------------------------------------------------------//
-                //--------------------------------------Similar----------------------------------------------//
-                //-----------------------------------------------------------------------------------------//
-                $url_similar = 'https://www.similarweb.com/website/' . $domain;
-                $content_similar = $this->cUrl($url_similar);
-                //Total visitor
-                preg_match('/\<span class=\"engagementInfo-valueNumber js-countValue\"\>(.*?)\<\/span\>/', $content_similar, $result);
-                $total_visitor = $result[1];
-
-
-                //-----------------------------------------------------------------------------------------//
-                //--------------------------------------Similar----------------------------------------------//
-                //-----------------------------------------------------------------------------------------//
 
                 //-----------------------------------------------------------------------------------------//
                 //--------------------------------------Alexa----------------------------------------------//
@@ -1244,7 +1253,6 @@ class HomeController extends Controller
                     $alexa_information->delete();
                     $website_information->delete();
                     $who_is_information->delete();
-                    dd($e);
                     return redirect()->back()->with('error', 'Error connect database !');
                 }
                 //-----------------------------------------------------------------------------------------//
