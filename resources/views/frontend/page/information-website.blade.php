@@ -665,16 +665,22 @@
     <?php
     $inf_traffic_over = json_decode($alexa_inf[0]['traffic_over']);
     $code_country = [];
-    foreach ($inf_traffic_over as $item) {
-        $name_country = substr($item[0]->name_country,7);
-        if (isset($array_code_country[$name_country])) {
-            $code_country[] = $array_code_country[$name_country];
-        } else {
-            $code_country[] = $name_country;
+    if (count($inf_traffic_over > 1)) {
+        foreach ($inf_traffic_over as $item) {
+            $name_country = substr($item[0]->name_country, 7);
+            if (isset($array_code_country[$name_country])) {
+                $code_country[] = $array_code_country[$name_country];
+            } else {
+                $code_country[] = $name_country;
+            }
+        }
+    }
+    for ($i = 0; $i < 5; $i++) {
+        if (empty($code_country[$i])) {
+            $code_country[$i] = 'N/A';
         }
     }
     ?>
-
 @endsection
 @section('script')
     <script>
