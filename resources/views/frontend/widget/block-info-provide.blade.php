@@ -17,7 +17,7 @@
                             Basic Stats
                         </h3>
                         <div class="alt-features-descr align-left">
-                            Alexa rank, Country rank, Screenshot, Backlink , ..
+                            Alexa rank, Country rank, Screenshot, Website ranking checker , Check website speed, Rate my website ..
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                             <i class="fa fa-user-o" aria-hidden="true"></i>
                             Visitor stats</h3>
                         <div class="alt-features-descr align-left">
-                            Percent of visitors, Bounce rate, Time on site, Male rate, Female rate, ...
+                            Website visitor tracking, Bounce rate, Time on site, Male rate, Female rate, Website visitor statistics ...
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                             <i class="fa fa-key" aria-hidden="true"></i>
                             Top keyword search</h3>
                         <div class="alt-features-descr align-left">
-                            Top keyword search google form alexa and similar web.
+                            Top keyword search google form alexa and similar web, google website analysis, website statistics, google keyword search,..
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                             <i class="fa fa-info" aria-hidden="true"></i>
                             Website Information</h3>
                         <div class="alt-features-descr align-left">
-                            Title, Language, Description, Author, Position, Place name, Distribution, ...
+                            Web analytics, Title, Language, Description, Author, Position, Place name, Distribution,... free website analysis.
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                             <i class="fa fa-globe" aria-hidden="true"></i>
                             Upstream sites</h3>
                         <div class="alt-features-descr align-left">
-                            Which sites did people visit immediately before this site?
+                            Which sites did people visit immediately before this site? Website traffic tracker, website visitor tracking in here
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
                             <i class="fa fa-question-circle" aria-hidden="true"></i>
                             Whois information</h3>
                         <div class="alt-features-descr align-left">
-                            Domain information, Admin contact, Registration contact, Technology contact, ..
+                            Check domain availability, Domain information, Admin contact, Registration contact, Technology contact, Website domain check  ..
                         </div>
                     </div>
                 </div>
