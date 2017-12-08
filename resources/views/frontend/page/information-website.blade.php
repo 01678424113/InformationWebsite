@@ -31,7 +31,7 @@
                                         <table class="table" style="border-bottom: #c7c7c7 1px solid;">
                                             <tr>
                                                 <td class="title search col-md-7 col-xs-12">
-                                                    <div class="inner-addon right-addon">
+                                                    <div class="inner-addon right-addon" style="padding: 10px">
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="rank"
@@ -78,7 +78,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td valign="middle" colspan="2" style="margin-top: 10px;"
+                                                <td valign="middle" colspan="2" style="margin-top: 10px;padding-right: 15px"
                                                     class="title text-center col-md-5 hidden-sm hidden-xs">
                                                     <img src="{{$website_inf[0]['image_screen_shot']}}"
                                                          class="image_scree_shot" alt="">

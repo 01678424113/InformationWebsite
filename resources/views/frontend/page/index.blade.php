@@ -42,11 +42,11 @@
         <!-- Divider -->
         <hr class="mt-0 mb-0 "/>
         <!-- End Divider -->
-
         @include('frontend.widget.block-info-provide')
 
 
         @include('frontend.widget.block-one')
+
 
         {{--   @include('frontend.widget.block-seven')--}}
 
