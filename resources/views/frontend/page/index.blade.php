@@ -21,7 +21,7 @@
                      <a href="http://vimeo.com/50201327" class="btn btn-mod btn-border-w btn-medium btn-round lightbox mfp-iframe">Play Reel</a>--}}
 
                     <div class="input-group" style="max-width: 700px;margin: auto;">
-                        <input type="text" class="form-control input-search"
+                        <input type="url" class="form-control input-search"
                                style="height: 50px;background: #ffffff12;color: white;" name="txt-domain"
                                placeholder="Enter domain ...">
                         <div class="input-group-btn">
@@ -39,6 +39,24 @@
     <!-- End Home Section -->
 
     <div class="content">
+        <div class="container">
+            @if(session('error'))
+                <div class="alert alert-danger" style="text-align: center;color: red;margin-top: 10px;font-size: 20px;text-transform: inherit; background: #ff00001f;border-radius: 5px;">
+                    {{session('error')}}
+                </div>
+            @elseif(session('success'))
+                <div class="alert alert-success" style="text-align: center; color: green;margin-top: 10px;font-size: 20px;text-transform: inherit; background: #00800036;border-radius: 5px;">
+                    {{session('success')}}
+                </div>
+            @endif
+            @if(count($errors) > 0)
+                @foreach($errors->all() as $error)
+                    <div class="alert alert-danger" style="text-align: center;color: red;margin-top: 10px;font-size: 20px;text-transform: inherit; background: #ff00001f;border-radius: 5px;">
+                        {{$error}}
+                    </div>
+                @endforeach
+            @endif
+        </div>
         <!-- Divider -->
         <hr class="mt-0 mb-0 "/>
         <!-- End Divider -->

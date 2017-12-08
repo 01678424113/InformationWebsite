@@ -32,7 +32,7 @@ class HomeController extends Controller
 
     public function cUrl()
     {
-        $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
+        $user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:32.0) Gecko/20100101 Firefox/32.0';
 
         $options = array(
 
@@ -51,7 +51,7 @@ class HomeController extends Controller
             CURLOPT_MAXREDIRS => 10,       // stop after 10 redirects
         );
 
-        $ch = curl_init('https://www.similarweb.com/website/www.facebook.com');
+        $ch = curl_init('similarweb.com/website/facebook.com#overview');
         curl_setopt_array($ch, $options);
         $content = curl_exec($ch);
         $err = curl_errno($ch);
@@ -61,41 +61,9 @@ class HomeController extends Controller
         $header['errno'] = $err;
         $header['errmsg'] = $errmsg;
         $header['content'] = $content;
+        dd(dns_get_record('fbdownloadvideo.net'));
         preg_match('/\<span class=\"engagementInfo-valueNumber js-countValue\"\>(.*?)\<\/span\>/',$content,$result);
-        dd($content);
+
     }
 
-    function spiderGetDomain($url)
-    {
-        $content_url = $this->cUrl($url);
-        $content_txt = file_get_contents('../domain.txt');
-        $list_http = explode(';', $content_txt);
-        //Get list http
-        preg_match_all('/http:\/\/(.+?)\//', $content_url, $http);
-        foreach ($http[0] as $item) {
-            if (filter_var($item, FILTER_VALIDATE_URL) != false) {
-                preg_match('/http:\/\/(.+?)\//', $item, $result);
-                if (!isset($list_http)) {
-                    $list_http = [];
-                }
-                if (array_key_exists($result[1], $list_http) === false) {
-                    $list_http[] = $result[1];
-                }
-            }
-        }
-        $list_http = array_unique($list_http);
-        foreach ($list_http as $item) {
-            $content_txt = file_get_contents('../domain.txt');
-            $content_txt = explode(';', $content_txt);
-            if (count($content_txt) > 500) {
-                dd('Complete');
-            }
-            if (in_array($item, $content_txt) === false) {
-                $item = $item . ';';
-                file_put_contents('../domain.txt', $item, FILE_APPEND);
-                $item = trim($item, ';');
-                $this->spiderGetDomain($item);
-            }
-        }
-    }
 }
