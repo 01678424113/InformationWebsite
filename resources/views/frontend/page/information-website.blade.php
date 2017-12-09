@@ -11,7 +11,7 @@
                             {{--Domain website--}}
                             <div class="row" style="margin: 0">
                                 <div class="sidebar-inf">
-                                    <div class="col-md-4 col-sm-5 col-xs-5" style="padding: 0">
+                                    <div class="col-md-12" style="padding: 0">
                                         <div class="domain-website">
                                             <img src="{{$website_inf[0]['icon']}}" alt=""
                                                  style="margin-top: 6px;">
@@ -81,7 +81,7 @@
                                                 <td valign="middle" colspan="2" style="margin-top: 10px;padding-right: 15px"
                                                     class="title text-center col-md-5 hidden-sm hidden-xs">
                                                     <img src="{{$website_inf[0]['image_screen_shot']}}"
-                                                         class="image_scree_shot" alt="">
+                                                         class="image_screen_shot" style="border: 2px solid #80808063;border-radius: 3px;padding-bottom: 5px;" alt="">
                                                 </td>
                                             </tr>
                                         </table>
