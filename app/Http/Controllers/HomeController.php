@@ -61,8 +61,12 @@ class HomeController extends Controller
         $header['errno'] = $err;
         $header['errmsg'] = $errmsg;
         $header['content'] = $content;
-        dd(dns_get_record('fbdownloadvideo.net'));
-        preg_match('/\<span class=\"engagementInfo-valueNumber js-countValue\"\>(.*?)\<\/span\>/',$content,$result);
+
+
+
+
+
+        dd($content);
 
     }
 

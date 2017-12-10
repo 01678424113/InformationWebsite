@@ -60,6 +60,7 @@ class DomainController extends Controller
 
     public function doAutoGetInfoWeb(Request $request){
         $list_domain = $request->list_domain;
+        $list_domain = str_replace(" ","",$list_domain);
         $list_domain = explode(';',$list_domain);
         foreach ($list_domain as $domain_name){
             if(!empty($domain_name)){
