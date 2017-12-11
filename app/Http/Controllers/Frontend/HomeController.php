@@ -404,7 +404,7 @@ class HomeController extends Controller
     public function getInformationDomain($domain_name)
     {
         $domain = trim(strtolower($domain_name));
-        if(count(dns_get_record($domain)) > 1){
+        if (count(dns_get_record($domain)) > 1) {
             $check_domain = Domain::where('domain', $domain)->first();
             if (!isset($check_domain)) {
 
@@ -1266,8 +1266,8 @@ class HomeController extends Controller
             } else {
                 return redirect()->route('informationDomain', ['domain_name' => $domain]);
             }
-        }else{
-            return redirect()->back()->with('error','Domain not exist !');
+        } else {
+            return redirect()->back()->with('error', 'Domain not exist !');
         }
 
     }
@@ -1346,10 +1346,14 @@ class HomeController extends Controller
             }
             //Upstream sites
             $upstream_sites = $html_alexa->find('section#upstream-content #keywords_upstream_site_table tbody tr');
-            for ($i = 1; $i < 6; $i++) {
-                $upstream_site[] = [
-                    ['site' => $upstream_sites[$i]->find('td a')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td span')[1]->innertext()]
-                ];
+            $i = 0;
+            foreach ($upstream_sites as $item) {
+                if ($i != 0) {
+                    $upstream_site[] = [
+                        ['site' => $item->find('td a')[0]->innertext(), 'rate' => $item->find('td span')[1]->innertext()]
+                    ];
+                }
+                $i++;
             }
             //Website related
             $website_related_html = $html_alexa->find('section#related-content table#audience_overlap_table tbody tr td a');

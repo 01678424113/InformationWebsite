@@ -13,7 +13,8 @@
                                 <div class="sidebar-inf">
                                     <div class="col-md-12" style="padding: 0">
                                         <div class="domain-website">
-                                            <img src="{{$website_inf[0]['icon']}}" alt="{{$website_inf[0]['alt_website_auto']}}"
+                                            <img src="{{$website_inf[0]['icon']}}"
+                                                 alt="{{$website_inf[0]['alt_website_auto']}}"
                                                  style="margin-top: 6px;">
                                             <h1>{{$who_is_inf[0]['domain']}}</h1>
                                         </div>
@@ -25,7 +26,8 @@
                                 <div class="row">
                                     <div class="col-xs-12 hidden-lg hidden-md" style="text-align: center">
                                         <img src="{{$website_inf[0]['image_screen_shot']}}"
-                                             style="width: 95%;margin-top: 10px;" class="" alt="{{$website_inf[0]['alt_website_auto']}}">
+                                             style="width: 95%;margin-top: 10px;" class=""
+                                             alt="{{$website_inf[0]['alt_website_auto']}}">
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <table class="table" style="border-bottom: #c7c7c7 1px solid;">
@@ -48,7 +50,8 @@
                                                             <div class="col-md-6">
                                                                 <div class="rank">
                                                                     <img src="https://www.alexa.com/images/icons/globe-sm.jpg"
-                                                                         alt="{{$website_inf[0]['alt_website_auto']}}" style="margin-bottom: 4px;">
+                                                                         alt="{{$website_inf[0]['alt_website_auto']}}"
+                                                                         style="margin-bottom: 4px;">
                                                                     <span>
                                                                         Global rank
                                                                     </span><br>
@@ -63,7 +66,8 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="rank">
-                                                                    <img src="{{$alexa_inf[0]['flag_country']}}" alt="{{$website_inf[0]['alt_website_auto']}}"
+                                                                    <img src="{{$alexa_inf[0]['flag_country']}}"
+                                                                         alt="{{$website_inf[0]['alt_website_auto']}}"
                                                                          style="margin-bottom: 4px;">
                                                                     <span>{{$alexa_inf[0]['country']}} Rank</span><br>
                                                                     <a href="">Wordwire</a>
@@ -78,10 +82,13 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td valign="middle" colspan="2" style="margin-top: 10px;padding-right: 15px"
+                                                <td valign="middle" colspan="2"
+                                                    style="margin-top: 10px;padding-right: 15px"
                                                     class="title text-center col-md-5 hidden-sm hidden-xs">
                                                     <img src="{{$website_inf[0]['image_screen_shot']}}"
-                                                         class="image_screen_shot" style="border: 2px solid #80808063;border-radius: 3px;padding-bottom: 5px;" alt="{{$website_inf[0]['alt_website_auto']}}">
+                                                         class="image_screen_shot"
+                                                         style="border: 2px solid #80808063;border-radius: 3px;padding-bottom: 5px;"
+                                                         alt="{{$website_inf[0]['alt_website_auto']}}">
                                                 </td>
                                             </tr>
                                         </table>
@@ -103,7 +110,7 @@
                                                         <tr>
                                                             <td>Country</td>
                                                             <td style="text-align: center">Percent of Visitors</td>
-                                                            <td >Rank in Country</td>
+                                                            <td>Rank in Country</td>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -114,8 +121,10 @@
                                                                          alt="{{$website_inf[0]['alt_website_auto']}}">
                                                                     {{$item[0]->name_country}}
                                                                 </td>
-                                                                <td style="text-align: center" class="td-parameter">{{$item[0]->percent_visitor}}</td>
-                                                                <td style="text-align: center" class="td-parameter">{{$item[0]->rank_country}}</td>
+                                                                <td style="text-align: center"
+                                                                    class="td-parameter">{{$item[0]->percent_visitor}}</td>
+                                                                <td style="text-align: center"
+                                                                    class="td-parameter">{{$item[0]->rank_country}}</td>
                                                             </tr>
                                                         @endforeach
                                                         </tbody>
@@ -305,7 +314,7 @@
                                             <?php
                                             $upstream_sites = json_decode($alexa_inf[0]['upstream_site']);
                                             ?>
-                                            @if(count($upstream_sites) > 3)
+                                            @if(count($upstream_sites) > 0)
                                                 <script type="text/javascript">
                                                     window.onload = function () {
                                                         var chart = new CanvasJS.Chart("chartUpstream",
@@ -329,26 +338,34 @@
                                                                                 y: {{trim($upstream_sites[0][0]->rate,'%')}},
                                                                                 label: "{{$upstream_sites[0][0]->site}}"
                                                                             },
+                                                                                @if(count($upstream_sites) == 2)
                                                                             {
                                                                                 x: 2,
                                                                                 y: {{trim($upstream_sites[1][0]->rate,'%')}},
                                                                                 label: "{{$upstream_sites[1][0]->site}}"
                                                                             },
+                                                                                @endif
+                                                                                @if(count($upstream_sites) == 3)
                                                                             {
                                                                                 x: 3,
                                                                                 y: {{trim($upstream_sites[2][0]->rate,'%')}},
                                                                                 label: "{{$upstream_sites[2][0]->site}}"
                                                                             },
+                                                                                @endif
+                                                                                @if(count($upstream_sites) == 4)
                                                                             {
                                                                                 x: 4,
                                                                                 y: {{trim($upstream_sites[3][0]->rate,'%')}},
                                                                                 label: "{{$upstream_sites[3][0]->site}}"
                                                                             },
+                                                                                @endif
+                                                                                @if(count($upstream_sites) == 5)
                                                                             {
                                                                                 x: 5,
                                                                                 y: {{trim($upstream_sites[4][0]->rate,'%')}},
                                                                                 label: "{{$upstream_sites[4][0]->site}}"
                                                                             }
+                                                                            @endif
                                                                         ]
                                                                     }
                                                                 ]

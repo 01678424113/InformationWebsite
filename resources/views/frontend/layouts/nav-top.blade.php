@@ -4,7 +4,7 @@
         <!-- Logo ( * your text or image into link tag *) -->
         <style>
             .search-nav-top {
-                width: 130px;
+                width: 200px;
                 box-sizing: border-box;
                 border: 2px solid #ccc;
                 border-radius: 4px;
@@ -29,12 +29,8 @@
             <span>
                 <a href="{{route('home')}}" class="logo">
                 <img src="image/logo-website.png" alt=""/>
-            </a>
-
-                <input type="text" class="search-nav-top" name="txt-domain" placeholder="Enter domain ...">
-
+                </a>
             </span>
-
         </div>
 
 
@@ -45,7 +41,18 @@
         <!-- Main Menu -->
         <div class="inner-nav desktop-nav">
             <ul class="clearlist">
-
+<li style="height: 65px;display: flex;">
+    <div class="input-group" style="max-width: 300px;margin: auto;">
+        <input type="url" class="form-control input-search"
+               style="height: 40px;background: #ffffff12" name="txt-domain"
+               placeholder="Enter domain ...">
+        <div class="input-group-btn">
+            <a class="btn btn-default btn-search" href="" style="height: 40px!important;border-color:#ccc;display: flex">
+                Search
+            </a>
+        </div>
+    </div>
+</li>
                 <!-- Item With Sub -->
                 <li>
                     <a href="{{route('home')}}" class="mn-has-sub">Home</a>
@@ -75,11 +82,11 @@
                     <a href="{{route('top500')}}" class="mn-has-sub">Top 500 domain MOZ</a>
 
                 </li>
-              {{--  <li>
-                    <a href="{{route('top500')}}" class="mn-has-sub">Top alexa</a>
+            {{--  <li>
+                  <a href="{{route('top500')}}" class="mn-has-sub">Top alexa</a>
 
-                </li>--}}
-                <!-- End Item With Sub -->
+              </li>--}}
+            <!-- End Item With Sub -->
                 <!-- Languages -->
                 <li>
                     <a class="mn-has-sub">Eng <i class="fa fa-angle-down"></i></a>
@@ -87,8 +94,8 @@
                     <ul class="mn-sub">
 
                         <li><a href="">English</a></li>
-                     {{--   <li><a href="">France</a></li>
-                        <li><a href="">Germany</a></li>--}}
+                        {{--   <li><a href="">France</a></li>
+                           <li><a href="">Germany</a></li>--}}
 
                     </ul>
 

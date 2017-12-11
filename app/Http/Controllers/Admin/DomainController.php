@@ -87,7 +87,6 @@ class DomainController extends Controller
             if (count($dns) > 1) {
                 $check_domain = Domain::where('domain', $domain)->first();
                 if (!isset($check_domain)) {
-
                     $new_domain = new Domain();
                     $new_domain->domain = $domain;
                     $new_domain->created_at = round(microtime(true));
@@ -979,6 +978,5 @@ class DomainController extends Controller
                 }
             }
         }
-
     }
 }
