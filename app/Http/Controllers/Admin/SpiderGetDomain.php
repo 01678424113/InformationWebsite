@@ -63,8 +63,13 @@ class SpiderGetDomain extends Controller
         foreach ($list_http as $item) {
             $content_txt = file_get_contents('../domain.txt');
             $content_txt = explode(';', $content_txt);
-            if (count($content_txt) > 10000) {
-                return $content_txt;
+            if (count($content_txt) > 1000) {
+                $response = [
+                    'title' => 'Auto get information website',
+                    'page' => 'domain',
+                    'spider_get_domain' => $content_txt
+                ];
+                return view('admin.page.auto-get-info-web', $response);
             }
             if (in_array($item, $content_txt) === false) {
                 $item = $item . ';';

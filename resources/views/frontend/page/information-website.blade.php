@@ -338,28 +338,28 @@
                                                                                 y: {{trim($upstream_sites[0][0]->rate,'%')}},
                                                                                 label: "{{$upstream_sites[0][0]->site}}"
                                                                             },
-                                                                                @if(count($upstream_sites) == 2)
+                                                                                @if(count($upstream_sites) > 1)
                                                                             {
                                                                                 x: 2,
                                                                                 y: {{trim($upstream_sites[1][0]->rate,'%')}},
                                                                                 label: "{{$upstream_sites[1][0]->site}}"
                                                                             },
                                                                                 @endif
-                                                                                @if(count($upstream_sites) == 3)
+                                                                                @if(count($upstream_sites) > 2)
                                                                             {
                                                                                 x: 3,
                                                                                 y: {{trim($upstream_sites[2][0]->rate,'%')}},
                                                                                 label: "{{$upstream_sites[2][0]->site}}"
                                                                             },
                                                                                 @endif
-                                                                                @if(count($upstream_sites) == 4)
+                                                                                @if(count($upstream_sites) > 3)
                                                                             {
                                                                                 x: 4,
                                                                                 y: {{trim($upstream_sites[3][0]->rate,'%')}},
                                                                                 label: "{{$upstream_sites[3][0]->site}}"
                                                                             },
                                                                                 @endif
-                                                                                @if(count($upstream_sites) == 5)
+                                                                                @if(count($upstream_sites) > 4)
                                                                             {
                                                                                 x: 5,
                                                                                 y: {{trim($upstream_sites[4][0]->rate,'%')}},
