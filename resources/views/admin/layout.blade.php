@@ -163,5 +163,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="style-admin/assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
 <script src="style-admin/assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
 <script src="style-admin/assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+@yield('script')
+
 <!-- END THEME LAYOUT SCRIPTS -->
 </body>

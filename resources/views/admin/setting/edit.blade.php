@@ -30,7 +30,7 @@
                 <div class="form-group">
                     <label>Key setting</label>
                     <input class="form-control" placeholder="Enter text" name="key_setting"
-                           value="{{$setting->key_setting}}">
+                           value="{{$setting->key_setting}}" readonly>
                 </div>
                 @if($setting->key_setting != "logo")
                 <div class="form-group">
@@ -39,7 +39,7 @@
                 </div>
                 @else
                 <div class="form-group">
-                    <label class="control-label">Ảnh tiêu biểu</label>
+                    <label class="control-label">Ảnh logo</label>
                     <div>
                         <a role="button" data-toggle="modal" data-target="#featured-modal">
                             @if(!empty($setting->value_setting))
@@ -69,7 +69,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Chọn từ files</label>
                                         <input type="file" class="form-control" name="file-featured"
-                                               accept="image/*">
+                                               accept="image/*" value="">
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">URL ảnh</label>
@@ -77,7 +77,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" id="btn-featured" class="btn blue text-uppercase">
+                                    <button type="button" id="btn-featured"  class="btn blue text-uppercase">
                                         Xác nhận
                                     </button>
                                 </div>
@@ -95,62 +95,41 @@
 @endsection
 @section('script')
     <script>
-        $(document).ready(function () {
-           /* $('#setting_form').validate({
-                errorElement: 'span',
-                errorClass: 'help-block',
-                focusInvalid: false,
-                rules: {
-                    'key_setting': {
-                        required: true
-                    },
-                    'file-featured': {
-                        accept: "image/!*"
+        $('#setting_form').find('input[name="file-featured"]').change(function () {
+            var files = $('#featured-modal').find('input[name="file-featured"]').prop('files');
+            if (files.length) {
+                var regex_type = /^(image\/jpeg|image\/png|image\/gif|image\/ico)$/;
+                $.each(files, function (key, file) {
+                    if (regex_type.test(file.type)) {
+                        var fr = new FileReader();
+                        fr.readAsDataURL(file);
+                        fr.onload = function (event) {
+                            $('#featured-img').attr('src', event.target.result);
+                            $('#setting_form').find('input[name="txt-featured-type"]').val('file');
+                            $('#featured-modal').find('input[name="txt-featured"]').val("");
+                            $('#featured-modal').modal('hide');
+                        };
+                    } else {
+                        $('#featured-img').attr('src', $('#featured-img').data('old'));
+                        $('#setting_form').find('input[name="txt-featured-type"]').val('none');
                     }
-                },
-                messages: {
-                    'key_setting': {
-                        required: "Must not to blank title !"
-                    },
-                    'file-featured': {
-                        accept: "Logo không hợp lệ"
-                    }
-                }
-            });*/
-            $('#setting_form').find('input[name="file-featured"]').change(function () {
-                var files = $('#featured-modal').find('input[name="file-featured"]').prop('files');
-                if (files.length) {
-                    var regex_type = /^(image\/jpeg|image\/png|image\/gif|image\/ico)$/;
-                    $.each(files, function (key, file) {
-                        if (regex_type.test(file.type)) {
-                            var fr = new FileReader();
-                            fr.readAsDataURL(file);
-                            fr.onload = function (event) {
-                                $('#featured-img').attr('src', event.target.result);
-                                $('#setting_form').find('input[name="txt-featured-type"]').val('file');
-                                $('#featured-modal').find('input[name="txt-featured"]').val("");
-                                $('#featured-modal').modal('hide');
-                            };
-                        } else {
-                            $('#featured-img').attr('src', $('#featured-img').data('old'));
-                            $('#setting_form').find('input[name="txt-featured-type"]').val('none');
-                        }
-                    });
-                } else {
-                    $('#featured-img').attr('src', $('#featured-img').data('old'));
-                    $('#setting_form').find('input[name="txt-featured-type"]').val('none');
-                }
-            });
-            $('#btn-featured').click(function () {
-                var url = $('#featured-modal').find('input[name="txt-featured"]').val();
-                var regex_url = /(https?:\/\/(.*)\.(png|jpg|jpeg|gif|ico))/i;
-                if (url !== "" && regex_url.test(url)) {
-                    $('#featured-img').attr('src', url);
-                    $('#setting_form').find('input[name="txt-featured-type"]').val('url');
-                    $('#setting_form').find('input[name="file-featured"]').val(null);
-                }
-                $('#featured-modal').modal('hide');
-            });
+                });
+            } else {
+                $('#featured-img').attr('src', $('#featured-img').data('old'));
+                $('#setting_form').find('input[name="txt-featured-type"]').val('none');
+            }
         });
+        $('#btn-featured').click(function () {
+            alert('ok');
+            var url = $('#featured-modal').find('input[name="txt-featured"]').val();
+            var regex_url = /(https?:\/\/(.*)\.(png|jpg|jpeg|gif|ico))/i;
+            if (url !== "" && regex_url.test(url)) {
+                $('#featured-img').attr('src', url);
+                $('#setting_form').find('input[name="txt-featured-type"]').val('url');
+                $('#setting_form').find('input[name="file-featured"]').val(null);
+            }
+            $('#featured-modal').modal('hide');
+        });
+
     </script>
 @endsection

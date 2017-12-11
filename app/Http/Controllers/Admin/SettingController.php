@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\ImageUpload;
+use ImageUpload;
 use App\Http\Requests\SettingRequest;
 use App\Setting;
 use Exception;
@@ -231,8 +231,6 @@ class SettingController extends Controller
     {
         $setting = Setting::find($setting_id);
         $setting->key_setting = $request->key_setting;
-
-
         if ($request->has('txt-featured-type')) {
             if ($request->hasFile('file-featured') && $request->input('txt-featured-type') == 'file') {
                 $setting->value_setting = ImageUpload::image($request->file('file-featured'), md5('logo_' . $setting->article_title . time()));
@@ -247,7 +245,6 @@ class SettingController extends Controller
             $setting->save();
             return redirect()->back()->with('success', 'You are successfully fixed setting !');
         } catch (Exception $e) {
-            dd($e);
             return redirect()->back()->with('error', 'Error ! Database');
         }
 

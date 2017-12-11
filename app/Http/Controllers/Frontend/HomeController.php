@@ -21,7 +21,10 @@ class HomeController extends Controller
     public function __construct()
     {
         $meta_keyword = Setting::where('setting_page', 'index')->where('key_setting', 'keyword')->first();
+        $logo = Setting::where('setting_page', 'logo')->where('key_setting', 'logo')->first();
+        $logo = $logo->value_setting;
         $meta_keyword = $meta_keyword->value_setting;
+        view()->share('logo', $logo);
         view()->share('meta_keyword', $meta_keyword);
     }
     public function cUrl($url)

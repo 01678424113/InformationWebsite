@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
     <!-- Favicons -->
-    <link rel="shortcut icon" href="image/favicon.png">
+    <link rel="shortcut icon" href="{{$logo}}">
     <base href="{{asset('')}}">
     {{--Seo--}}
     <meta itemprop="url" content="{{route('home')}}"/>
@@ -128,7 +128,7 @@
 <script>
     $('.input-search').change(function () {
         var domain = $('.input-search').val();
-        $('.btn-search').attr('href', '/InformationWebsite/public/inf/' + domain);
+        $('.btn-search').attr('href', '/inf/' + domain);
     });
    /* $('a').click(function () {
         $('#loader').show('slow');
