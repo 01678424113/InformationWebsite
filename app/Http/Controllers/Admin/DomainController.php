@@ -17,64 +17,65 @@ class DomainController extends Controller
     public function listDomain()
     {
         $response = [
-            'title'=>'List domain',
-            'page'=>'domain'
+            'title' => 'List domain',
+            'page' => 'domain'
         ];
         $domain_query = Domain::select([
-           'id',
+            'id',
             'domain',
             'created_at',
             'updated_at'
         ]);
-        $domains = $domain_query->orderBy('created_at','DESC')->paginate(20);
+        $domains = $domain_query->orderBy('created_at', 'DESC')->paginate(20);
         $response['domains'] = $domains;
-        return view('admin.domain.list-domain',$response);
+        return view('admin.domain.list-domain', $response);
     }
 
     public function informationDomain(Request $request)
     {
         $domain_name = $request->domain_name;
         $response = [
-            'title'=>'Information domain',
-            'page'=>'domain'
+            'title' => 'Information domain',
+            'page' => 'domain'
         ];
-        $alexa_inf = AlexaInformation::where('domain',$domain_name)->get();
-        $website_inf = WebsiteInformation::where('domain',$domain_name)->get();
-        $whois_inf = WhoisInformation::where('domain',$domain_name)->get();
+        $alexa_inf = AlexaInformation::where('domain', $domain_name)->get();
+        $website_inf = WebsiteInformation::where('domain', $domain_name)->get();
+        $whois_inf = WhoisInformation::where('domain', $domain_name)->get();
 
         $response['alexa_inf'] = $alexa_inf;
         $response['website_inf'] = $website_inf;
         $response['who_is_inf'] = $whois_inf;
-        return view('admin.domain.information-domain',$response);
+        return view('admin.domain.information-domain', $response);
     }
 
 
     public function autoGetInfoWeb()
     {
         $response = [
-            'title'=>'Auto get information website',
-            'page'=>'domain'
+            'title' => 'Auto get information website',
+            'page' => 'domain'
         ];
-        return view('admin.page.auto-get-info-web',$response);
+        return view('admin.page.auto-get-info-web', $response);
     }
 
-    public function doAutoGetInfoWeb(Request $request){
+    public function doAutoGetInfoWeb(Request $request)
+    {
         $list_domain = $request->list_domain;
-        $list_domain = str_replace(" ","",$list_domain);
-        $list_domain = explode(';',$list_domain);
-        foreach ($list_domain as $domain_name){
-            if(!empty($domain_name)){
+        $list_domain = str_replace(" ", "", $list_domain);
+        $list_domain = explode(';', $list_domain);
+        foreach ($list_domain as $domain_name) {
+            if (!empty($domain_name)) {
                 $this->getInfoWeb($domain_name);
             }
         }
-        return redirect()->back()->with('success','Auto get infomation website successfully');
+        return redirect()->back()->with('success', 'Auto get infomation website successfully');
     }
 
     public function getInfoWeb($domain_name)
     {
         $domain = trim(strtolower($domain_name));
-        try{
-            if(dns_get_record($domain)){
+        try {
+            if (count(dns_get_record($domain)) > 1) {
                 $check_domain = Domain::where('domain', $domain)->first();
                 if (!isset($check_domain)) {
 
@@ -185,7 +186,7 @@ class DomainController extends Controller
                             $pageviews_per_visitor = 'N/A';
                             $time_on_site = 'N/A';
                             $inf_traffic_over = [];
-                            $image_search_traffic = 'http://traffic.alexa.com/graph?o=lt&y=t&b=ffffff&n=666666&f=999999&r=1y&t=2&z=30&c=1&h=300&w=500&u='.$domain;
+                            $image_search_traffic = 'http://traffic.alexa.com/graph?o=lt&y=t&b=ffffff&n=666666&f=999999&r=1y&t=2&z=30&c=1&h=300&w=500&u=' . $domain;
                             $keyword = [];
                             $rate_keyword = [];
                             $upstream_site = [];
@@ -970,7 +971,7 @@ class DomainController extends Controller
 
                 }
             }
-        }catch(Exception $e){
+        } catch (Exception $e) {
 
         }
 

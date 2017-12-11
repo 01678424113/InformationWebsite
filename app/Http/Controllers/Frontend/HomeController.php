@@ -404,9 +404,6 @@ class HomeController extends Controller
     public function getInformationDomain($domain_name)
     {
         $domain = trim(strtolower($domain_name));
-        if(filter_var($domain,FILTER_VALIDATE_URL) == false){
-            return redirect()->back()->with('error','Domain not exist !');
-        }
         if(count(dns_get_record($domain)) > 1){
             $check_domain = Domain::where('domain', $domain)->first();
             if (!isset($check_domain)) {
