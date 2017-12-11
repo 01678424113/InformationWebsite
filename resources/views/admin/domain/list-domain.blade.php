@@ -11,15 +11,15 @@
                             <span class="caption-subject font-green bold uppercase">{{$title}}</span>
                         </div>
                         <div class="actions">
-                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                                <i class="icon-cloud-upload"></i>
-                            </a>
-                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                                <i class="icon-wrench"></i>
-                            </a>
-                            <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                                <i class="icon-trash"></i>
-                            </a>
+                            <form action="{{route('listDomain')}}" method="get">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="domain_search" placeholder="Search for..."
+                                           aria-label="Search for...">
+                                    <span class="input-group-btn">
+        <button class="btn btn-secondary" type="submit">Go!</button>
+      </span>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div class="portlet-body">
@@ -43,7 +43,8 @@
                                         <td>
                                             <form action="{{route('informationDomainAdmin')}}" method="get">
                                                 {{csrf_field()}}
-                                                <input type="text" name="domain_name" value="{{$domain->domain}}" style="display:none;">
+                                                <input type="text" name="domain_name" value="{{$domain->domain}}"
+                                                       style="display:none;">
                                                 <button type="submit" class="btn btn-info">Watch now</button>
                                             </form>
                                         </td>

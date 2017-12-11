@@ -14,7 +14,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 class DomainController extends Controller
 {
-    public function listDomain()
+    public function listDomain(Request $request)
     {
         $response = [
             'title' => 'List domain',
@@ -26,7 +26,11 @@ class DomainController extends Controller
             'created_at',
             'updated_at'
         ]);
-        $domains = $domain_query->orderBy('created_at', 'DESC')->paginate(20);
+        if (!empty($request->domain_search)) {
+            $domains = $domain_query->where('domain', 'LIKE', '%' . $request->domain_search . '%')->paginate(20);
+        } else {
+            $domains = $domain_query->orderBy('created_at', 'DESC')->paginate(20);
+        }
         $response['domains'] = $domains;
         return view('admin.domain.list-domain', $response);
     }
