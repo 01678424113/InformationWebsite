@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
     <!-- Favicons -->
-    <link rel="shortcut icon" href="image/favicon.png">
+    <link rel="shortcut icon" href="image/favicon.ico">
     <base href="{{asset('')}}">
     {{--Seo--}}
     <meta itemprop="url" content="{{route('home')}}"/>

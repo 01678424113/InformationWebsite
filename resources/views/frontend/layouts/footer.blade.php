@@ -4,7 +4,7 @@
 
         <!-- Footer Logo -->
         <div class="local-scroll mb-30 wow fadeInUp" data-wow-duration="1.2s">
-            <img src="frontend/images/logo-footer.png" width="78" height="36" alt="" />
+            <img src="image/logo-website.png" width="78" height="36" alt="" />
         </div>
         <!-- End Footer Logo -->
 
