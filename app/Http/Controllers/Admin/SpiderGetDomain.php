@@ -64,7 +64,7 @@ class SpiderGetDomain extends Controller
             $content_txt = file_get_contents('../domain.txt');
             $content_txt = explode(';', $content_txt);
             if (count($content_txt) > 10000) {
-               return $content_txt;
+                return $content_txt;
             }
             if (in_array($item, $content_txt) === false) {
                 $item = $item . ';';
@@ -80,11 +80,11 @@ class SpiderGetDomain extends Controller
         $url = $request->domain_use_auto;
         $spider_get_domain = $this->doSpiderGetDomain($url);
         $response = [
-            'title'=>'Auto get information website',
-            'page'=>'domain',
-            'spider_get_domain'=>$spider_get_domain
+            'title' => 'Auto get information website',
+            'page' => 'domain',
+            'spider_get_domain' => $spider_get_domain
         ];
-        return view('admin.page.auto-get-info-web',$response);
+        return view('admin.page.auto-get-info-web', $response);
     }
 
 }

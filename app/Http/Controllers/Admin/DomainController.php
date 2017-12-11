@@ -79,7 +79,12 @@ class DomainController extends Controller
     {
         $domain = trim(strtolower($domain_name));
         try {
-            if (count(dns_get_record($domain)) > 1) {
+            $dns = dns_get_record($domain);
+        } catch (Exception $e) {
+            $dns = '';
+        }
+        if ($dns != '') {
+            if (count($dns) > 1) {
                 $check_domain = Domain::where('domain', $domain)->first();
                 if (!isset($check_domain)) {
 
@@ -971,12 +976,8 @@ class DomainController extends Controller
                     } catch (Exception $e) {
 
                     }
-                } else {
-
                 }
             }
-        } catch (Exception $e) {
-
         }
 
     }
