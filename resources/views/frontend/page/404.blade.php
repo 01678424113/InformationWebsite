@@ -7,7 +7,7 @@
         <!-- End Divider -->
         <div class="container" style="text-align: center">
             <div class="404">
-                <img src="image/404.gif" style="max-height: 340px;" alt="">
+                <img src="image/404.gif" style="max-height: 340px;" alt="Checking website - Website traffic">
             </div>
             <h3>Sorry! Not Found Page</h3>
             <hr class="hr-title">

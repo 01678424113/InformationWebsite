@@ -672,7 +672,7 @@ class DomainController extends Controller
 
                         $alt_rp_name = str_replace('%name%', $domain, $rd_alt);
                         $alt_rp_domain = str_replace('%domainname%', $rd_domain, $alt_rp_name);
-                        $alt_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $alt_rp_name);
+                        $alt_rp_keyword_1 = str_replace('%kw1%', $rd_keyword_1, $alt_rp_domain);
                         $alt_rp_keyword_2 = str_replace('%kw2%', $rd_keyword_2, $alt_rp_keyword_1);
                         //$alt = str_replace('%link%', "<a href='http://fbdownloadvideo.net' target='_blank'>" . $rd_keyword_link . "</a>", $alt_rp_keyword_2);
                         $alt = $alt_rp_keyword_2;

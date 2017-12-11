@@ -3,13 +3,11 @@
     <div class="container">
 
         <!-- Footer Logo -->
-        <div class="local-scroll mb-30 wow fadeInUp" data-wow-duration="1.2s">
-            <img src="image/logo-website.png" width="78" height="36" alt="" />
-        </div>
+
         <!-- End Footer Logo -->
 
         <!-- Social Links -->
-        <div class="footer-social-links mb-110 mb-xs-60">
+        <div class="footer-social-links mb-110 mb-xs-60" style="margin-bottom: 50px;">
             <a href="#" title="Facebook" target="_blank"><i class="fa fa-facebook"></i></a>
             <a href="#" title="Twitter" target="_blank"><i class="fa fa-twitter"></i></a>
             <a href="#" title="Behance" target="_blank"><i class="fa fa-behance"></i></a>
@@ -37,8 +35,6 @@
         <!-- End Footer Text -->
 
     </div>
-
-
     <!-- Top Link -->
     <div class="local-scroll">
         <a href="" class="link-to-top"><i class="fa fa-caret-up"></i></a>

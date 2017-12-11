@@ -13,7 +13,7 @@
                                 <div class="sidebar-inf">
                                     <div class="col-md-12" style="padding: 0">
                                         <div class="domain-website">
-                                            <img src="{{$website_inf[0]['icon']}}" alt=""
+                                            <img src="{{$website_inf[0]['icon']}}" alt="{{$website_inf[0]['alt_website_auto']}}"
                                                  style="margin-top: 6px;">
                                             <h1>{{$who_is_inf[0]['domain']}}</h1>
                                         </div>
@@ -25,7 +25,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 hidden-lg hidden-md" style="text-align: center">
                                         <img src="{{$website_inf[0]['image_screen_shot']}}"
-                                             style="width: 95%;margin-top: 10px;" class="" alt="">
+                                             style="width: 95%;margin-top: 10px;" class="" alt="{{$website_inf[0]['alt_website_auto']}}">
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <table class="table" style="border-bottom: #c7c7c7 1px solid;">
@@ -48,7 +48,7 @@
                                                             <div class="col-md-6">
                                                                 <div class="rank">
                                                                     <img src="https://www.alexa.com/images/icons/globe-sm.jpg"
-                                                                         alt="" style="margin-bottom: 4px;">
+                                                                         alt="{{$website_inf[0]['alt_website_auto']}}" style="margin-bottom: 4px;">
                                                                     <span>
                                                                         Global rank
                                                                     </span><br>
@@ -63,7 +63,7 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="rank">
-                                                                    <img src="{{$alexa_inf[0]['flag_country']}}" alt=""
+                                                                    <img src="{{$alexa_inf[0]['flag_country']}}" alt="{{$website_inf[0]['alt_website_auto']}}"
                                                                          style="margin-bottom: 4px;">
                                                                     <span>{{$alexa_inf[0]['country']}} Rank</span><br>
                                                                     <a href="">Wordwire</a>
@@ -81,7 +81,7 @@
                                                 <td valign="middle" colspan="2" style="margin-top: 10px;padding-right: 15px"
                                                     class="title text-center col-md-5 hidden-sm hidden-xs">
                                                     <img src="{{$website_inf[0]['image_screen_shot']}}"
-                                                         class="image_screen_shot" style="border: 2px solid #80808063;border-radius: 3px;padding-bottom: 5px;" alt="">
+                                                         class="image_screen_shot" style="border: 2px solid #80808063;border-radius: 3px;padding-bottom: 5px;" alt="{{$website_inf[0]['alt_website_auto']}}">
                                                 </td>
                                             </tr>
                                         </table>
@@ -111,7 +111,7 @@
                                                             <tr>
                                                                 <td class="td-parameter">
                                                                     <img src="{{$item[0]->img_country}}"
-                                                                         alt="">
+                                                                         alt="{{$website_inf[0]['alt_website_auto']}}">
                                                                     {{$item[0]->name_country}}
                                                                 </td>
                                                                 <td style="text-align: center" class="td-parameter">{{$item[0]->percent_visitor}}</td>
@@ -219,7 +219,7 @@
                                             <div class="col-md-6 col-sm-6 col-xs-12"
                                                  style="text-align: center;margin-top: 40px;">
                                                 <img src="{{$alexa_inf[0]['image_search_traffic']}}"
-                                                     alt="">
+                                                     alt="{{$website_inf[0]['alt_website_auto']}}">
                                                 <h4 style="text-align: center">Search traffic</h4>
                                             </div>
                                         </div>
@@ -641,7 +641,7 @@
                                                             <td>
                                                                 <a href="{{route('informationDomain',['domain_name'=>$item])}}">
                                                                     <img src="https://www.google.com/s2/favicons?domain=http://{{$item}}"
-                                                                         alt="">
+                                                                         alt="{{$website_inf[0]['alt_website_auto']}}">
                                                                     {{$item}}
                                                                 </a>
                                                             </td>

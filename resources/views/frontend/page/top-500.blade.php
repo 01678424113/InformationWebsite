@@ -38,7 +38,7 @@
                                             >
                                                 <td>{{$top_500->rank}}</td>
                                                 <td  style="max-width: 150px">
-                                                    <img src="https://www.google.com/s2/favicons?domain=http://{{$top_500->root_domain}}" alt="">
+                                                    <img src="https://www.google.com/s2/favicons?domain=http://{{$top_500->root_domain}}" alt="Checking website - Website traffic">
                                                     <a href="{{route('informationDomain',['domain_name'=>$top_500->root_domain])}}" class="domain">
                                                         {{$top_500->root_domain}}
                                                     </a>
@@ -71,7 +71,7 @@
 
                                 <div class="team-item-image">
 
-                                    <img src="image/Google.jpg" alt=""/>
+                                    <img src="image/Google.jpg" alt="Checking website - Website traffic"/>
 
                                     <div class="team-item-detail">
 
@@ -112,7 +112,7 @@
 
                                 <div class="team-item-image">
 
-                                    <img src="image/alexa.jpg" alt="" style=""/>
+                                    <img src="image/alexa.jpg" alt="Checking website - Website traffic" style=""/>
 
                                     <div class="team-item-detail">
 
@@ -153,7 +153,7 @@
 
                                 <div class="team-item-image">
 
-                                    <img src="image/similarweb.png" alt=""/>
+                                    <img src="image/similarweb.png" alt="Checking website - Website traffic"/>
 
                                     <div class="team-item-detail">
 
