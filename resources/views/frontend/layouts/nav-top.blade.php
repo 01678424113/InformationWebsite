@@ -27,7 +27,7 @@
         </style>
         <div class="nav-logo-wrap local-scroll">
             <span>
-                <a href="{{route('home')}}" class="logo">
+                <a href="{{$url_home}}" class="logo">
                 <img src="image/logo-website.png" alt=""/>
                 </a>
             </span>
@@ -55,7 +55,7 @@
 </li>
                 <!-- Item With Sub -->
                 <li>
-                    <a href="{{route('home')}}" class="mn-has-sub">Home</a>
+                    <a href="{{$url_home}}" class="mn-has-sub">Home</a>
                     {{--
                                         <!-- Sub Multilevel -->
                                         <ul class="mn-sub mn-has-multi">
@@ -79,7 +79,7 @@
 
                 <!-- Item With Sub -->
                 <li>
-                    <a href="{{route('top500')}}" class="mn-has-sub">Top 500 domain MOZ</a>
+                    <a href="{{$url_top_500}}" class="mn-has-sub">Top 500 domain MOZ</a>
 
                 </li>
             {{--  <li>

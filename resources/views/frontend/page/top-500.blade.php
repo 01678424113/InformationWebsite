@@ -39,7 +39,7 @@
                                                 <td>{{$top_500->rank}}</td>
                                                 <td  style="max-width: 150px">
                                                     <img src="https://www.google.com/s2/favicons?domain=http://{{$top_500->root_domain}}" alt="Checking website - Website traffic">
-                                                    <a href="{{route('informationDomain',['domain_name'=>$top_500->root_domain])}}" class="domain">
+                                                    <a href="{{'http://'.$top_500->root_domain.'.'.env('URL_DOMAIN')}}" class="domain">
                                                         {{$top_500->root_domain}}
                                                     </a>
                                                 </td>

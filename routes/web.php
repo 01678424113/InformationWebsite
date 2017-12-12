@@ -18,9 +18,9 @@ Route::get('/sitemap.xml',function (){
 
 Route::get('/top-500','Frontend\HomeController@top500')->name('top500');
 
-Route::get('/get-information-web/{domain_name}', 'Frontend\HomeController@getInformationDomain')->name('getInformationDomain');
-Route::get('/inf/{domain_name}', 'Frontend\HomeController@informationDomain')->name('informationDomain');
-Route::get('/update/{domain_name}', 'Frontend\HomeController@updateInformationDomain')->name('updateInformationDomain');
+Route::get('/get-information-web', 'Frontend\HomeController@getInformationDomain')->name('getInformationDomain');
+Route::get('/', 'Frontend\HomeController@informationDomain')->name('informationDomain');
+Route::get('/update/', 'Frontend\HomeController@updateInformationDomain')->name('updateInformationDomain');
 Route::get('/404','Frontend\HomeController@error404')->name('404');
 Route::get('/test','HomeController@cUrl');
 

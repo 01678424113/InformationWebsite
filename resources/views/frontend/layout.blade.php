@@ -14,16 +14,16 @@
     <link rel="shortcut icon" href="{{$logo}}">
     <base href="{{asset('')}}">
     {{--Seo--}}
-    <meta itemprop="url" content="{{route('home')}}"/>
+    <meta itemprop="url" content="{{$url_home}}"/>
     <meta name="robots" content="index, follow">
     <meta name="revisit-after" content="1 days">
-    <link rel="canonical" href="{{route('home')}}" />
+    <link rel="canonical" href="{{$url_home}}" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:image" content="" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="" />
     <meta property="og:description" content="" />
-    <meta property="og:url" content="{{route('home')}}" />
+    <meta property="og:url" content="{{$url_home}}" />
     <meta property="og:site_name" content="Check website traffic free 2018" />
     <meta name="DC.title" content="" />
     <meta name="author" content="" />
@@ -128,7 +128,7 @@
 <script>
     $('.input-search').change(function () {
         var domain = $('.input-search').val();
-        $('.btn-search').attr('href', '/inf/' + domain);
+        $('.btn-search').attr('href', 'http://' + domain + {{env('URL_DOMAIN')}});
     });
    /* $('a').click(function () {
         $('#loader').show('slow');

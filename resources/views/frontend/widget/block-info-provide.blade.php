@@ -132,7 +132,7 @@
                                 <td style="min-width: 150px;">
                                     <img src="https://www.google.com/s2/favicons?domain=http://{{$domain_relative->domain}}"
                                          alt="">
-                                    <a href="{{route('informationDomain',['domain_name'=>$domain_relative->domain])}}">{{$domain_relative->domain}}</a>
+                                    <a href="{{'http://'.$domain_relative->domain.'.'.env('URL_DOMAIN')}}">{{$domain_relative->domain}}</a>
                                 </td>
                                 <td>{{$domain_relative->alexa->global_rank}}</td>
                             </tr>

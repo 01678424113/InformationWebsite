@@ -83,7 +83,6 @@ class DomainController extends Controller
         } catch (Exception $e) {
             $dns = '';
         }*/
-
         $check_domain = Domain::where('domain', $domain)->first();
         if (!isset($check_domain)) {
             $new_domain = new Domain();
@@ -156,10 +155,14 @@ class DomainController extends Controller
                     }
                     //Upstream sites
                     $upstream_sites = $html_alexa->find('section#upstream-content #keywords_upstream_site_table tbody tr');
-                    for ($i = 1; $i < 6; $i++) {
-                        $upstream_site[] = [
-                            ['site' => $upstream_sites[$i]->find('td a')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td span')[1]->innertext()]
-                        ];
+                    $i = 0;
+                    foreach ($upstream_sites as $item) {
+                        if ($i != 0) {
+                            $upstream_site[] = [
+                                ['site' => $item->find('td a')[0]->innertext(), 'rate' => $item->find('td span')[1]->innertext()]
+                            ];
+                        }
+                        $i++;
                     }
                     //Website related
                     $website_related_html = $html_alexa->find('section#related-content table#audience_overlap_table tbody tr td a');

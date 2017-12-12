@@ -24,6 +24,10 @@ class HomeController extends Controller
         $logo = Setting::where('setting_page', 'logo')->where('key_setting', 'logo')->first();
         $logo = $logo->value_setting;
         $meta_keyword = $meta_keyword->value_setting;
+        $url_home = 'http://' . env('URL_DOMAIN');
+        $url_top_500 = 'http://' . env('URL_DOMAIN') . '/top-500';
+        view()->share('url_home', $url_home);
+        view()->share('url_top_500', $url_top_500);
         view()->share('logo', $logo);
         view()->share('meta_keyword', $meta_keyword);
     }
@@ -127,8 +131,13 @@ class HomeController extends Controller
         return view('frontend.page.top-500', $response);
     }
 
-    public function informationDomain($domain_name)
+    public function informationDomain()
     {
+        $domain_name = $_SERVER["HTTP_HOST"];
+        if ($domain_name == env('URL_DOMAIN')) {
+            return redirect()->route('home');
+        }
+        $domain_name = str_replace("." . env('URL_DOMAIN'), "", $domain_name);
         $domain_name = trim(strtolower($domain_name));
         $response = [
             'meta_title' => 'Website analysis : ' . $domain_name . ' - Check Website Traffic',
@@ -136,17 +145,9 @@ class HomeController extends Controller
         $domain = Domain::where('domain', $domain_name)->first();
         if (isset($domain)) {
             $domain_id = $domain->id;
-
             $alexa_inf = AlexaInformation::where('domain', $domain_name)->get();
             $website_inf = WebsiteInformation::where('domain', $domain_name)->get();
             $who_is_inf = WhoisInformation::where('domain', $domain_name)->get();
-
-            $response['meta_description'] = strip_tags(rawurldecode($website_inf[0]->description_website_auto));
-
-            $response['alexa_inf'] = $alexa_inf;
-            $response['website_inf'] = $website_inf;
-            $response['who_is_inf'] = $who_is_inf;
-
             $array_code_country = [
                 'Afghanistan' => 'AF',
                 'Aland Islands' => 'AX',
@@ -395,27 +396,31 @@ class HomeController extends Controller
                 'Zambia' => 'ZM',
                 'Zimbabwe' => 'ZW',
             ];
-            $response['array_code_country'] = $array_code_country;
 
+            $response['meta_description'] = strip_tags(rawurldecode($website_inf[0]->description_website_auto));
+            $response['alexa_inf'] = $alexa_inf;
+            $response['website_inf'] = $website_inf;
+            $response['who_is_inf'] = $who_is_inf;
+            $response['array_code_country'] = $array_code_country;
 
             return view('frontend.page.information-website', $response);
         } else {
-            return redirect()->route('getInformationDomain', ['domain_name' => $domain_name]);
+            return redirect()->route('getInformationDomain');
         }
     }
 
-    public function getInformationDomain($domain_name)
+    public function getInformationDomain()
     {
+        $domain_name = $_SERVER["HTTP_HOST"];
+        $domain_name = str_replace("." . env('URL_DOMAIN'), "", $domain_name);
         $domain = trim(strtolower($domain_name));
         if (count(dns_get_record($domain)) > 1) {
             $check_domain = Domain::where('domain', $domain)->first();
             if (!isset($check_domain)) {
-
                 $new_domain = new Domain();
                 $new_domain->domain = $domain;
                 $new_domain->created_at = round(microtime(true));
                 try {
-
                     //-----------------------------------------------------------------------------------------//
                     //--------------------------------------Alexa----------------------------------------------//
                     //-----------------------------------------------------------------------------------------//
@@ -482,10 +487,14 @@ class HomeController extends Controller
                         }
                         //Upstream sites
                         $upstream_sites = $html_alexa->find('section#upstream-content #keywords_upstream_site_table tbody tr');
-                        for ($i = 1; $i < 6; $i++) {
-                            $upstream_site[] = [
-                                ['site' => $upstream_sites[$i]->find('td a')[0]->innertext(), 'rate' => $upstream_sites[$i]->find('td span')[1]->innertext()]
-                            ];
+                        $i = 0;
+                        foreach ($upstream_sites as $item) {
+                            if ($i != 0) {
+                                $upstream_site[] = [
+                                    ['site' => $item->find('td a')[0]->innertext(), 'rate' => $item->find('td span')[1]->innertext()]
+                                ];
+                            }
+                            $i++;
                         }
                         //Website related
                         $website_related_html = $html_alexa->find('section#related-content table#audience_overlap_table tbody tr td a');
@@ -554,8 +563,6 @@ class HomeController extends Controller
                     $alexa_information->rate_work = $rate_work;
                     $alexa_information->rate_school = $rate_school;
                     $alexa_information->created_at = round(microtime(true));
-
-
                     //-----------------------------------------------------------------------------------------//
                     //--------------------------------------End alexa------------------------------------------//
                     //-----------------------------------------------------------------------------------------//
@@ -595,7 +602,6 @@ class HomeController extends Controller
                                 $language = 'N/A';
                             }
                         }
-
                         //Distribution
                         $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
                         if (isset($result_distribution[1])) {
@@ -708,7 +714,6 @@ class HomeController extends Controller
                                 $language = 'N/A';
                             }
                         }
-
                         //Distribution
                         $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
                         if (isset($result_distribution[1])) {
@@ -798,8 +803,6 @@ class HomeController extends Controller
                           ->setHeight('768')
                           ->save($image_path);*/
                     $image_path = 'http://free.pagepeeker.com/v2/thumbs.php?size=x&url=' . $domain;
-
-
                     //Auto tạo content
                     //Create auto title and content video
                     //Get value form database
@@ -985,7 +988,6 @@ class HomeController extends Controller
                     $website_information->icon = $icon;
                     $website_information->image_screen_shot = $image_path;
                     $website_information->created_at = round(microtime(true));
-
                     //-----------------------------------------------------------------------------------------//
                     //--------------------------------------End domain-----------------------------------------//
                     //-----------------------------------------------------------------------------------------//
@@ -994,7 +996,6 @@ class HomeController extends Controller
                     //-----------------------------------------------------------------------------------------//
                     //--------------------------------------Who is---------------------------------------------//
                     //-----------------------------------------------------------------------------------------//
-
                     $html_whois = HtmlDomParser::file_get_html('https://www.whois.com/whois/' . $domain);
                     $df_block = $html_whois->find('div.df-block');
                     //DOMAIN INFORMATION
@@ -1057,7 +1058,6 @@ class HomeController extends Controller
                     isset($who_is_information->domain_updated_date) ?: $who_is_information->domain_updated_date = "N/A";
                     isset($who_is_information->domain_status) ?: $who_is_information->domain_status = "N/A";
                     isset($who_is_information->domain_name_servers) ?: $who_is_information->domain_name_servers = "N/A";
-
                     //REGISTRANT CONTACT
                     if (isset($regis_block)) {
                         $registrant_whois_contacts = $regis_block->find('.df-row');
@@ -1191,7 +1191,6 @@ class HomeController extends Controller
                                     $item->find('.df-label')[0]->innertext() => $item->find('.df-value')[0]->innertext(),
                                 ];
                             }
-
                             foreach ($technical_whois_contact as $item) {
                                 if (isset($item["Name:"])) {
                                     $who_is_information->tech_name = $item["Name:"];
@@ -1263,11 +1262,10 @@ class HomeController extends Controller
                     //--------------------------------------End Who is-----------------------------------------//
                     //-----------------------------------------------------------------------------------------//
                 } catch (Exception $e) {
-                    dd($e);
                     return redirect()->back()->with('error', 'Error connect database !');
                 }
             } else {
-                return redirect()->route('informationDomain', ['domain_name' => $domain]);
+                return redirect()->route('informationDomain');
             }
         } else {
             return redirect()->back()->with('error', 'Domain not exist !');
@@ -1275,8 +1273,10 @@ class HomeController extends Controller
 
     }
 
-    public function updateInformationDomain($domain_name)
+    public function updateInformationDomain()
     {
+        $domain_name = $_SERVER["HTTP_HOST"];
+        $domain_name = str_replace("." . env('URL_DOMAIN'), "", $domain_name);
         $domain = trim(strtolower($domain_name));
         $response = [
             'title' => 'Update domain : ' . $domain
@@ -1404,8 +1404,6 @@ class HomeController extends Controller
             $alexa_information->rate_work = $rate_work;
             $alexa_information->rate_school = $rate_school;
             $alexa_information->created_at = round(microtime(true));
-
-
             //-----------------------------------------------------------------------------------------//
             //--------------------------------------End alexa------------------------------------------//
             //-----------------------------------------------------------------------------------------//
@@ -1420,33 +1418,7 @@ class HomeController extends Controller
                 $html_web = '';
             }
             $url = 'http://' . $domain;
-            $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
-            $options = array(
-                CURLOPT_CUSTOMREQUEST => "GET",        //set request type post or get
-                CURLOPT_POST => false,        //set to GET
-                CURLOPT_USERAGENT => $user_agent, //set user agent
-                CURLOPT_COOKIEFILE => "cookie.txt", //set cookie file
-                CURLOPT_COOKIEJAR => "cookie.txt", //set cookie jar
-                CURLOPT_RETURNTRANSFER => true,     // return web page
-                CURLOPT_HEADER => false,    // don't return headers
-                CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-                CURLOPT_ENCODING => "",       // handle all encodings
-                CURLOPT_AUTOREFERER => true,     // set referer on redirect
-                CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
-                CURLOPT_TIMEOUT => 120,      // timeout on response
-                CURLOPT_MAXREDIRS => 10,       // stop after 10 redirects
-            );
-            $ch = curl_init($url);
-            curl_setopt_array($ch, $options);
-            $content = curl_exec($ch);
-            $err = curl_errno($ch);
-            $errmsg = curl_error($ch);
-            $header = curl_getinfo($ch);
-            curl_close($ch);
-
-            $header['errno'] = $err;
-            $header['errmsg'] = $errmsg;
-            $header['content'] = $content;
+            $content = $this->cUrl($url);
             if ($html_web != '') {
                 //Title
                 $title_website = preg_match('/\<title\>(.*?)\<\/title\>/', $content, $result_title);
@@ -1471,11 +1443,9 @@ class HomeController extends Controller
                         $language = 'N/A';
                     }
                 }
-
                 if (isset($html_web->find('meta[name=language]')[0])) {
                     $language = $html_web->find('meta[name=language]')[0]->content;
                 }
-
                 //Distribution
                 $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
                 if (isset($result_distribution[1])) {
@@ -1595,7 +1565,6 @@ class HomeController extends Controller
                         $language = 'N/A';
                     }
                 }
-
                 //Distribution
                 $distribution = preg_match('/name="Distribution" content="(.*?)"/', $content, $result_distribution);
                 if (isset($result_distribution[1])) {
@@ -1675,7 +1644,6 @@ class HomeController extends Controller
                 //Icon
                 $icon = 'https://www.google.com/s2/favicons?domain=http://' . $domain;
             }
-
             //Screen short website
             $image_path = 'http://free.pagepeeker.com/v2/thumbs.php?size=x&url=' . $domain;
 
@@ -1694,7 +1662,6 @@ class HomeController extends Controller
             $website_information->icon = $icon;
             $website_information->image_screen_shot = $image_path;
             $website_information->created_at = round(microtime(true));
-
             //-----------------------------------------------------------------------------------------//
             //--------------------------------------End domain-----------------------------------------//
             //-----------------------------------------------------------------------------------------//
@@ -1703,7 +1670,6 @@ class HomeController extends Controller
             //-----------------------------------------------------------------------------------------//
             //--------------------------------------Who is---------------------------------------------//
             //-----------------------------------------------------------------------------------------//
-
             $html_whois = HtmlDomParser::file_get_html('https://www.whois.com/whois/' . $domain);
             $df_block = $html_whois->find('div.df-block');
             //DOMAIN INFORMATION
@@ -1766,7 +1732,6 @@ class HomeController extends Controller
             isset($who_is_information->domain_updated_date) ?: $who_is_information->domain_updated_date = "N/A";
             isset($who_is_information->domain_status) ?: $who_is_information->domain_status = "N/A";
             isset($who_is_information->domain_name_servers) ?: $who_is_information->domain_name_servers = "N/A";
-
             //REGISTRANT CONTACT
             if (isset($regis_block)) {
                 $registrant_whois_contacts = $regis_block->find('.df-row');
@@ -1960,9 +1925,12 @@ class HomeController extends Controller
                 $alexa_information->save();
                 $website_information->save();
                 $who_is_information->save();
-                return redirect()->route('informationDomain', ['domain_name' => $domain]);
+                return redirect()->route('informationDomain');
             } catch (Exception $e) {
-                dd($e);
+                $new_domain->delete();
+                $alexa_information->delete();
+                $website_information->delete();
+                $who_is_information->delete();
                 return redirect()->back()->with('error', 'Error connect database !');
             }
             //-----------------------------------------------------------------------------------------//

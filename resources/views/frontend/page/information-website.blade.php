@@ -42,7 +42,7 @@
                                                                     <p style="text-align: left">{!! $website_inf[0]->content_bot_website_auto !!}</p>
                                                                     <p>Update
                                                                         : {{date('d-m-Y',$alexa_inf[0]['created_at'])}}</p>
-                                                                    <a href="{{route('updateInformationDomain',['domain_name'=>$who_is_inf[0]['domain']])}}"
+                                                                    <a href="{{'http://'.$website_inf[0]->domain.'.'.env('URL_DOMAIN').'/update'}}"
                                                                        class="btn btn-info" style="color:white">Click
                                                                         update new</a>
                                                                 </div>
@@ -656,7 +656,7 @@
                                                         <tr>
                                                             <td>{{$i}}</td>
                                                             <td>
-                                                                <a href="{{route('informationDomain',['domain_name'=>$item])}}">
+                                                                <a href="{{'http://'.$item.'.'.env('URL_DOMAIN')}}">
                                                                     <img src="https://www.google.com/s2/favicons?domain=http://{{$item}}"
                                                                          alt="{{$website_inf[0]['alt_website_auto']}}">
                                                                     {{$item}}

@@ -33,7 +33,7 @@
                                             <img src="https://www.google.com/s2/favicons?domain=http://{{$top_10->root_domain}}"
                                                  alt="">
                                             <a class="domain"
-                                               href="{{route('informationDomain',['domain_name'=>$top_10->root_domain])}}">
+                                               href="{{'http://'.$top_10->root_domain.'.'.env('URL_DOMAIN')}}">
                                                 {{$top_10->root_domain}}
                                             </a>
                                         </td>
