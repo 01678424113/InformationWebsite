@@ -41,7 +41,7 @@
         <!-- Main Menu -->
         <div class="inner-nav desktop-nav">
             <ul class="clearlist">
-<li style="height: 65px;display: flex;">
+<li style="height: 70px;display: flex;">
     <div class="input-group" style="max-width: 300px;margin: auto;">
         <input type="url" class="form-control input-search"
                style="height: 40px;background: #ffffff12" name="txt-domain"

@@ -119,7 +119,7 @@ class HomeController extends Controller
             'meta_title' => 'Checking Top 500 domain - Website analysis',
             'meta_description' => $meta_description->value_setting
         ];
-        $top_500s = Top500Domain::all();
+        $top_500s = Top500Domain::where('id','>',0)->paginate(50);
         $response['top_500s'] = $top_500s;
 
         $domain_relative_query = Domain::select([

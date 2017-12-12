@@ -32,7 +32,7 @@
                                         <tbody>
                                         @foreach($top_500s as $top_500)
                                             <tr class="
-                            @if((int)$top_500->rank % 2 == 0)
+                                            @if((int)$top_500->rank % 2 == 0)
                                             {{"active"}}
                                             @endif"
                                             >
@@ -62,6 +62,7 @@
                         </div>
                     </div>
                 </div>
+                {{$top_500s->links()}}
                 <hr>
                 <div class="container relative">
                     <div class="row">

@@ -71,9 +71,41 @@ body {
     }
   }
 }
+
 .domain {
   color: #337ab7 !important;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  li {
+    span {
+      display: inline-block;
+      min-width: 30px;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 7px 14px;
+      border: 1px solid #eaeaea;
+      color: black;
+      font-size: 13px;
+      font-weight: 400;
+      text-transform: uppercase;
+      text-align: center;
+      text-decoration: none;
+      -webkit-transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+      -moz-transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+      -o-transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+      -ms-transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+      transition: all 0.27s cubic-bezier(0.000, 0.000, 0.580, 1.000);
+    }
+    a{
+      color: black;
+    }
+  }
+}
+
 /*----------------------------------------------Information website-----------------------------------------------------*/
 body {
   .information-website {

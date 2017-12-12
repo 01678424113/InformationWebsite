@@ -51,6 +51,31 @@ body {
 .domain {
   color: #337ab7 !important; }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  list-style-type: none; }
+  .pagination li span {
+    display: inline-block;
+    min-width: 30px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 7px 14px;
+    border: 1px solid #eaeaea;
+    color: black;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    -webkit-transition: all 0.27s cubic-bezier(0, 0, 0.58, 1);
+    -moz-transition: all 0.27s cubic-bezier(0, 0, 0.58, 1);
+    -o-transition: all 0.27s cubic-bezier(0, 0, 0.58, 1);
+    -ms-transition: all 0.27s cubic-bezier(0, 0, 0.58, 1);
+    transition: all 0.27s cubic-bezier(0, 0, 0.58, 1); }
+  .pagination li a {
+    color: black; }
+
 /*----------------------------------------------Information website-----------------------------------------------------*/
 body .information-website {
   display: flex;

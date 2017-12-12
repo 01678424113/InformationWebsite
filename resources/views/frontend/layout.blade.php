@@ -127,8 +127,8 @@
 
 <script>
     $('.input-search').change(function () {
-        var domain = $('.input-search').val();
-        $('.btn-search').attr('href', 'http://' + domain + {{env('URL_DOMAIN')}});
+        var domain = $(this).val();
+        $('.btn-search').attr('href', 'http://' + domain + '.infomerweb.com');
     });
    /* $('a').click(function () {
         $('#loader').show('slow');
