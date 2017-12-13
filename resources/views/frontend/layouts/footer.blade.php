@@ -21,13 +21,13 @@
 
             <!-- Copyright -->
             <div class="footer-copy font-alt">
-                <a href="{{route('home')}}" target="_blank">Infomerweb.com</a>.
+                <a href="{{$url_home}}" target="_blank">Infomerweb.com</a>.
             </div>
             <!-- End Copyright -->
 
             <div class="footer-made">
                 <span>
-                    <a href="{{route('home')}}">Home </a>|<a href=""> About </a>|<a href=""> Site.map</a>
+                    <a href="{{$url_home}}">Home </a>|<a href=""> About </a>|<a href=""> Site.map</a>
                 </span>
             </div>
 

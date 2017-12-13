@@ -15,7 +15,7 @@
     <base href="{{asset('')}}">
     {{--Seo--}}
     <meta itemprop="url" content="{{$url_home}}"/>
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="noindex, nofollow">
     <meta name="revisit-after" content="1 days">
     <link rel="canonical" href="{{$url_home}}" />
     <meta property="og:locale" content="id_ID" />

@@ -39,6 +39,18 @@
                             <button type="submit" class="btn btn-default">Auto get</button>
                         </div>
                     </form>
+                    <form class="form-horizontal" action="{{route('doAutoGetInfoWeb')}}" method="post">
+                        {{csrf_field()}}
+                        <div class="form-group">
+                            <label class="control-label" for="list_domain" style="margin-bottom: 10px;">List domain
+                                :</label>
+                            <textarea class="form-control" id="list-domain" name="list_domain" rows="5"
+                                      placeholder="Enter list domain"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </form>
                 @else
                     <?php
                     $spider_get_domain = implode(';',$spider_get_domain);
@@ -52,22 +64,11 @@
                                       rows="5"
                                       placeholder="">{{$spider_get_domain}}</textarea>
                         </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
                     </form>
                 @endif
-            </div>
-            <div class="col-md-12">
-                <form class="form-horizontal" action="{{route('doAutoGetInfoWeb')}}" method="post">
-                    {{csrf_field()}}
-                    <div class="form-group">
-                        <label class="control-label" for="list_domain" style="margin-bottom: 10px;">List domain
-                            :</label>
-                        <textarea class="form-control" id="list-domain" name="list_domain" rows="5"
-                                  placeholder="Enter list domain"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
