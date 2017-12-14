@@ -1,1 +1,0 @@
-www.w3.org;www.w3devcampus.com;yoast.com;wp.me;www.linkedin.com;eepurl.com;mailchimp.com;kb.mailchimp.com;docmakers.mailchimp.com;rocketsciencegroup.com;mandrill.com;blog.mandrill.com;use.typekit.com;mandrillapp.com;html5shim.googlecode.com;blog.mailchimp.com;developer.mailchimp.com;schema.org;lists.w3.org;dev.w3.org;

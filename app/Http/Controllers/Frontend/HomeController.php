@@ -471,13 +471,14 @@ class HomeController extends Controller
                         //Top 5 Keyword search engines
                         $keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
                         $keyword = "";
-                        for ($i = 1; $i < 10; $i += 2) {
+
+                        for ($i = 1; $i < count($keywords); $i += 2) {
                             $keyword = $keyword . urlencode($keywords[$i]->innertext()) . ", ";
                         }
                         //Rate keyword
                         $rate_keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.text-right span');
                         $rate_keyword = "";
-                        for ($i = 0; $i < 5; $i++) {
+                        for ($i = 0; $i < count($rate_keywords); $i++) {
                             $rate_keyword = $rate_keyword . $rate_keywords[$i]->innertext() . ", ";
                         }
                         //Backlink
@@ -1301,6 +1302,8 @@ class HomeController extends Controller
             //--------------------------------------Alexa----------------------------------------------//
             //-----------------------------------------------------------------------------------------//
             $html_alexa = HtmlDomParser::file_get_html('https://www.alexa.com/siteinfo/' . $domain);
+
+
             //Global rank
             $globalRanks = $html_alexa->find('span.globleRank .col-pad div strong.metrics-data');
             foreach ($globalRanks as $item) {
@@ -1346,13 +1349,14 @@ class HomeController extends Controller
             //Top 5 Keyword search engines
             $keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.topkeywordellipsis span');
             $keyword = "";
-            for ($i = 1; $i < 10; $i += 2) {
+
+            for ($i = 1; $i < count($keywords); $i += 2) {
                 $keyword = $keyword . urlencode($keywords[$i]->innertext()) . ", ";
             }
             //Rate keyword
             $rate_keywords = $html_alexa->find('table#keywords_top_keywords_table tbody tr td.text-right span');
             $rate_keyword = "";
-            for ($i = 0; $i < 5; $i++) {
+            for ($i = 0; $i < count($rate_keywords); $i++) {
                 $rate_keyword = $rate_keyword . $rate_keywords[$i]->innertext() . ", ";
             }
             //Backlink
