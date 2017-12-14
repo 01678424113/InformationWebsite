@@ -47,7 +47,7 @@ class Cronjob extends Controller
         return $content;
     }
 
-    public function doSpiderGetDomain($url)
+    public function doSpiderGetDomainWeek($url)
     {
         $content_url = $this->cUrl($url);
         $list_domains = CheckAutoDomain::select([
@@ -88,25 +88,13 @@ class Cronjob extends Controller
             return $list_http;
         }
         foreach ($list_http as $item) {
-            $this->doSpiderGetDomain($item);
+            $this->doSpiderGetDomainWeek($item);
         }
-    }
-
-    public function spiderGetDomain(Request $request)
-    {
-        $url = $request->domain_use_auto;
-        $spider_get_domain = $this->doSpiderGetDomain($url);
-        $response = [
-            'title' => 'Auto get information website',
-            'page' => 'domain',
-            'spider_get_domain' => $spider_get_domain
-        ];
-        return view('admin.page.auto-get-info-web', $response);
     }
 
     public function spiderGetDomainWeek()
     {
         $url = 'dantri.com';
-        $spider_get_domain = $this->doSpiderGetDomain($url);
+        $spider_get_domain = $this->doSpiderGetDomainWeek($url);
     }
 }

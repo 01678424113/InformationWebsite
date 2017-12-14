@@ -46,7 +46,7 @@ class LogSpider extends Command
     public function handle()
     {
         //
-        \Log::info('Test @' . \Carbon\Carbon::now());
+        \Log::info('Get domain @' . \Carbon\Carbon::now());
 
     }
     public function doAutoGetInfoWebFromData()

@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\Console\Commands\LogSpider',
+        'App\Console\Commands\LogSpiderGetInfo'
         //
     ];
 
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
         //$schedule->command('inspire')
                   //->hourly();
         $schedule->command('log:spider')->everyMinute();
+        $schedule->command('log:spiderinfo')->everyMinute();
     }
 
     /**
