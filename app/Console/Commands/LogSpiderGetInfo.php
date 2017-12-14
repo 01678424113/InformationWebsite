@@ -291,7 +291,7 @@ class LogSpiderGetInfo extends Command
                 $header['errno'] = $err;
                 $header['errmsg'] = $errmsg;
                 $header['content'] = $content;
-                if ($html_web != '') {
+                if (!empty($html_web)) {
                     //Title
                     $title_website = preg_match('/\<title\>(.*?)\<\/title\>/', $content, $result_title);
                     if (isset($result_title[1])) {

@@ -31,6 +31,7 @@ class HomeController extends Controller
         view()->share('logo', $logo);
         view()->share('meta_keyword', $meta_keyword);
     }
+
     public function cUrl($url)
     {
         $user_agent = 'Mozilla/5.0 (Windows NT 6.1; rv:8.0) Gecko/20100101 Firefox/8.0';
@@ -579,7 +580,7 @@ class HomeController extends Controller
                     }
                     $url = 'http://' . $domain;
                     $content = $this->cUrl($url);
-                    if ($html_web != '') {
+                    if (!empty($html_web)) {
                         //Title
                         $title_website = preg_match('/\<title\>(.*?)\<\/title\>/', $content, $result_title);
                         if (isset($result_title[1])) {
@@ -1436,7 +1437,7 @@ class HomeController extends Controller
             }
             $url = 'http://' . $domain;
             $content = $this->cUrl($url);
-            if ($html_web != '') {
+            if (!empty($html_web)) {
                 //Title
                 $title_website = preg_match('/\<title\>(.*?)\<\/title\>/', $content, $result_title);
                 if (isset($result_title[1])) {
