@@ -72,7 +72,7 @@
                                         </tr>
                                         <tr>
                                             <td>Keyword</td>
-                                            <td>{{trim(str_replace('+','',$alexa_inf[0]->top_5_keyword),'"')}}</td>
+                                            <td>{{trim(str_replace('+',' ',rawurldecode($alexa_inf[0]->top_5_keyword)),'"')}}</td>
                                         </tr>
                                         <tr>
                                             <td>Backlink</td>
