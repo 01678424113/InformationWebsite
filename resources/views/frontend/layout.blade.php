@@ -5,7 +5,6 @@
     <meta name="description" content="{{$meta_description}}">
     <meta name="keywords" content="{{$meta_keyword}}">
     <meta charset="utf-8">
-    <meta name="author" content="Roman Kirichik">
     <!--[if IE]>
     <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
@@ -21,12 +20,12 @@
     <meta property="og:locale" content="id_ID" />
     <meta property="og:image" content="" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="" />
-    <meta property="og:description" content="" />
+    <meta property="og:title" content="{{$meta_title}}" />
+    <meta property="og:description" content="{{$meta_description}}" />
     <meta property="og:url" content="{{$url_home}}" />
-    <meta property="og:site_name" content="Check website traffic free 2018" />
-    <meta name="DC.title" content="" />
-    <meta name="author" content="" />
+    <meta property="og:site_name" content="{{$meta_title}}" />
+    <meta name="DC.title" content="{{$meta_title}}" />
+    <meta name="author" content="Infomerweb.com" />
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="frontend/css/bootstrap.min.css">
@@ -39,7 +38,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style-information-website.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/loadding.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=vietnamese"
           rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
@@ -50,31 +48,7 @@
     <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 </head>
-<body class="appear-animate" {{--onload="myFunction()" style="background-color: #5BC0DE;"--}}>
-
-<!-- Page Loader -->
-{{--<div id="loader">
-    <div class='body'>
-  <span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </span>
-        <div class='base'>
-            <span></span>
-            <div class='face'></div>
-        </div>
-    </div>
-    <div class='longfazers'>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <h4>Wait a few second. Thank you :) </h4>
-</div>--}}
-<!-- End Page Loader -->
+<body class="appear-animate">
 
 <!-- Page Wrap -->
 <div class="page" id="top">
@@ -123,18 +97,12 @@
 <!--[if lt IE 10]>
 <script type="text/javascript" src="frontend/js/placeholder.js"></script><![endif]-->
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script type="text/javascript" src="js/loadding.js"></script>
 
 <script>
     $('.input-search').change(function () {
         var domain = $(this).val();
         $('.btn-search').attr('href', 'http://' + domain + '.infomerweb.com');
     });
-   /* $('a').click(function () {
-        $('#loader').show('slow');
-        $('#myDiv').hide('slow');
-        $('body').attr('style','background-color: #5BC0DE;');
-    })*/
 </script>
 @yield('script')
 </body>
