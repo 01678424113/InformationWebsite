@@ -38,6 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/information-domain', 'Admin\DomainController@informationDomain')->name('informationDomainAdmin');
     Route::get('/auto-get-info-web','Admin\DomainController@autoGetInfoWeb')->name('autoGetInfoWeb');
     Route::post('/auto-get-info-web','Admin\DomainController@doAutoGetInfoWeb')->name('doAutoGetInfoWeb');
+    Route::get('/auto-get-info-web-from-data','Admin\DomainController@doAutoGetInfoWebFromData')->name('doAutoGetInfoWebFromData');
 
     Route::get('/spider-get-domain','Admin\SpiderGetDomain@spiderGetDomain')->name('spiderGetDomain');
     Route::get('/spider-get-domain/{url}','Admin\SpiderGetDomain@doSpiderGetDomain')->name('doSpiderGetDomain');

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\CheckAutoDomain;
+use DB;
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -44,8 +47,10 @@ class SpiderGetDomain extends Controller
     public function doSpiderGetDomain($url)
     {
         $content_url = $this->cUrl($url);
-        $content_txt = file_get_contents('../domain.txt');
-        $list_http = explode(';', $content_txt);
+        $check_auto_domains = CheckAutoDomain::all();
+        foreach ($check_auto_domains as $check_auto_domain) {
+            $list_http[] = $check_auto_domain->domain;
+        }
         //Get list http
         preg_match_all('/http:\/\/(.+?)\//', $content_url, $http);
         foreach ($http[0] as $item) {
@@ -54,28 +59,29 @@ class SpiderGetDomain extends Controller
                 if (!isset($list_http)) {
                     $list_http = [];
                 }
-                if (array_key_exists($result[1], $list_http) === false) {
+                if (isset($result[1])) {
                     $list_http[] = $result[1];
                 }
             }
         }
         $list_http = array_unique($list_http);
         foreach ($list_http as $item) {
-            $content_txt = file_get_contents('../domain.txt');
-            $content_txt = explode(';', $content_txt);
-            if (count($content_txt) > 100) {
-                $response = [
-                    'title' => 'Auto get information website',
-                    'page' => 'domain',
-                    'spider_get_domain' => $content_txt
-                ];
-                return view('admin.page.auto-get-info-web', $response);
-            }
-            if (in_array($item, $content_txt) === false) {
-                $item = $item . ';';
-                file_put_contents('../domain.txt', $item, FILE_APPEND);
-                $item = trim($item, ';');
-                $this->doSpiderGetDomain($item);
+            try {
+                CheckAutoDomain::updateOrInsert(
+                    ['domain' => $item]
+                );
+                if (count($list_http) > 20) {
+                    $response = [
+                        'title' => 'Auto get information website',
+                        'page' => 'domain',
+                        'spider_get_domain' => implode(';', $list_http)
+                    ];
+                    return view('admin.page.auto-get-info-web', $response);
+                } else {
+                    $this->doSpiderGetDomain($item);
+                }
+            } catch (Exception $e) {
+
             }
         }
     }

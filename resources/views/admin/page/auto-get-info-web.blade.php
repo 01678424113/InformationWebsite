@@ -52,10 +52,8 @@
                         </div>
                     </form>
                 @else
-                    <?php
-                    $spider_get_domain = implode(';',$spider_get_domain);
-                    ?>
-                    <form action="" class="form-horizontal">
+                        <form class="form-horizontal" action="{{route('doAutoGetInfoWeb')}}" method="post">
+                            {{csrf_field()}}
                         <div class="form-group">
                             <label class="control-label" for="domain_use_auto" style="margin-bottom: 10px;">List domain
                                 get auto

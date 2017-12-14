@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\AlexaInformation;
+use App\CheckAutoDomain;
 use App\Domain;
 use App\Setting;
 use App\WebsiteInformation;
@@ -52,7 +53,6 @@ class DomainController extends Controller
         return view('admin.domain.information-domain', $response);
     }
 
-
     public function autoGetInfoWeb()
     {
         $response = [
@@ -67,6 +67,20 @@ class DomainController extends Controller
         $list_domain = $request->list_domain;
         $list_domain = str_replace(" ", "", $list_domain);
         $list_domain = explode(';', $list_domain);
+        foreach ($list_domain as $domain_name) {
+            if (!empty($domain_name)) {
+                $this->getInfoWeb($domain_name);
+            }
+        }
+        return redirect()->back()->with('success', 'Auto get infomation website successfully');
+    }
+
+    public function doAutoGetInfoWebFromData()
+    {
+        $list_domain_data = CheckAutoDomain::all();
+        foreach ($list_domain_data as $item) {
+            $list_domain[] = $item->domain;
+        }
         foreach ($list_domain as $domain_name) {
             if (!empty($domain_name)) {
                 $this->getInfoWeb($domain_name);
