@@ -28,8 +28,8 @@ class Kernel extends ConsoleKernel
     {
         //$schedule->command('inspire')
                   //->hourly();
-        $schedule->command('log:spider')->everyMinute();
-        $schedule->command('log:spiderinfo')->everyMinute();
+        $schedule->command('log:spider')->everyFiveMinutes();
+        $schedule->command('log:spiderinfo')->everyFiveMinutes();
     }
 
     /**
