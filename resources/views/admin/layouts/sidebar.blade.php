@@ -1,4 +1,3 @@
-
 <div class="page-sidebar-wrapper">
     <!-- BEGIN SIDEBAR -->
     <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
@@ -43,9 +42,9 @@
             </li>
             <li class="nav-item start
             @if($page === 'home')
-                {{"active open"}}
+            {{"active open"}}
             @endif
-            ">
+                    ">
                 <a href="{{route('home_admin')}}" class="nav-link nav-toggle">
                     <i class="icon-home"></i>
                     <span class="title">
@@ -61,9 +60,9 @@
             {{--------------------------Top 500-----------------------------------------}}
             <li class="nav-item
                 @if($page === 'top-500')
-                {{"active open"}}
-                @endif
-                ">
+            {{"active open"}}
+            @endif
+                    ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>
                     <span class="title">Top 500</span>
@@ -80,9 +79,9 @@
             {{--------------------------Domain-----------------------------------------}}
             <li class="nav-item
                 @if($page === 'domain')
-                {{"active open"}}
-                @endif
-                ">
+            {{"active open"}}
+            @endif
+                    ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>
                     <span class="title">Domain</span>
@@ -98,15 +97,15 @@
                         <a href="{{route('autoGetInfoWeb')}}" class="nav-link ">
                             <span class="title">Auto get infomation</span>
                         </a>
-                    </li>               
+                    </li>
                 </ul>
             </li>
             {{-------------------------Setting------------------------------------------}}
             <li class="nav-item
                 @if($page === 'setting')
-                {{"active open"}}
-                @endif
-                ">
+            {{"active open"}}
+            @endif
+                    ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>
                     <span class="title">Setting</span>
@@ -134,12 +133,12 @@
                         </a>
                     </li>
                     <li class="nav-item  ">
-                        <a href="{{route('listSettingAds')}}" class="nav-link ">
+                        <a href="{{route('listSettingGoogleAds')}}" class="nav-link ">
                             <span class="title">Google Adsense</span>
                         </a>
-                    </li>      
+                    </li>
                 </ul>
-            </li>      
+            </li>
             <!-- END SIDEBAR MENU -->
             <!-- END SIDEBAR MENU -->
     </div>

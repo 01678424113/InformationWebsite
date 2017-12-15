@@ -59,7 +59,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/add-setting-keyword', 'Admin\SettingController@getAddSettingKeyword')->name('getAddSettingKeyword');
     Route::post('/add-setting-keyword', 'Admin\SettingController@postAddSettingKeyword')->name('postAddSettingKeyword');
 
-    Route::get('/list-setting-ads', 'Admin\SettingController@listSettingGoogleAds')->name('listSettingGoogleAds');
+    Route::get('/list-setting-google-ads', 'Admin\SettingController@listSettingGoogleAds')->name('listSettingGoogleAds');
+    Route::get('/add-setting-google-ads', 'Admin\SettingController@getAddSettingGoogleAds')->name('getAddSettingGoogleAds');
+    Route::post('/add-setting-google-ads', 'Admin\SettingController@postAddSettingGoogleAds')->name('postAddSettingGoogleAds');
 
     Route::get('/edit-setting/{setting_id}', 'Admin\SettingController@getEditSetting')->name('getEditSetting');
     Route::post('/edit-setting/{setting_id}', 'Admin\SettingController@postEditSetting')->name('postEditSetting');

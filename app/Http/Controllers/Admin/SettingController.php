@@ -213,19 +213,30 @@ class SettingController extends Controller
             'created_at',
             'updated_at'
         ])->where('setting_page', 'google_ads');
-
         $response['settings'] = $settings_query->paginate(10);
-
-        return view('admin.setting.list-ads', $response);
+        return view('admin.setting.list-google-ads', $response);
     }
-
     public function getAddSettingGoogleAds()
     {
         $response = [
-            'title' => 'Add setting domain',
+            'title' => 'Add setting google ads',
             'page'=>'setting'
         ];
-        return view('admin.setting.add-domain', $response);
+        return view('admin.setting.add-google-ads', $response);
+    }
+    public function postAddSettingGoogleAds(SettingRequest $request)
+    {
+        $setting = new Setting();
+        $setting->setting_page = 'google_ads';
+        $setting->key_setting = 'google_ads';
+        $setting->value_setting = $request->value_setting;
+        $setting->created_at = round(microtime(true));
+        try {
+            $setting->save();
+            return redirect()->route('listSettingGoogleAds')->with('success', 'You have successfully added setting google ads !');
+        } catch (Exception $e) {
+            return redirect()->route('listSettingGoogleAds')->with('error', 'Error ! Database');
+        }
     }
 
     //Dùng chung

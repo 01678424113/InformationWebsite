@@ -62,9 +62,7 @@
         <!-- End Divider -->
         @include('frontend.widget.block-info-provide')
 
-
         @include('frontend.widget.block-one')
-
 
         {{--   @include('frontend.widget.block-seven')--}}
 
