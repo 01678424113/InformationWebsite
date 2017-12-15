@@ -1,28 +1,28 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+  |--------------------------------------------------------------------------
+  | Web Routes
+  |--------------------------------------------------------------------------
+  |
+  | Here is where you can register web routes for your application. These
+  | routes are loaded by the RouteServiceProvider within a group which
+  | contains the "web" middleware group. Now create something great!
+  |
+ */
 Route::get('/home', 'Frontend\HomeController@home')->name('home');
 Route::get('/', 'Frontend\HomeController@home');
-Route::get('/sitemap.xml',function (){
+Route::get('/sitemap.xml', function () {
     return view('frontend.page.sitemap');
 })->name('sitemap');
 
-Route::get('/top-500','Frontend\HomeController@top500')->name('top500');
+Route::get('/top-500', 'Frontend\HomeController@top500')->name('top500');
 
 Route::get('/get-information-web', 'Frontend\HomeController@getInformationDomain')->name('getInformationDomain');
 Route::get('/', 'Frontend\HomeController@informationDomain')->name('informationDomain');
 Route::get('/update/', 'Frontend\HomeController@updateInformationDomain')->name('updateInformationDomain');
-Route::get('/404','Frontend\HomeController@error404')->name('404');
-Route::get('/test','HomeController@cUrl');
+Route::get('/404', 'Frontend\HomeController@error404')->name('404');
+Route::get('/test', 'HomeController@cUrl');
 
 Auth::routes();
 
@@ -36,12 +36,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     //Domain
     Route::get('/list-domain', 'Admin\DomainController@listDomain')->name('listDomain');
     Route::get('/information-domain', 'Admin\DomainController@informationDomain')->name('informationDomainAdmin');
-    Route::get('/auto-get-info-web','Admin\DomainController@autoGetInfoWeb')->name('autoGetInfoWeb');
-    Route::post('/auto-get-info-web','Admin\DomainController@doAutoGetInfoWeb')->name('doAutoGetInfoWeb');
-    Route::get('/auto-get-info-web-from-data','Admin\DomainController@doAutoGetInfoWebFromData')->name('doAutoGetInfoWebFromData');
+    Route::get('/auto-get-info-web', 'Admin\DomainController@autoGetInfoWeb')->name('autoGetInfoWeb');
+    Route::post('/auto-get-info-web', 'Admin\DomainController@doAutoGetInfoWeb')->name('doAutoGetInfoWeb');
+    Route::get('/auto-get-info-web-from-data', 'Admin\DomainController@doAutoGetInfoWebFromData')->name('doAutoGetInfoWebFromData');
 
-    Route::get('/spider-get-domain','Admin\SpiderGetDomain@spiderGetDomain')->name('spiderGetDomain');
-    Route::get('/spider-get-domain/{url}','Admin\SpiderGetDomain@doSpiderGetDomain')->name('doSpiderGetDomain');
+    Route::get('/spider-get-domain', 'Admin\SpiderGetDomain@spiderGetDomain')->name('spiderGetDomain');
+    Route::get('/spider-get-domain/{url}', 'Admin\SpiderGetDomain@doSpiderGetDomain')->name('doSpiderGetDomain');
     //Setting
     Route::get('/list-setting-domain', 'Admin\SettingController@listSettingDomain')->name('listSettingDomain');
     Route::get('/add-setting-domain', 'Admin\SettingController@getAddSettingDomain')->name('getAddSettingDomain');
@@ -58,6 +58,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/list-setting-keyword', 'Admin\SettingController@listSettingKeyword')->name('listSettingKeyword');
     Route::get('/add-setting-keyword', 'Admin\SettingController@getAddSettingKeyword')->name('getAddSettingKeyword');
     Route::post('/add-setting-keyword', 'Admin\SettingController@postAddSettingKeyword')->name('postAddSettingKeyword');
+
+    Route::get('/list-setting-ads', 'Admin\SettingController@listSettingGoogleAds')->name('listSettingGoogleAds');
 
     Route::get('/edit-setting/{setting_id}', 'Admin\SettingController@getEditSetting')->name('getEditSetting');
     Route::post('/edit-setting/{setting_id}', 'Admin\SettingController@postEditSetting')->name('postEditSetting');

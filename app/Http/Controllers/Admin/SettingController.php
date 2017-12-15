@@ -197,6 +197,37 @@ class SettingController extends Controller
         }
     }
 
+    
+    //Seting google adsense
+     public function listSettingGoogleAds(Request $request)
+    {
+        $response = [
+            'title' => 'Setting google ads',
+            'page'=>'setting'
+        ];
+        $settings_query = Setting::select([
+            'id',
+            'setting_page',
+            'key_setting',
+            'value_setting',
+            'created_at',
+            'updated_at'
+        ])->where('setting_page', 'google_ads');
+
+        $response['settings'] = $settings_query->paginate(10);
+
+        return view('admin.setting.list-ads', $response);
+    }
+
+    public function getAddSettingGoogleAds()
+    {
+        $response = [
+            'title' => 'Add setting domain',
+            'page'=>'setting'
+        ];
+        return view('admin.setting.add-domain', $response);
+    }
+
     //Dùng chung
 
     public function getEditSetting($setting_id)

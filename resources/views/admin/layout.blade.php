@@ -32,7 +32,8 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
           type="text/css"/>
     <base href="{{asset('')}}">
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
     <link href="style-admin/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"
           type="text/css"/>
     <link href="style-admin/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet"

@@ -60,10 +60,10 @@
             </li>
             {{--------------------------Top 500-----------------------------------------}}
             <li class="nav-item
-                  @if($page === 'top-500')
-                    {{"active open"}}
-                    @endif
-            ">
+                @if($page === 'top-500')
+                {{"active open"}}
+                @endif
+                ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>
                     <span class="title">Top 500</span>
@@ -79,10 +79,10 @@
             </li>
             {{--------------------------Domain-----------------------------------------}}
             <li class="nav-item
-              @if($page === 'domain')
-            {{"active open"}}
-            @endif
-            ">
+                @if($page === 'domain')
+                {{"active open"}}
+                @endif
+                ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>
                     <span class="title">Domain</span>
@@ -98,15 +98,15 @@
                         <a href="{{route('autoGetInfoWeb')}}" class="nav-link ">
                             <span class="title">Auto get infomation</span>
                         </a>
-                    </li>
+                    </li>               
                 </ul>
             </li>
             {{-------------------------Setting------------------------------------------}}
             <li class="nav-item
-             @if($page === 'setting')
+                @if($page === 'setting')
                 {{"active open"}}
-            @endif
-            ">
+                @endif
+                ">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-briefcase"></i>
                     <span class="title">Setting</span>
@@ -133,11 +133,15 @@
                             <span class="title">Page view</span>
                         </a>
                     </li>
+                    <li class="nav-item  ">
+                        <a href="{{route('listSettingAds')}}" class="nav-link ">
+                            <span class="title">Google Adsense</span>
+                        </a>
+                    </li>      
                 </ul>
-            </li>
-        </ul>
-        <!-- END SIDEBAR MENU -->
-        <!-- END SIDEBAR MENU -->
+            </li>      
+            <!-- END SIDEBAR MENU -->
+            <!-- END SIDEBAR MENU -->
     </div>
     <!-- END SIDEBAR -->
 </div>
